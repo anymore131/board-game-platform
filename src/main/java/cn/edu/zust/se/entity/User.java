@@ -1,12 +1,14 @@
-package cn.edu.zust.se.Bo;
+package cn.edu.zust.se.entity;
 
 import lombok.Data;
+
+import java.sql.Date;
 
 /**
  * @author Lenovo
  */
 @Data
-public class UserBo {
+public class User {
     int id;
     //真实姓名
     String name;
@@ -16,7 +18,7 @@ public class UserBo {
     String password;
     int age;
     //性别
-    String gender;
+    int gender;
     String introduction;
     //权限
     int type;
@@ -26,10 +28,12 @@ public class UserBo {
     String province;
     //城市
     String city;
-    //具体地址
-    String address;
+    //注册时间
+    Date registerTime;
     String QQ;
     String weixin;
+    //头像
+    String avatarFname;
     //在线状态
     int status;
 }

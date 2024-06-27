@@ -1,4 +1,4 @@
-package cn.edu.zust.se.Dao;
+package cn.edu.zust.se.dao;
 
 /**
  * @author Lenovo

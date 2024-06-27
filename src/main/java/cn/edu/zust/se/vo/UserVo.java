@@ -1,6 +1,8 @@
-package cn.edu.zust.se.Vo;
+package cn.edu.zust.se.vo;
 
 import lombok.Data;
+
+import java.sql.Date;
 
 /**
  * @author Lenovo
@@ -14,7 +16,7 @@ public class UserVo {
     String userName;
     int age;
     //性别
-    String gender;
+    int gender;
     String introduction;
     //权限
     int type;
@@ -24,10 +26,12 @@ public class UserVo {
     String province;
     //城市
     String city;
-    //具体地址
-    String address;
+    //注册时间
+    Date registerTime;
     String QQ;
     String weixin;
+    //头像
+    String avatarFname;
     //在线状态
     int status;
 }

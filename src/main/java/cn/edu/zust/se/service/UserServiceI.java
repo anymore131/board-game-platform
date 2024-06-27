@@ -1,4 +1,4 @@
-package cn.edu.zust.se.Service;
+package cn.edu.zust.se.service;
 
 /**
  * @author Lenovo
