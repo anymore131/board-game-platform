@@ -1,6 +1,9 @@
 package cn.edu.zust.se.controller;
 
+import cn.edu.zust.se.bo.UserBo;
+import cn.edu.zust.se.service.LoginServiceI;
 import cn.edu.zust.se.service.UserServiceI;
+import cn.edu.zust.se.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +18,7 @@ import javax.annotation.Resource;
 @RequestMapping("login")
 public class LoginController {
     @Resource
-    UserServiceI userService;
+    LoginServiceI loginService;
 
     @RequestMapping("hi")
     public String login(){
@@ -28,17 +31,36 @@ public class LoginController {
     }
 
     @RequestMapping(value = "login",method = RequestMethod.POST)
-    public String loginPost(HttpSession session){
+    public String loginPost(UserBo userBo, HttpSession session){
+        if(userBo.getUserName().isEmpty()||userBo.getPassword().isEmpty()){
+            session.setAttribute("error", "未输入完整");
+            return "login";
+        }
+        UserVo userVo = loginService.login(userBo);
+        if(userVo != null){
+            session.setAttribute("user", userVo);
+            return "redirect:/user/index";
+        }
         return "login";
     }
 
     @RequestMapping(value = "register",method = RequestMethod.GET)
     public String registerGet(HttpSession session){
-        return "login";
+        return "register";
     }
 
     @RequestMapping(value = "register",method = RequestMethod.POST)
-    public String registerPost(HttpSession session){
-        return "login";
+    public String registerPost(UserBo userBo, HttpSession session){
+        if(userBo.getUserName().isEmpty()||userBo.getPassword().isEmpty()||userBo.getName().isEmpty()){
+            session.setAttribute("error", "未输入完整");
+            return "register";
+        }
+        UserVo userVo = loginService.register(userBo);
+        if(userVo != null){
+            session.setAttribute("user", userVo);
+            return "redirect:/user/index";
+        }
+        session.setAttribute("error", "已存在该用户");
+        return "register";
     }
 }
