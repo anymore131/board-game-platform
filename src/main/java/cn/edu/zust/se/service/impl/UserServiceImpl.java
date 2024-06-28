@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -13,4 +14,8 @@ public class UserServiceImpl implements UserServiceI {
     @Resource
     UserMapper userMapper;
 
+    @Override
+    public List<Integer> getUserJoin(int id) {
+        return userMapper.selectUserJoinByUserId(id);
+    }
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * @author Lenovo
@@ -27,8 +28,13 @@ public interface UserMapper {
             "VALUES (#{userName}, #{password}, #{password}, null, null, null, " +
             "0, null, null, null, null, #{registerTime}, null, null, #{avatarFname}, 1)")
     void insertUser(@Param("userName")String userName,
-                      @Param("password")String password,
-                      @Param("name")String name,
-                      @Param("registerTime") Date registerTime,
-                      @Param("avatarFname")String avatarFname);
+                    @Param("password")String password,
+                    @Param("name")String name,
+                    @Param("registerTime") Date registerTime,
+                    @Param("avatarFname")String avatarFname);
+
+    @Select("select club_id " +
+            "from board_game_platform.t_user_join " +
+            "where user_id = #{userId}")
+    List<Integer> selectUserJoinByUserId(@Param("userId")int userId);
 }

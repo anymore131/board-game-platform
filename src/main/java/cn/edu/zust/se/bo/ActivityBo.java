@@ -1,14 +1,15 @@
-package cn.edu.zust.se.entity;
+package cn.edu.zust.se.bo;
 
 import lombok.Data;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * @author Lenovo
  */
 @Data
-public class Activity {
+public class ActivityBo {
     int id;
     int clubId;
     String name;

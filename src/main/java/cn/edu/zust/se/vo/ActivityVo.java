@@ -9,13 +9,16 @@ import java.util.List;
  * @author Lenovo
  */
 @Data
-public class ClubVo {
+public class ActivityVo {
+
     int id;
+    String clubName;
     String name;
-    String userName;
-    Date createTime;
-    String province;
-    String city;
-    List<String> tags;
     String introduction;
+    List<String> tags;
+    String address;
+    Date startTime;
+    Date endTime;
+    Date createTime;
+    int number;
 }

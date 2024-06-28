@@ -8,14 +8,12 @@ import java.sql.Date;
  * @author Lenovo
  */
 @Data
-public class Activity {
+public class GameType {
     int id;
-    int clubId;
     String name;
+    String referrals;
     String introduction;
-    String tags;
-    String address;
-    Date startTime;
-    Date endTime;
-    Date createTime;
+    Date insertTime;
+    int userId;
+    int type;
 }

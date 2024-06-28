@@ -3,19 +3,17 @@ package cn.edu.zust.se.vo;
 import lombok.Data;
 
 import java.sql.Date;
-import java.util.List;
 
 /**
  * @author Lenovo
  */
 @Data
-public class ClubVo {
+public class GameTypeVo {
     int id;
     String name;
-    String userName;
-    Date createTime;
-    String province;
-    String city;
-    List<String> tags;
+    String referrals;
     String introduction;
+    Date insertTime;
+    String userName;
+    int type;
 }

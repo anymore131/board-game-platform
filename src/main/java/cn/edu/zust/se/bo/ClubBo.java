@@ -1,4 +1,4 @@
-package cn.edu.zust.se.vo;
+package cn.edu.zust.se.bo;
 
 import lombok.Data;
 
@@ -9,13 +9,14 @@ import java.util.List;
  * @author Lenovo
  */
 @Data
-public class ClubVo {
+public class ClubBo {
     int id;
     String name;
-    String userName;
+    int userId;
     Date createTime;
     String province;
     String city;
-    List<String> tags;
+    String tags;
     String introduction;
+    int status;
 }
