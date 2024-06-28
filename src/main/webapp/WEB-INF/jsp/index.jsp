@@ -56,7 +56,7 @@
                 </div>
             </c:forEach>
         </c:if>
-        <c:if test="${activitys == null}">
+        <c:if test="${activities == null}">
             还没有活动！
         </c:if>
     </div>
