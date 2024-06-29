@@ -3,7 +3,6 @@ package cn.edu.zust.se.bo;
 import lombok.Data;
 
 import java.sql.Date;
-import java.util.List;
 
 /**
  * @author Lenovo
