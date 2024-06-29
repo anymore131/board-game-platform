@@ -12,6 +12,7 @@ import java.util.List;
 public class ClubVo {
     int id;
     String clubName;
+    int userId;
     String userName;
     Date createTime;
     String province;

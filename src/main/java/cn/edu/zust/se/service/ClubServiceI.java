@@ -1,5 +1,6 @@
 package cn.edu.zust.se.service;
 
+import java.sql.Date;
 import java.util.List;
 import cn.edu.zust.se.vo.ClubVo;
 
@@ -14,4 +15,5 @@ public interface ClubServiceI {
     List<ClubVo> getClubVoByName(String clubName,int pageNo,int pageSize,int userId);
     Integer getClubNumberByTag(String tag);
     List<ClubVo> getClubVoByTag(String tag,int pageNo,int pageSize,int userId);
+    boolean insetClub(ClubVo clubVo);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +93,22 @@ public class ClubServiceImpl implements ClubServiceI {
             }
         }
         return clubVos;
+    }
+
+    @Override
+    public boolean insetClub(ClubVo clubVo) {
+        if(clubMapper.getClubByName(clubVo.getClubName()) != null){
+            StringBuilder s = new StringBuilder(";");
+            List<String> tags = clubVo.getTags();
+            for(String tag : tags){
+                s.append(tag).append(";");
+            }
+            clubMapper.insertClub(clubVo.getClubName(),clubVo.getUserId(),
+                    new Date(new java.util.Date().getTime()),clubVo.getProvince(),
+                    clubVo.getCity(), String.valueOf(s), clubVo.getIntroduction());
+            return true;
+        }
+        return false;
     }
 
     public List<String> splitTag(String[] ss){

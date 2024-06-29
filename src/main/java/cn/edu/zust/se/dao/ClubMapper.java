@@ -1,5 +1,6 @@
 package cn.edu.zust.se.dao;
 
+import cn.edu.zust.se.entity.Club;
 import cn.edu.zust.se.vo.ClubVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -35,6 +36,9 @@ public interface ClubMapper {
             "from board_game_platform.t_club " +
             "where id = ${id} and status = 1")
     String getClubTagsById(@Param("id") int id);
+
+    @Select("select * from board_game_platform.t_club where club_name = #{clubName}")
+    Club getClubByName(@Param("clubName") String clubName);
 
     /**
      * 通过name，模糊搜索俱乐部的数量
