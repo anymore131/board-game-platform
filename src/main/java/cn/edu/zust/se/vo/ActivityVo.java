@@ -13,7 +13,7 @@ public class ActivityVo {
 
     int id;
     String clubName;
-    String name;
+    String activityName;
     String introduction;
     List<String> tags;
     String address;
@@ -21,4 +21,6 @@ public class ActivityVo {
     Date endTime;
     Date createTime;
     int number;
+    //1为已参加，0为未参加
+    int attended;
 }

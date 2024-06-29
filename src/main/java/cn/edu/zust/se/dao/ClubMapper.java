@@ -1,6 +1,5 @@
 package cn.edu.zust.se.dao;
 
-import cn.edu.zust.se.bo.ClubBo;
 import cn.edu.zust.se.vo.ClubVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -17,9 +16,9 @@ public interface ClubMapper {
      * 新建俱乐部
      */
     @Insert("INSERT INTO board_game_platform.t_club " +
-            "(name, user_id, create_time, province, city, tags, introduction, status) " +
-            "VALUES (#{name}, #{id}, #{createTime}, #{province}, #{city}, #{tags}, #{introduction}, 0)")
-    void insertClub(@Param("name") String name,
+            "(club_name, user_id, create_time, province, city, tags, introduction, status) " +
+            "VALUES (#{clubName}, #{id}, #{createTime}, #{province}, #{city}, #{tags}, #{introduction}, 0)")
+    void insertClub(@Param("clubName") String clubName,
                     @Param("userId") int id,
                     @Param("createTime")Date createTime,
                     @Param("province")String province,
@@ -27,7 +26,7 @@ public interface ClubMapper {
                     @Param("tags")String tags,
                     @Param("introduction")String introduction);
 
-    @Select("select c.id,c.name,u.user_name,c.create_time,c.province,c.city,c.introduction " +
+    @Select("select c.id,c.club_name,u.user_name,c.create_time,c.province,c.city,c.introduction " +
             "from board_game_platform.t_club c,board_game_platform.t_user u " +
             "where c.status = 1 and c.id = ${id} and c.user_id = u.id")
     ClubVo getClubById(@Param("id") int id);
@@ -39,28 +38,34 @@ public interface ClubMapper {
 
     /**
      * 通过name，模糊搜索俱乐部的数量
-     * @param name  模糊搜索值
+     * @param clubName  模糊搜索值
      * @return      搜索到的数量
      */
     @Select("SELECT COUNT(id) " +
             "from board_game_platform.t_club " +
-            "where name like #{%name%} and status = 1")
-    int selectClubNumberByName(@Param("name")String name);
+            "where club_name like concat('%',#{clubName},'%') and status = 1")
+    int selectClubNumberByName(@Param("clubName")String clubName);
 
     /**
      * 通过name，模糊搜索俱乐部
-     * @param name      模糊搜索值
+     * @param clubName      模糊搜索值
      * @param pageNo    页码
      * @param pageSize  每页数量
      * @return          搜索到的俱乐部列表
      */
-    @Select("select * " +
-            "from board_game_platform.t_club " +
-            "where name like #{%name%} and status = 1 " +
+    @Select("select c.id,c.club_name,u.user_name,c.create_time,c.province,c.city,c.introduction " +
+            "from board_game_platform.t_club c,board_game_platform.t_user u " +
+            "where c.user_id = u.id and c.club_name like concat('%',#{clubName},'%') and c.status = 1 " +
             "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
-    List<ClubBo> selectClubByName(@Param("name") String name,
+    List<ClubVo> selectClubByName(@Param("clubName") String clubName,
                                   @Param("pageNo")int pageNo,
                                   @Param("pageSize")int pageSize);
+
+    @Select("select club_type " +
+            "from board_game_platform.t_user_join " +
+            "where user_id = #{userId} and club_id = #{clubId}")
+    Integer selectClubTypeByUserIdAndClubId(@Param("userId") int userId,
+                                        @Param("clubId") int clubId);
 
     /**
      * 通过tag，模糊搜索俱乐部的数量
@@ -69,8 +74,8 @@ public interface ClubMapper {
      */
     @Select("SELECT COUNT(id) " +
             "from board_game_platform.t_club " +
-            "where name like #{%tag%} and status = 1")
-    int selectClubNumberByTag(@Param("tag")int tag);
+            "where t_club.tags like concat('%',#{tag},'%') and status = 1")
+    int selectClubNumberByTag(@Param("tag")String tag);
 
     /**
      * 通过tag，模糊搜索俱乐部
@@ -79,13 +84,21 @@ public interface ClubMapper {
      * @param pageSize  每页数量
      * @return          搜索到的俱乐部列表
      */
-    @Select("select * " +
-            "from board_game_platform.t_club c " +
-            "where c.tags like #{%tag%} and c.status = 1 " +
+    @Select("select c.id,c.club_name,u.user_name,c.create_time,c.province,c.city,c.introduction " +
+            "from board_game_platform.t_club c,board_game_platform.t_user u " +
+            "where c.tags like concat('%',#{tag},'%') and c.status = 1 and c.user_id = u.id " +
             "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
-    List<ClubBo> selectClubByTag(@Param("tag")int tag,
+    List<ClubVo> selectClubByTag(@Param("tag")String tag,
                                  @Param("pageNo")int pageNo,
                                  @Param("pageSize")int pageSize);
 
+    @Select("select c.id,c.club_name,u.user_name,c.create_time,c.province,c.city,c.introduction,j.join_time " +
+            "from board_game_platform.t_club c,board_game_platform.t_user u,board_game_platform.t_user_join j " +
+            "where j.user_id = #{userId} and c.id = j.club_id and c.user_id = u.id and j.club_type = 0 and c.status = 1")
+    List<ClubVo> selectClubVoByUserJoin(@Param("userId")int userId);
 
+    @Select("select c.id,c.club_name,u.user_name,c.create_time,c.province,c.city,c.introduction,j.join_time " +
+            "from board_game_platform.t_club c,board_game_platform.t_user u,board_game_platform.t_user_join j " +
+            "where j.user_id = #{userId} and c.id = j.club_id and c.user_id = u.id and j.club_type = 1 and c.status = 1")
+    List<ClubVo> selectClubVoManageByUserJoin(@Param("userId") int userId);
 }

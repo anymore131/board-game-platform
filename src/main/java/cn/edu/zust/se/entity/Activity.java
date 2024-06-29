@@ -11,7 +11,7 @@ import java.sql.Date;
 public class Activity {
     int id;
     int clubId;
-    String name;
+    String activityName;
     String introduction;
     String tags;
     String address;

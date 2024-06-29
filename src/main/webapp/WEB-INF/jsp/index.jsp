@@ -17,40 +17,52 @@
         ${sessionScope.remove("error")}
         </c:if>
     </script>
+    <style>
+        .avatar{
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+            border-color: #ffffff
+        }
+    </style>
 </head>
 <body>
 <div class="header">
-    <div class="avatar-body">
-        <img src="/user/showAvatar/${user.avatarFname}" alt="头像" class="avatar">
-        <a href="/user/userHome">个人主页</a>
-    </div>
+    <span class="avatar-body">
+        <a href="/user/userHome">
+            <img src="/user/showAvatar/${user.avatarFname}" alt="头像" class="avatar" title="个人中心">
+        </a>
+    </span>
+    <span class="header-out">
+        <a href="/login/login">退出</a>
+    </span>
 </div>
 <div class="body">
     <div class="search-body">
         <form action="/user/search" method="post">
-            <select id="search_target" name="search_target" >
+            <select id="search-target" name="search-target" >
                 <option value="0">俱乐部</option>
                 <option value="1">活动</option>
                 <option value="2">游戏标签</option>
                 <option value="3">用户</option>
             </select>
             <input type="text" name="search-text">
-            <input type="text" value="提交" name="action">
+            <input type="submit" value="提交" name="action">
         </form>
     </div>
     <div class="club-activity">
         <c:if test="${activities != null}">
             <c:forEach var="activity" items="${activities}">
                 <div class="activity">
-                    <span><a href="">${activity.name}</a></span>
-                    <span><a href="">${activity.clubName}</a></span>
-                    <span>
+                    <div><a href="">${activity.activityName}</a></div>
+                    <div>俱乐部名：<a href="">${activity.clubName}</a></div>
+                    <div>标签：
                         <c:forEach var="tag" items="${activity.tags}">
-                            <a href="/user/serarch?search_target=2&&search-text=${tag}">${tag}&nbsp;&nbsp;</a>
+                            <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
                         </c:forEach>
-                    </span>
-                    <span>${activity.number}</span>
-                    <span>
+                    </div>
+                    <span>参加人数：${activity.number}</span>
+                    <span>时间：
                         ${activity.startTime}——${activity.endTime}
                     </span>
                 </div>

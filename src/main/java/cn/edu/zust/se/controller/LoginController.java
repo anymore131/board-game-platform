@@ -2,7 +2,6 @@ package cn.edu.zust.se.controller;
 
 import cn.edu.zust.se.bo.UserBo;
 import cn.edu.zust.se.service.LoginServiceI;
-import cn.edu.zust.se.service.UserServiceI;
 import cn.edu.zust.se.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -20,13 +19,9 @@ public class LoginController {
     @Resource
     LoginServiceI loginService;
 
-    @RequestMapping("hi")
-    public String login(){
-        return "hi";
-    }
-
     @RequestMapping(value = "login",method = RequestMethod.GET)
     public String loginGet(HttpSession session){
+        session.invalidate();
         return "login";
     }
 
@@ -46,6 +41,7 @@ public class LoginController {
 
     @RequestMapping(value = "register",method = RequestMethod.GET)
     public String registerGet(HttpSession session){
+        session.invalidate();
         return "register";
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 public class ActivityBo {
     int id;
     int clubId;
-    String name;
+    String activityName;
     String introduction;
     String tags;
     String address;

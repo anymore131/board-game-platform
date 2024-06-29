@@ -11,11 +11,15 @@ import java.util.List;
 @Data
 public class ClubVo {
     int id;
-    String name;
+    String clubName;
     String userName;
     Date createTime;
     String province;
     String city;
     List<String> tags;
     String introduction;
+    Date joinTime;
+    int number;
+    //1为已加入，0为未加入
+    int joined;
 }

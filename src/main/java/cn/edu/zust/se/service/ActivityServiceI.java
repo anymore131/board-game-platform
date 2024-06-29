@@ -1,9 +1,6 @@
 package cn.edu.zust.se.service;
 
-import cn.edu.zust.se.bo.ActivityBo;
 import cn.edu.zust.se.vo.ActivityVo;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,5 +8,9 @@ import java.util.List;
  * @author Lenovo
  */
 public interface ActivityServiceI {
-    List<ActivityVo> getActivityVoById(int id);
+    List<ActivityVo> getActivityVoById(int id,int userId);
+    int getActivityVoNumberByTag(String tag);
+    List<ActivityVo> getActivityVoByTag(String tag,int pageNo,int pageSize,int userId);
+    int getActivityVoNumberByName(String name);
+    List<ActivityVo> getActivityVoByName(String tag,int pageNo,int pageSize,int userId);
 }

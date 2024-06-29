@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class ClubBo {
     int id;
-    String name;
+    String clubName;
     int userId;
     Date createTime;
     String province;
