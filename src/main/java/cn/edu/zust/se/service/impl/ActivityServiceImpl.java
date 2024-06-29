@@ -40,7 +40,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
     }
 
     @Override
-    public int getActivityVoNumberByTag(String tag) {
+    public Integer getActivityVoNumberByTag(String tag) {
         Date nowTime = new Date(new java.util.Date().getTime());
         return activityMapper.selectActivityNumberByTag(';' + tag + ';',nowTime);
     }
@@ -63,7 +63,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
     }
 
     @Override
-    public int getActivityVoNumberByName(String name) {
+    public Integer getActivityVoNumberByName(String name) {
         Date nowTime = new Date(new java.util.Date().getTime());
         return activityMapper.selectActivityNumberByName(name,nowTime);
     }

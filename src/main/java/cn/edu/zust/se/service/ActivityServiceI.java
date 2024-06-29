@@ -9,8 +9,8 @@ import java.util.List;
  */
 public interface ActivityServiceI {
     List<ActivityVo> getActivityVoById(int id,int userId);
-    int getActivityVoNumberByTag(String tag);
+    Integer getActivityVoNumberByTag(String tag);
     List<ActivityVo> getActivityVoByTag(String tag,int pageNo,int pageSize,int userId);
-    int getActivityVoNumberByName(String name);
+    Integer getActivityVoNumberByName(String name);
     List<ActivityVo> getActivityVoByName(String tag,int pageNo,int pageSize,int userId);
 }

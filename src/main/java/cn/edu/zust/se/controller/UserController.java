@@ -252,5 +252,4 @@ public class UserController {
             session.setAttribute("pageNo2", pageNo2);
         }
     }
-
 }

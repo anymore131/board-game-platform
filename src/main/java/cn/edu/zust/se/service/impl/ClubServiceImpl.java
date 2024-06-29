@@ -53,7 +53,7 @@ public class ClubServiceImpl implements ClubServiceI {
     }
 
     @Override
-    public int getClubNumberByName(String clubName) {
+    public Integer getClubNumberByName(String clubName) {
         return clubMapper.selectClubNumberByName(clubName);
     }
 
@@ -74,7 +74,7 @@ public class ClubServiceImpl implements ClubServiceI {
     }
 
     @Override
-    public int getClubNumberByTag(String tag) {
+    public Integer getClubNumberByTag(String tag) {
         return clubMapper.selectClubNumberByTag(';' + tag + ';');
     }
 
