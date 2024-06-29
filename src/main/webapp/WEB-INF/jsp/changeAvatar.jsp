@@ -11,6 +11,20 @@
 <html>
 <head>
     <title>Title</title>
+    <script>
+        <c:if test="${sessionScope.error != null}">
+        alert("${sessionScope.error}")
+        ${sessionScope.remove("error")}
+        </c:if>
+    </script>
+    <style>
+        .avatar{
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+            border-color: #ffffff
+        }
+    </style>
 </head>
 <body>
 <div class="header">

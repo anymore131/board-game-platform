@@ -37,6 +37,9 @@
         <a href="/login/login">退出</a>
     </span>
 </div>
+<div class="side">
+    <a href="/club/createClub">创建俱乐部</a>
+</div>
 <div class="body">
     <div class="search-body">
         <form action="/user/search" method="post">

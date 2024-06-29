@@ -1,13 +1,17 @@
 package cn.edu.zust.se.controller;
 
 import cn.edu.zust.se.bo.ClubBo;
+import cn.edu.zust.se.dao.GameMapper;
 import cn.edu.zust.se.service.ActivityServiceI;
 import cn.edu.zust.se.service.ClubServiceI;
+import cn.edu.zust.se.service.GameServiceI;
 import cn.edu.zust.se.service.PictureServiceI;
 import cn.edu.zust.se.vo.ClubPictureVo;
 import cn.edu.zust.se.vo.ClubVo;
 import cn.edu.zust.se.vo.UserVo;
 import cn.edu.zust.se.vo.UserJoinVo;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +31,7 @@ public class ClubController {
     @Resource
     ClubServiceI clubService;
     @Resource
-    ActivityServiceI activityService;
+    GameServiceI gameService;
     @Resource
     PictureServiceI pictureService;
 
@@ -60,18 +64,34 @@ public class ClubController {
         if(user == null){
             return "redirect:/login/login";
         }
+        List<String> games = gameService.selectAllGameName();
+        session.setAttribute("games", games);
         return "createClub";
     }
     @RequestMapping(value = "createClub",method = RequestMethod.POST)
-    public String createClubPost(ClubBo clubBo, HttpSession session) {
+    public String createClubPost(HttpServletResponse servletResponse,
+                                 HttpServletRequest request, HttpSession session) {
         UserVo user = (UserVo)session.getAttribute("user");
         if(user == null){
             return "redirect:/login/login";
         }
-        if (clubService.insetClub(clubBo)){
-            session.setAttribute("error", "添加成功");
-            return "redirect:/user/userHome";
+        ClubBo club = new ClubBo();
+        String[] tags = request.getParameterValues("tags");
+        StringBuilder ss = new StringBuilder(";");
+        for(String tag : tags){
+            ss.append(";").append(tag);
         }
-        return "redirect:/user/index";
+        club.setClubName(request.getParameterValues("clubName")[0]);
+        club.setIntroduction(request.getParameterValues("introduction")[0]);
+        club.setTags(ss.toString());
+        club.setProvince(request.getParameterValues("province")[0]);
+        club.setCity(request.getParameterValues("city")[0]);
+        club.setUserId(user.getId());
+        if(clubService.insetClub(user.getId(),club)){
+            session.setAttribute("error","添加成功");
+            return "redirect:/user/index";
+        }
+        session.setAttribute("error","信息有误");
+        return "createClub";
     }
 }

@@ -35,4 +35,7 @@ public interface GameMapper {
 
     @Select("select COUNT(id) from board_game_platform.t_game_type")
     int selectGameTypeNumber();
+
+    @Select("select name from board_game_platform.t_game_type")
+    List<String> selectGameTypeNames();
 }

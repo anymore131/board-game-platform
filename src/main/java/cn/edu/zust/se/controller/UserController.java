@@ -47,7 +47,9 @@ public class UserController {
             clubs.add(clubService.getClubVo(id));
         }
         for(ClubVo club : clubs){
-            activities.addAll(activityService.getActivityVoById(club.getId(),user.getId()));
+            if (club!=null){
+                activities.addAll(activityService.getActivityVoById(club.getId(),user.getId()));
+            }
         }
         session.setAttribute("activities", activities);
         return "index";

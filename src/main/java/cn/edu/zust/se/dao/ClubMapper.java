@@ -19,9 +19,9 @@ public interface ClubMapper {
      */
     @Insert("INSERT INTO board_game_platform.t_club " +
             "(club_name, user_id, create_time, province, city, tags, introduction, status) " +
-            "VALUES (#{clubName}, #{id}, #{createTime}, #{province}, #{city}, #{tags}, #{introduction}, 0)")
+            "VALUES (#{clubName}, #{userId}, #{createTime}, #{province}, #{city}, #{tags}, #{introduction}, 0)")
     void insertClub(@Param("clubName") String clubName,
-                    @Param("userId") int id,
+                    @Param("userId") int userId,
                     @Param("createTime")Date createTime,
                     @Param("province")String province,
                     @Param("city")String city,
@@ -116,4 +116,12 @@ public interface ClubMapper {
             "from board_game_platform.t_user_join " +
             "where club_id = #{clubId}")
     Integer selectClubJoinCount(@Param("clubId") int clubId);
+
+    @Insert("INSERT INTO board_game_platform.t_user_join " +
+            "(user_id, club_id, join_time, club_type) " +
+            "VALUES (#{userId}, #{clubId}, #{joinTime}, #{clubType})")
+    void insertUserJoin(@Param("userId") int userId,
+                        @Param("clubId") int clubId,
+                        @Param("joinTime") Date joinTime,
+                        @Param("clubType")int clubType);
 }

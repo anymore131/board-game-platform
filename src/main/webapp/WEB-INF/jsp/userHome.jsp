@@ -28,6 +28,18 @@
 </head>
 <body>
 <div class="header">
+    <div class="search-body">
+        <form action="/user/search" method="post">
+            <select id="search-target" name="search-target" >
+                <option value="0">俱乐部</option>
+                <option value="1">活动</option>
+                <option value="2">游戏标签</option>
+                <option value="3">用户</option>
+            </select>
+            <input type="text" name="search-text">
+            <input type="submit" value="提交" name="action">
+        </form>
+    </div>
     <span class="header-out">
         <a href="/login/login">退出</a>
     </span>

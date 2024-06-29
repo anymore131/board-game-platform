@@ -17,7 +17,7 @@ public interface ClubServiceI {
     List<ClubVo> getClubVoByName(String clubName,int pageNo,int pageSize,int userId);
     Integer getClubNumberByTag(String tag);
     List<ClubVo> getClubVoByTag(String tag,int pageNo,int pageSize,int userId);
-    boolean insetClub(ClubBo clubBo);
+    boolean insetClub(int userId,ClubBo clubBo);
     Integer getClubType(int userId,int clubId);
     List<UserJoinVo> getUserJoinVoByClubId(int clubId);
     Integer getClubJoinNumber(int clubId);
