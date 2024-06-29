@@ -11,7 +11,9 @@ import java.sql.Date;
 public class UserJoinVo {
     int id;
     int userId;
+    String userName;
     int clubId;
+    String clubName;
     Date joinTime;
     int clubType;
 }

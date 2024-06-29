@@ -12,6 +12,7 @@ import java.util.List;
 public class ActivityVo {
 
     int id;
+    int clubId;
     String clubName;
     String activityName;
     String introduction;

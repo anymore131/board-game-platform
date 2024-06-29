@@ -70,7 +70,7 @@
         <c:forEach var="club" items="${clubs}">
             <div class="club">
                 <span class="club-name">
-                    <a href="">${club.clubName}</a>
+                    <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
                 </span>
                 <div class="club-tags">
                     标签：
@@ -89,7 +89,7 @@
         <c:forEach var="club" items="${manageClubs}">
             <div class="club">
                 <span class="club-name">
-                    <a href="">${club.clubName}</a>
+                    <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
                 </span>
                 <div class="club-tags">
                     标签：

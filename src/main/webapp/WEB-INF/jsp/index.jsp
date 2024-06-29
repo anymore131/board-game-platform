@@ -55,7 +55,7 @@
             <c:forEach var="activity" items="${activities}">
                 <div class="activity">
                     <div><a href="">${activity.activityName}</a></div>
-                    <div>俱乐部名：<a href="">${activity.clubName}</a></div>
+                    <div>俱乐部名：<a href="/club/clubHome?clubId=${activity.clubId}">${activity.clubName}</a></div>
                     <div>标签：
                         <c:forEach var="tag" items="${activity.tags}">
                             <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;

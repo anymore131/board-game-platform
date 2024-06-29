@@ -55,7 +55,7 @@
             找到的俱乐部：<br>
             <c:forEach var="club" items="${clubs}">
                 <div class="club">
-                    <div><a href="">${club.clubName}</a></div>
+                    <div><a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a></div>
                     <div>标签：
                         <c:forEach var="tag" items="${club.tags}">
                             <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
@@ -92,7 +92,7 @@
             <c:forEach var="activity" items="${activities}">
                 <div class="activity">
                     <div><a href="">${activity.activityName}</a></div>
-                    <div>俱乐部名：<a href="">${activity.clubName}</a></div>
+                    <div>俱乐部名：<a href="/club/clubHome?clubId=${activity.clubId}">${activity.clubName}</a></div>
                     <div>标签：
                         <c:forEach var="tag" items="${activity.tags}">
                             <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
@@ -120,7 +120,7 @@
             找到的俱乐部：<br>
             <c:forEach var="club" items="${clubs}">
                 <div class="club">
-                    <div><a href="">${club.clubName}</a></div>
+                    <div><a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a></div>
                     <div>标签：
                         <c:forEach var="tag" items="${club.tags}">
                             <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
@@ -153,7 +153,7 @@
                 <c:forEach var="activity" items="${activities}">
                     <div class="activity">
                         <div><a href="">${activity.activityName}</a></div>
-                        <div>俱乐部名：<a href="">${activity.clubName}</a></div>
+                        <div>俱乐部名：<a href="/club/clubHome?clubId=${activity.clubId}">${activity.clubName}</a></div>
                         <div>标签：
                             <c:forEach var="tag" items="${activity.tags}">
                                 <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;

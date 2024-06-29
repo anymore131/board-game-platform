@@ -2,6 +2,7 @@ package cn.edu.zust.se.dao;
 
 import cn.edu.zust.se.entity.Club;
 import cn.edu.zust.se.vo.ClubVo;
+import cn.edu.zust.se.vo.UserJoinVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -69,7 +70,7 @@ public interface ClubMapper {
             "from board_game_platform.t_user_join " +
             "where user_id = #{userId} and club_id = #{clubId}")
     Integer selectClubTypeByUserIdAndClubId(@Param("userId") int userId,
-                                        @Param("clubId") int clubId);
+                                            @Param("clubId") int clubId);
 
     /**
      * 通过tag，模糊搜索俱乐部的数量
@@ -105,4 +106,14 @@ public interface ClubMapper {
             "from board_game_platform.t_club c,board_game_platform.t_user u,board_game_platform.t_user_join j " +
             "where j.user_id = #{userId} and c.id = j.club_id and c.user_id = u.id and j.club_type = 1 and c.status = 1")
     List<ClubVo> selectClubVoManageByUserJoin(@Param("userId") int userId);
+
+    @Select("select j.id,j.user_id,u.user_name,j.club_id,c.club_name,j.join_time,j.club_type " +
+            "from board_game_platform.t_user_join j,board_game_platform.t_user u,board_game_platform.t_club c " +
+            "where j.club_id = #{clubId} and j.club_id = c.id and j.user_id = u.id")
+    List<UserJoinVo> selectUserJoinVo(@Param("clubId") int clubId);
+
+    @Select("select count(id) " +
+            "from board_game_platform.t_user_join " +
+            "where club_id = #{clubId}")
+    Integer selectClubJoinCount(@Param("clubId") int clubId);
 }

@@ -1,9 +1,11 @@
 package cn.edu.zust.se.service.impl;
 
+import cn.edu.zust.se.bo.ClubBo;
 import cn.edu.zust.se.dao.ClubMapper;
 import cn.edu.zust.se.dao.GameMapper;
 import cn.edu.zust.se.service.ClubServiceI;
 import cn.edu.zust.se.vo.ClubVo;
+import cn.edu.zust.se.vo.UserJoinVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,19 +98,29 @@ public class ClubServiceImpl implements ClubServiceI {
     }
 
     @Override
-    public boolean insetClub(ClubVo clubVo) {
-        if(clubMapper.getClubByName(clubVo.getClubName()) != null){
-            StringBuilder s = new StringBuilder(";");
-            List<String> tags = clubVo.getTags();
-            for(String tag : tags){
-                s.append(tag).append(";");
-            }
-            clubMapper.insertClub(clubVo.getClubName(),clubVo.getUserId(),
-                    new Date(new java.util.Date().getTime()),clubVo.getProvince(),
-                    clubVo.getCity(), String.valueOf(s), clubVo.getIntroduction());
+    public boolean insetClub(ClubBo clubBo) {
+        if(clubMapper.getClubByName(clubBo.getClubName()) != null){
+            clubMapper.insertClub(clubBo.getClubName(),clubBo.getUserId(),
+                    new Date(new java.util.Date().getTime()),clubBo.getProvince(),
+                    clubBo.getCity(), ';' + clubBo.getTags() + ';', clubBo.getIntroduction());
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Integer getClubType(int userId, int clubId) {
+        return clubMapper.selectClubTypeByUserIdAndClubId(userId,clubId);
+    }
+
+    @Override
+    public List<UserJoinVo> getUserJoinVoByClubId(int clubId) {
+        return clubMapper.selectUserJoinVo(clubId);
+    }
+
+    @Override
+    public Integer getClubJoinNumber(int clubId) {
+        return clubMapper.selectClubJoinCount(clubId);
     }
 
     public List<String> splitTag(String[] ss){

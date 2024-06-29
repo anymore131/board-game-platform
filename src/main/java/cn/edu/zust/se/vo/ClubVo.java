@@ -23,4 +23,6 @@ public class ClubVo {
     int number;
     //1为已加入，0为未加入
     int joined;
+    //1为管理，0为普通成员
+    int clubType;
 }

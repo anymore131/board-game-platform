@@ -24,7 +24,7 @@ public interface ActivityMapper {
                         @Param("endTime")Date endTime,
                         @Param("createTime")Date createTime);
 
-    @Select("SELECT a.id,c.club_name,a.activity_name,a.introduction,a.address,a.start_time,a.end_time,a.create_time " +
+    @Select("SELECT a.id,a.club_id,c.club_name,a.activity_name,a.introduction,a.address,a.start_time,a.end_time,a.create_time " +
             "from board_game_platform.t_activity a,board_game_platform.t_club c " +
             "where a.club_id = #{clubId} and c.id = a.club_id and c.status = 1")
     List<ActivityVo> selectActivityVoByClubId(@Param("clubId")int clubId);
@@ -45,7 +45,7 @@ public interface ActivityMapper {
     int selectActivityNumberByClubId(@Param("clubId")int clubId,
                                      @Param("nowTime")Date nowTime);
 
-    @Select("SELECT a.id,c.club_name,a.activity_name,a.introduction,a.address,a.start_time,a.end_time,a.create_time " +
+    @Select("SELECT a.id,a.club_id,c.club_name,a.activity_name,a.introduction,a.address,a.start_time,a.end_time,a.create_time " +
             "from board_game_platform.t_activity a,board_game_platform.t_club c " +
             "where a.club_id = #{clubId} and c.id = #{clubId} and date(a.start_time) between #{nowTime} and '2100-01-01 00:00:00' " +
             "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
@@ -60,7 +60,7 @@ public interface ActivityMapper {
     int selectActivityNumberByName(@Param("activityName")String activityName,
                                    @Param("nowTime")Date nowTime);
 
-    @Select("SELECT a.id,c.club_name,a.activity_name,a.introduction,a.address,a.start_time,a.end_time,a.create_time " +
+    @Select("SELECT a.id,a.club_id,c.club_name,a.activity_name,a.introduction,a.address,a.start_time,a.end_time,a.create_time " +
             "from board_game_platform.t_activity a,board_game_platform.t_club c " +
             "where activity_name like concat('%',#{activityName},'%') and c.id = a.club_id and date(start_time) between #{nowTime} and '2100-01-01 00:00:00' " +
             "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
@@ -75,7 +75,7 @@ public interface ActivityMapper {
     int selectActivityNumberByTag(@Param("tag")String  tag,
                                   @Param("nowTime")Date nowTime);
 
-    @Select("select a.id,c.club_name,a.activity_name,a.introduction,a.address,a.start_time,a.end_time,a.create_time " +
+    @Select("select a.id,a.club_id,c.club_name,a.activity_name,a.introduction,a.address,a.start_time,a.end_time,a.create_time " +
             "from board_game_platform.t_activity a,board_game_platform.t_club c " +
             "where a.tags like concat('%',#{tag},'%') and c.id = a.club_id and date(a.start_time) between #{nowTime} and '2100-01-01 00:00:00' " +
             "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
