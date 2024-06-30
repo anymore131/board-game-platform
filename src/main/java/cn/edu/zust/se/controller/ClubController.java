@@ -53,7 +53,7 @@ public class ClubController {
             List<UserJoinVo> userJoins = clubService.getUserJoinVoByClubId(club.getId());
             session.setAttribute("userJoins", userJoins);
         }
-        session.setAttribute("picture", clubPicture);
+        session.setAttribute("pictures", clubPicture);
         session.setAttribute("club", club);
         return "clubHome";
     }

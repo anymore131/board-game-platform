@@ -1,9 +1,7 @@
 package cn.edu.zust.se.dao;
 
 import cn.edu.zust.se.vo.UserVo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.sql.Date;
 import java.util.List;
@@ -37,4 +35,9 @@ public interface UserMapper {
             "from board_game_platform.t_user_join " +
             "where user_id = #{userId}")
     List<Integer> selectUserJoinByUserId(@Param("userId")int userId);
+
+    @Update("UPDATE board_game_platform.t_user t " +
+            "SET t.avatar_fname = #{fname} " +
+            "WHERE t.id = #{id}")
+    void updateUserAvatar(@Param("id")int id,@Param("fname")String fname);
 }

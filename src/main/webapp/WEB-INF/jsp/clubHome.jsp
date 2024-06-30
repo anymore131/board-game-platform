@@ -49,6 +49,10 @@
         <a href="/login/login">退出</a>
     </span>
 </div>
+<div class="side">
+    <a href="/user/index">首页</a>
+    <a href="/club/createActivity">新建活动</a>
+</div>
 <div class="body">
     <div class="club-img">
         <c:forEach var="picture" items="${pictures}">

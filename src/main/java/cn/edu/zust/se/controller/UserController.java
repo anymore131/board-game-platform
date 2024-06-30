@@ -14,10 +14,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -140,7 +146,68 @@ public class UserController {
         return "search";
     }
 
+    @RequestMapping(value = "changeAvatar",method = RequestMethod.GET)
+    public String changeAvatarGet(HttpSession session){
+        UserVo user = (UserVo)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        return "changeAvatar";
+    }
 
+    @RequestMapping(value = "changeAvatar",method = RequestMethod.POST)
+    public String changeAvatarPost(HttpSession session){
+        UserVo user = (UserVo)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        return "changeAvatar";
+    }
+
+    /**
+     * 更换头像
+     * @param newAvatar        头像图片
+     * @param session       session
+     * @return              成功返回到userHome，失败返回到userHome
+     */
+    @RequestMapping("/uploadAvatar")
+    public String testUpload(@RequestParam("newAvatar") MultipartFile newAvatar,
+                             HttpSession session) throws IOException {
+        UserVo user = (UserVo)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        if (newAvatar.isEmpty()) {
+            session.setAttribute("error","修改失败");
+            return "changeAvatar";
+        }
+        String fileName = newAvatar.getOriginalFilename();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSS");
+        String res = sdf.format(new Date());
+        String fileName2 = user.getUserName() + res + fileName;
+        String finalPath = Constants.AVATAR_PATH2 + fileName2;
+        // 验证服务器是否已经创建了该目录
+        File fileSave = new File(Constants.AVATAR_PATH2);
+        // 判断保存路径文件对象是否存在
+        if (!fileSave.exists()) {
+            // 创建该目录
+            fileSave.mkdirs();
+        }
+        try{
+            byte[] bytes = newAvatar.getBytes();
+            Path path = Paths.get(finalPath);
+            Files.write(path, bytes);
+//            用不了transferTo，不知道为什么
+//            picture.transferTo(new File(finalPath));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        user.setAvatarFname(fileName2);
+        userService.updateUserAvatar(user.getId(), user.getAvatarFname());
+        session.setAttribute("user",user);
+        session.setAttribute("error","修改成功");
+        return "userHome";
+    }
 
     /**
      * 处理头像显示请求

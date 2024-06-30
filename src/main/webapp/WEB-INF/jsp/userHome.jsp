@@ -44,6 +44,9 @@
         <a href="/login/login">退出</a>
     </span>
 </div>
+<div class="side">
+    <a href="/user/index">首页</a>
+</div>
 <div class="body">
     <span class="user-message" >
         <a href="/user/changeAvatar">

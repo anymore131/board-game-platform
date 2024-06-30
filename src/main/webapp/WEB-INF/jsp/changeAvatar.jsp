@@ -35,14 +35,15 @@
         <a href="/login/login">退出</a>
     </span>
 </div>
+<div class="side">
+    <a href="/user/index">首页</a>
+</div>
 <div class="body">
-    <form action="/user/changeAvatar" method="post" enctype="multipart/form-data">
+    <form action="/user/uploadAvatar" method="post" enctype="multipart/form-data">
         <input type="file" name="newAvatar" value="选择头像"><br>
         <input type="submit" value="更换头像">
     </form>
 </div>
-<div class="footer">
-
-</div>
+<div class="footer"></div>
 </body>
 </html>

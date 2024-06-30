@@ -36,6 +36,9 @@
         <a href="/login/login">退出</a>
     </span>
 </div>
+<div class="side">
+    <a href="/user/index">首页</a>
+</div>
 <div class="body">
     <form action="/club/createClub" method="post">
         <table>

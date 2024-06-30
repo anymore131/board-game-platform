@@ -18,4 +18,9 @@ public class UserServiceImpl implements UserServiceI {
     public List<Integer> getUserJoin(int id) {
         return userMapper.selectUserJoinByUserId(id);
     }
+
+    @Override
+    public void updateUserAvatar(int id, String fname) {
+        userMapper.updateUserAvatar(id,fname);
+    }
 }

@@ -36,6 +36,7 @@ public class LoginController {
             session.setAttribute("user", userVo);
             return "redirect:/user/index";
         }
+        session.setAttribute("error","账号密码错误！");
         return "login";
     }
 
