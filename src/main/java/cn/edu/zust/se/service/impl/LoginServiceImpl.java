@@ -21,15 +21,15 @@ public class LoginServiceImpl implements LoginServiceI {
 
     @Override
     public UserVo login(UserBo userBo) {
-        return userMapper.selectUserByUserNameAndPassword((userBo.getUserName()),(userBo.getPassword()));
+        return userMapper.selectUserByUserNameAndPassword((userBo.getUserName()), (userBo.getPassword()));
     }
 
     @Override
     public UserVo register(UserBo userBo) {
-        if (userMapper.selectUserByUserName(userBo.getUserName()) == null){
-            userMapper.insertUser(userBo.getUserName(), userBo.getPassword(),userBo.getName(),
-                    new Date(new java.util.Date().getTime()),"fls.jpg");
-            return userMapper.selectUserByUserNameAndPassword(userBo.getUserName(),userBo.getPassword());
+        if (userMapper.selectUserByUserName(userBo.getUserName()) == null) {
+            userMapper.insertUser(userBo.getUserName(), userBo.getPassword(), userBo.getName(),
+                    new Date(new java.util.Date().getTime()), "fls.jpg");
+            return userMapper.selectUserByUserNameAndPassword(userBo.getUserName(), userBo.getPassword());
         }
         return null;
     }

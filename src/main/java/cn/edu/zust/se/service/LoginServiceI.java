@@ -8,5 +8,6 @@ import cn.edu.zust.se.vo.UserVo;
  */
 public interface LoginServiceI {
     public UserVo login(UserBo userBo);
+
     public UserVo register(UserBo userBo);
 }

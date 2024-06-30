@@ -7,5 +7,6 @@ import java.util.List;
  */
 public interface UserServiceI {
     List<Integer> getUserJoin(int id);
+
     void updateUserAvatar(int id, String fname);
 }

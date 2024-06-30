@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,12 +22,12 @@ public class CommentsServiceImpl implements CommentsServiceI {
 
     @Override
     public void postActivityComments(int userId, int activityId, String comments) {
-        commentsMapper.insertActivityComments(userId,activityId,comments,new Date(new java.util.Date().getTime()));
+        commentsMapper.insertActivityComments(userId, activityId, comments, new Date(new java.util.Date().getTime()));
     }
 
     @Override
     public void postClubComments(int userId, int clubId, String comments) {
-        commentsMapper.insertClubComments(userId,clubId,comments,new Date(new java.util.Date().getTime()));
+        commentsMapper.insertClubComments(userId, clubId, comments, new Date(new java.util.Date().getTime()));
     }
 
     @Override
@@ -37,8 +36,8 @@ public class CommentsServiceImpl implements CommentsServiceI {
     }
 
     @Override
-    public List<ClubCommentsVo> getClubCommentsByClubId(int clubId,int pageNo,int pageSize) {
-        return commentsMapper.selectClubCommentsByClubId(clubId,pageNo,pageSize);
+    public List<ClubCommentsVo> getClubCommentsByClubId(int clubId, int pageNo, int pageSize) {
+        return commentsMapper.selectClubCommentsByClubId(clubId, pageNo, pageSize);
     }
 
     @Override
@@ -47,7 +46,7 @@ public class CommentsServiceImpl implements CommentsServiceI {
     }
 
     @Override
-    public List<ActivityCommentsVo> getActivityCommentsByActivityId(int activityId,int pageNo,int pageSize) {
-        return commentsMapper.selectActivityCommentsByActivityId(activityId,pageNo,pageSize);
+    public List<ActivityCommentsVo> getActivityCommentsByActivityId(int activityId, int pageNo, int pageSize) {
+        return commentsMapper.selectActivityCommentsByActivityId(activityId, pageNo, pageSize);
     }
 }

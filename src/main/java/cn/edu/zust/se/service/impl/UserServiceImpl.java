@@ -8,6 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author Lenovo
+ */
 @Service
 @Transactional
 public class UserServiceImpl implements UserServiceI {
@@ -21,6 +24,6 @@ public class UserServiceImpl implements UserServiceI {
 
     @Override
     public void updateUserAvatar(int id, String fname) {
-        userMapper.updateUserAvatar(id,fname);
+        userMapper.updateUserAvatar(id, fname);
     }
 }

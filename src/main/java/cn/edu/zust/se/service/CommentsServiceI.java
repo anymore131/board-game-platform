@@ -9,10 +9,15 @@ import java.util.List;
  * @author Lenovo
  */
 public interface CommentsServiceI {
-    void postActivityComments(int userId,int activityId,String comments);
-    void postClubComments(int userId,int clubId,String comments);
+    void postActivityComments(int userId, int activityId, String comments);
+
+    void postClubComments(int userId, int clubId, String comments);
+
     Integer getClubCommentsCountByClubId(int clubId);
-    List<ClubCommentsVo> getClubCommentsByClubId(int clubId,int pageNo,int pageSize);
+
+    List<ClubCommentsVo> getClubCommentsByClubId(int clubId, int pageNo, int pageSize);
+
     Integer getActivityCommentsCountByActivityId(int activityId);
-    List<ActivityCommentsVo> getActivityCommentsByActivityId(int activityId,int pageNo,int pageSize);
+
+    List<ActivityCommentsVo> getActivityCommentsByActivityId(int activityId, int pageNo, int pageSize);
 }

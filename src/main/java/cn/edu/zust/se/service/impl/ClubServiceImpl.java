@@ -7,7 +7,6 @@ import cn.edu.zust.se.entity.Club;
 import cn.edu.zust.se.service.ClubServiceI;
 import cn.edu.zust.se.vo.ClubVo;
 import cn.edu.zust.se.vo.UserJoinVo;
-import cn.edu.zust.se.vo.UserVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +30,7 @@ public class ClubServiceImpl implements ClubServiceI {
     public ClubVo getClubVo(int id) {
         ClubVo clubVo = clubMapper.getClubById(id);
         String s = clubMapper.getClubTagsById(id);
-        if (s!=null&&!"".equals(s)){
+        if (s != null && !"".equals(s)) {
             clubVo.setTags(splitTag(s.split(";")));
         }
         return clubVo;
@@ -42,7 +41,7 @@ public class ClubServiceImpl implements ClubServiceI {
         List<ClubVo> clubVos = clubMapper.selectClubVoByUserJoin(userId);
         for (ClubVo clubVo : clubVos) {
             String s = clubMapper.getClubTagsById(clubVo.getId());
-            if (s!=null&&!"".equals(s)){
+            if (s != null && !"".equals(s)) {
 
                 clubVo.setTags(splitTag(s.split(";")));
             }
@@ -56,7 +55,7 @@ public class ClubServiceImpl implements ClubServiceI {
         List<ClubVo> clubVos = clubMapper.selectClubVoManageByUserJoin(userId);
         for (ClubVo clubVo : clubVos) {
             String s = clubMapper.getClubTagsById(clubVo.getId());
-            if (s!=null&&!"".equals(s)){
+            if (s != null && !"".equals(s)) {
                 clubVo.setTags(splitTag(s.split(";")));
             }
             clubVo.setJoined(1);
@@ -70,14 +69,14 @@ public class ClubServiceImpl implements ClubServiceI {
     }
 
     @Override
-    public List<ClubVo> getClubVoByName(String clubName, int pageNo, int pageSize,int userId) {
+    public List<ClubVo> getClubVoByName(String clubName, int pageNo, int pageSize, int userId) {
         List<ClubVo> clubVos = clubMapper.selectClubByName(clubName, pageNo, pageSize);
         for (ClubVo clubVo : clubVos) {
             String s = clubMapper.getClubTagsById(clubVo.getId());
             clubVo.setTags(splitTag(s.split(";")));
-            if(clubMapper.selectClubTypeByUserIdAndClubId(userId,clubVo.getId()) != null){
+            if (clubMapper.selectClubTypeByUserIdAndClubId(userId, clubVo.getId()) != null) {
                 clubVo.setJoined(1);
-            }else {
+            } else {
                 clubVo.setJoined(0);
             }
         }
@@ -90,14 +89,14 @@ public class ClubServiceImpl implements ClubServiceI {
     }
 
     @Override
-    public List<ClubVo> getClubVoByTag(String tag, int pageNo, int pageSize,int userId) {
+    public List<ClubVo> getClubVoByTag(String tag, int pageNo, int pageSize, int userId) {
         List<ClubVo> clubVos = clubMapper.selectClubByTag(tag, pageNo, pageSize);
         for (ClubVo clubVo : clubVos) {
             String s = clubMapper.getClubTagsById(clubVo.getId());
             clubVo.setTags(splitTag(s.split(";")));
-            if(clubMapper.selectClubTypeByUserIdAndClubId(userId,clubVo.getId()) != null){
+            if (clubMapper.selectClubTypeByUserIdAndClubId(userId, clubVo.getId()) != null) {
                 clubVo.setJoined(1);
-            }else {
+            } else {
                 clubVo.setJoined(0);
             }
         }
@@ -105,13 +104,13 @@ public class ClubServiceImpl implements ClubServiceI {
     }
 
     @Override
-    public boolean insetClub(int userId,ClubBo clubBo) {
-        if(clubMapper.getClubByName(clubBo.getClubName()) == null){
-            clubMapper.insertClub(clubBo.getClubName(),clubBo.getUserId(),
-                    new Date(new java.util.Date().getTime()),clubBo.getProvince(),
+    public boolean insetClub(int userId, ClubBo clubBo) {
+        if (clubMapper.getClubByName(clubBo.getClubName()) == null) {
+            clubMapper.insertClub(clubBo.getClubName(), clubBo.getUserId(),
+                    new Date(new java.util.Date().getTime()), clubBo.getProvince(),
                     clubBo.getCity(), ';' + clubBo.getTags() + ';', clubBo.getIntroduction());
             Club c = clubMapper.getClubByName(clubBo.getClubName());
-            clubMapper.insertUserJoin(userId,c.getId(),new Date(new java.util.Date().getTime()),1);
+            clubMapper.insertUserJoin(userId, c.getId(), new Date(new java.util.Date().getTime()), 1);
             return true;
         }
         return false;
@@ -119,7 +118,7 @@ public class ClubServiceImpl implements ClubServiceI {
 
     @Override
     public Integer getClubType(int userId, int clubId) {
-        return clubMapper.selectClubTypeByUserIdAndClubId(userId,clubId);
+        return clubMapper.selectClubTypeByUserIdAndClubId(userId, clubId);
     }
 
     @Override
@@ -132,11 +131,11 @@ public class ClubServiceImpl implements ClubServiceI {
         return clubMapper.selectClubJoinCount(clubId);
     }
 
-    public List<String> splitTag(String[] ss){
+    public List<String> splitTag(String[] ss) {
         List<String> tags = new ArrayList<String>();
         for (String tag : ss) {
             if (tag != null && !tag.equals("")) {
-                if (gameMapper.selectGameById(Integer.parseInt(tag)) != null){
+                if (gameMapper.selectGameById(Integer.parseInt(tag)) != null) {
                     tag = gameMapper.selectGameById(Integer.parseInt(tag)).getName();
                     tags.add(tag);
                 }

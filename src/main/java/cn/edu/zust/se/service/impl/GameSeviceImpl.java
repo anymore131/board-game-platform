@@ -8,6 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author Lenovo
+ */
 @Service
 @Transactional
 public class GameSeviceImpl implements GameServiceI {

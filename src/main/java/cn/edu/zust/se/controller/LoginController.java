@@ -19,41 +19,41 @@ public class LoginController {
     @Resource
     LoginServiceI loginService;
 
-    @RequestMapping(value = "login",method = RequestMethod.GET)
-    public String loginGet(HttpSession session){
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String loginGet(HttpSession session) {
         session.invalidate();
         return "login";
     }
 
-    @RequestMapping(value = "login",method = RequestMethod.POST)
-    public String loginPost(UserBo userBo, HttpSession session){
-        if(userBo.getUserName().isEmpty()||userBo.getPassword().isEmpty()){
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public String loginPost(UserBo userBo, HttpSession session) {
+        if (userBo.getUserName().isEmpty() || userBo.getPassword().isEmpty()) {
             session.setAttribute("error", "未输入完整");
             return "login";
         }
         UserVo userVo = loginService.login(userBo);
-        if(userVo != null){
+        if (userVo != null) {
             session.setAttribute("user", userVo);
             return "redirect:/user/index";
         }
-        session.setAttribute("error","账号密码错误！");
+        session.setAttribute("error", "账号密码错误！");
         return "login";
     }
 
-    @RequestMapping(value = "register",method = RequestMethod.GET)
-    public String registerGet(HttpSession session){
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    public String registerGet(HttpSession session) {
         session.invalidate();
         return "register";
     }
 
-    @RequestMapping(value = "register",method = RequestMethod.POST)
-    public String registerPost(UserBo userBo, HttpSession session){
-        if(userBo.getUserName().isEmpty()||userBo.getPassword().isEmpty()||userBo.getName().isEmpty()){
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public String registerPost(UserBo userBo, HttpSession session) {
+        if (userBo.getUserName().isEmpty() || userBo.getPassword().isEmpty() || userBo.getName().isEmpty()) {
             session.setAttribute("error", "未输入完整");
             return "register";
         }
         UserVo userVo = loginService.register(userBo);
-        if(userVo != null){
+        if (userVo != null) {
             session.setAttribute("user", userVo);
             return "redirect:/user/index";
         }

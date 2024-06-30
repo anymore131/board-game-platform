@@ -17,10 +17,10 @@ public interface GameMapper {
             "(name, referrals, introduction, insert_time, user_id, type) " +
             "VALUES (#{name}, #{referrals}, #{introduction}, #{insertTime}, #{userId}, 0)")
     void insertGame(@Param("name") String name,
-                    @Param("referrals")String referrals,
-                    @Param("introduction")String introduction,
-                    @Param("insertTime")Date insertTime,
-                    @Param("userId")int userId);
+                    @Param("referrals") String referrals,
+                    @Param("introduction") String introduction,
+                    @Param("insertTime") Date insertTime,
+                    @Param("userId") int userId);
 
     @Select("select g.id,g.name,g.referrals,g.introduction,g.insert_time,u.user_name " +
             "from board_game_platform.t_game_type g,board_game_platform.t_user u " +

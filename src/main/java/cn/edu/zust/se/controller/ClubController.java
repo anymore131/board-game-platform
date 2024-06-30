@@ -1,8 +1,6 @@
 package cn.edu.zust.se.controller;
 
 import cn.edu.zust.se.bo.ClubBo;
-import cn.edu.zust.se.dao.GameMapper;
-import cn.edu.zust.se.service.ActivityServiceI;
 import cn.edu.zust.se.service.ClubServiceI;
 import cn.edu.zust.se.service.GameServiceI;
 import cn.edu.zust.se.service.PictureServiceI;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,21 +32,21 @@ public class ClubController {
     @Resource
     PictureServiceI pictureService;
 
-    @RequestMapping(value = "clubHome",method = RequestMethod.GET)
-    public String clubHome(@RequestParam("clubId")String clubId,
+    @RequestMapping(value = "clubHome", method = RequestMethod.GET)
+    public String clubHome(@RequestParam("clubId") String clubId,
                            HttpSession session) {
-        UserVo user = (UserVo)session.getAttribute("user");
-        if(user == null){
+        UserVo user = (UserVo) session.getAttribute("user");
+        if (user == null) {
             return "redirect:/login/login";
         }
-        if(clubId==null){
+        if (clubId == null) {
             return "redirect:/user/index";
         }
         ClubVo club = clubService.getClubVo(Integer.parseInt(clubId));
         club.setClubType(clubService.getClubType(user.getId(), club.getId()));
         club.setNumber(clubService.getClubJoinNumber(club.getId()));
         List<ClubPictureVo> clubPicture = pictureService.selectClubPictureByClubId(club.getId());
-        if(club.getClubType() == 1){
+        if (club.getClubType() == 1) {
             List<UserJoinVo> userJoins = clubService.getUserJoinVoByClubId(club.getId());
             session.setAttribute("userJoins", userJoins);
         }
@@ -58,27 +55,28 @@ public class ClubController {
         return "clubHome";
     }
 
-    @RequestMapping(value = "createClub",method = RequestMethod.GET)
+    @RequestMapping(value = "createClub", method = RequestMethod.GET)
     public String createClubGet(HttpSession session) {
-        UserVo user = (UserVo)session.getAttribute("user");
-        if(user == null){
+        UserVo user = (UserVo) session.getAttribute("user");
+        if (user == null) {
             return "redirect:/login/login";
         }
         List<String> games = gameService.selectAllGameName();
         session.setAttribute("games", games);
         return "createClub";
     }
-    @RequestMapping(value = "createClub",method = RequestMethod.POST)
+
+    @RequestMapping(value = "createClub", method = RequestMethod.POST)
     public String createClubPost(HttpServletResponse servletResponse,
                                  HttpServletRequest request, HttpSession session) {
-        UserVo user = (UserVo)session.getAttribute("user");
-        if(user == null){
+        UserVo user = (UserVo) session.getAttribute("user");
+        if (user == null) {
             return "redirect:/login/login";
         }
         ClubBo club = new ClubBo();
         String[] tags = request.getParameterValues("tags");
         StringBuilder ss = new StringBuilder(";");
-        for(String tag : tags){
+        for (String tag : tags) {
             ss.append(";").append(tag);
         }
         club.setClubName(request.getParameterValues("clubName")[0]);
@@ -87,11 +85,11 @@ public class ClubController {
         club.setProvince(request.getParameterValues("province")[0]);
         club.setCity(request.getParameterValues("city")[0]);
         club.setUserId(user.getId());
-        if(clubService.insetClub(user.getId(),club)){
-            session.setAttribute("error","添加成功");
+        if (clubService.insetClub(user.getId(), club)) {
+            session.setAttribute("error", "添加成功");
             return "redirect:/user/index";
         }
-        session.setAttribute("error","信息有误");
+        session.setAttribute("error", "信息有误");
         return "createClub";
     }
 }
