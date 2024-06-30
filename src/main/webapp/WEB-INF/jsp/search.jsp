@@ -109,7 +109,7 @@
             找到的活动：<br>
             <c:forEach var="activity" items="${activities}">
                 <div class="activity-body">
-                    <div><a href="">${activity.activityName}</a></div>
+                    <div><a href="/activity/activityHome?activityId=${activity.id}">${activity.activityName}</a></div>
                     <div>俱乐部名：<a href="/club/clubHome?clubId=${activity.clubId}">${activity.clubName}</a></div>
                     <div>标签：
                         <c:forEach var="tag" items="${activity.tags}">
@@ -170,7 +170,7 @@
                 找到的活动：<br>
                 <c:forEach var="activity" items="${activities}">
                     <div class="activity-body">
-                        <div><a href="">${activity.activityName}</a></div>
+                        <div><a href="/activity/activityHome?activityId=${activity.id}">${activity.activityName}</a></div>
                         <div>俱乐部名：<a href="/club/clubHome?clubId=${activity.clubId}">${activity.clubName}</a></div>
                         <div>标签：
                             <c:forEach var="tag" items="${activity.tags}">
@@ -202,7 +202,7 @@
                 找到的活动：<br>
                 <c:forEach var="activity" items="${activities}">
                     <div class="activity-body">
-                        <div><a href="">${activity.activityName}</a></div>
+                        <div><a href="/activity/activityHome?activityId=${activity.id}">${activity.activityName}</a></div>
                         <div>俱乐部名：<a href="/club/clubHome?clubId=${activity.clubId}">${activity.clubName}</a></div>
                         <div>标签：
                             <c:forEach var="tag" items="${activity.tags}">
