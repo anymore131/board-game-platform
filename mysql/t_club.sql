@@ -2,7 +2,7 @@ create table t_club
 (
     id           int auto_increment
         primary key,
-    name         varchar(20)  null comment '俱乐部名',
+    club_name    varchar(20)  null comment '俱乐部名',
     user_id      int          null comment '拥有者',
     create_time  date         null comment '俱乐部创建时间',
     province     varchar(30)  null comment '省',
@@ -17,3 +17,5 @@ create table t_club
 create index user_id
     on t_club (user_id);
 
+INSERT INTO board_game_platform.t_club (id, club_name, user_id, create_time, province, city, tags, introduction, status) VALUES (1, 'club1', 1, '2024-06-21', '浙江', '杭州', ';;1', '123', 1);
+INSERT INTO board_game_platform.t_club (id, club_name, user_id, create_time, province, city, tags, introduction, status) VALUES (3, '12313122', 1, '2024-06-30', '123', '123', ';;;1;2;', '123', 1);
