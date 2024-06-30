@@ -67,8 +67,7 @@ public class ClubController {
     }
 
     @RequestMapping(value = "createClub", method = RequestMethod.POST)
-    public String createClubPost(HttpServletResponse servletResponse,
-                                 HttpServletRequest request, HttpSession session) {
+    public String createClubPost(HttpServletRequest request, HttpSession session) {
         UserVo user = (UserVo) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login/login";
