@@ -56,7 +56,7 @@ public class UserController {
         }
         for(ClubVo club : clubs){
             if (club!=null){
-                activities.addAll(activityService.getActivityVoById(club.getId(),user.getId()));
+                activities.addAll(activityService.getActivityVoByClubId(club.getId(),user.getId()));
             }
         }
         session.setAttribute("activities", activities);
@@ -255,6 +255,8 @@ public class UserController {
         session.removeAttribute("activities");
         session.removeAttribute("clubs");
         session.removeAttribute("manageClubs");
+        session.removeAttribute("activity");
+        session.removeAttribute("club");
     }
 
     private void showSearch(HttpSession session,int pageNo1,int pageNo2){

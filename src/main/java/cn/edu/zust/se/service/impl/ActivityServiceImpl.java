@@ -25,8 +25,8 @@ public class ActivityServiceImpl implements ActivityServiceI {
     GameMapper gameMapper;
 
     @Override
-    public List<ActivityVo> getActivityVoById(int id, int userId) {
-        List<ActivityVo> activityVos = activityMapper.selectActivityVoByClubId(id);
+    public List<ActivityVo> getActivityVoByClubId(int clubId, int userId) {
+        List<ActivityVo> activityVos = activityMapper.selectActivityVoByClubId(clubId);
         for (ActivityVo activityVo : activityVos) {
             String s = activityMapper.selectActivityVoTagsById(activityVo.getId());
             activityVo.setNumber(activityMapper.selectActivityVoNumberById(activityVo.getId()));
@@ -108,6 +108,22 @@ public class ActivityServiceImpl implements ActivityServiceI {
             return activity;
         }
         return null;
+    }
+
+    @Override
+    public ActivityVo getActivityVoById(int id, int userId) {
+        ActivityVo activity = activityMapper.selectActivityById(id);
+        activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
+        String s = activityMapper.selectActivityVoTagsById(activity.getId());
+        if (s != null) {
+            activity.setTags(splitTag(s.split(";")));
+        }
+        if (activityMapper.selectActivityByUserIdAndActivityId(userId, activity.getId()) != null) {
+            activity.setAttended(1);
+        } else {
+            activity.setAttended(0);
+        }
+        return activity;
     }
 
     public List<String> splitTag(String[] ss) {

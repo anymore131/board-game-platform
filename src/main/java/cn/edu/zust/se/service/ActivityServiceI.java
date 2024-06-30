@@ -9,7 +9,7 @@ import java.util.List;
  * @author Lenovo
  */
 public interface ActivityServiceI {
-    List<ActivityVo> getActivityVoById(int id, int userId);
+    List<ActivityVo> getActivityVoByClubId(int id, int userId);
 
     Integer getActivityVoNumberByTag(String tag);
 
@@ -21,5 +21,5 @@ public interface ActivityServiceI {
 
     ActivityVo insertActivity(ActivityBo activityBo,int userId);
 
-
+    ActivityVo getActivityVoById(int id, int userId);
 }

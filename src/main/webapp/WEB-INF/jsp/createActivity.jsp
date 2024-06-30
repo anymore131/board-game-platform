@@ -39,7 +39,7 @@
 </div>
 <div class="side">
     <a href="/user/index">首页</a>
-    <a href="/club/clubHome?clubId=${clubId}">返回</a>
+    <a href="/club/clubHome?clubId=${club.id}">返回</a>
 </div>
 <div class="body">
     <form action="/activity/createActivity" method="post">
