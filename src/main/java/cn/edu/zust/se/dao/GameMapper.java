@@ -22,6 +22,11 @@ public interface GameMapper {
                     @Param("insertTime") Date insertTime,
                     @Param("userId") int userId);
 
+    /**
+     * 通过id获取游戏信息
+     * @param id    游戏id
+     * @return      游戏信息
+     */
     @Select("select g.id,g.name,g.referrals,g.introduction,g.insert_time,u.user_name " +
             "from board_game_platform.t_game_type g,board_game_platform.t_user u " +
             "where g.id = #{id} and g.user_id = u.id and g.type = 1")
@@ -36,6 +41,18 @@ public interface GameMapper {
     @Select("select COUNT(id) from board_game_platform.t_game_type")
     int selectGameTypeNumber();
 
+    /**
+     * 返回所有游戏名
+     * @return  游戏名列表
+     */
     @Select("select name from board_game_platform.t_game_type")
     List<String> selectGameTypeNames();
+
+    /**
+     * 通过标签名返回标签id
+     * @param name  标签名
+     * @return      标签id
+     */
+    @Select("select id from board_game_platform.t_game_type where name = #{name}")
+    Integer selectGameIdByName(String name);
 }

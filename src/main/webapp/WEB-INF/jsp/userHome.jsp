@@ -83,7 +83,7 @@
     <div class="user-club">
         我加入的俱乐部
         <c:forEach var="club" items="${clubs}">
-            <div class="club">
+            <div class="club-body">
                 <span class="club-name">
                     <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
                 </span>
@@ -102,7 +102,7 @@
     <div class="user-manage">
         我管理的俱乐部
         <c:forEach var="club" items="${manageClubs}">
-            <div class="club">
+            <div class="club-body">
                 <span class="club-name">
                     <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
                 </span>

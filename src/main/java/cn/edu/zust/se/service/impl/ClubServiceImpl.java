@@ -42,7 +42,6 @@ public class ClubServiceImpl implements ClubServiceI {
         for (ClubVo clubVo : clubVos) {
             String s = clubMapper.getClubTagsById(clubVo.getId());
             if (s != null && !"".equals(s)) {
-
                 clubVo.setTags(splitTag(s.split(";")));
             }
             clubVo.setJoined(1);
@@ -73,7 +72,9 @@ public class ClubServiceImpl implements ClubServiceI {
         List<ClubVo> clubVos = clubMapper.selectClubByName(clubName, pageNo, pageSize);
         for (ClubVo clubVo : clubVos) {
             String s = clubMapper.getClubTagsById(clubVo.getId());
-            clubVo.setTags(splitTag(s.split(";")));
+            if (s != null && !"".equals(s)) {
+                clubVo.setTags(splitTag(s.split(";")));
+            }
             if (clubMapper.selectClubTypeByUserIdAndClubId(userId, clubVo.getId()) != null) {
                 clubVo.setJoined(1);
             } else {
@@ -85,15 +86,18 @@ public class ClubServiceImpl implements ClubServiceI {
 
     @Override
     public Integer getClubNumberByTag(String tag) {
-        return clubMapper.selectClubNumberByTag(';' + tag + ';');
+        return clubMapper.selectClubNumberByTag(';' + String.valueOf(gameMapper.selectGameIdByName(tag)) + ';');
     }
 
     @Override
     public List<ClubVo> getClubVoByTag(String tag, int pageNo, int pageSize, int userId) {
-        List<ClubVo> clubVos = clubMapper.selectClubByTag(tag, pageNo, pageSize);
+        List<ClubVo> clubVos = clubMapper.selectClubByTag
+                (';' + String.valueOf(gameMapper.selectGameIdByName(tag)) + ';', pageNo, pageSize);
         for (ClubVo clubVo : clubVos) {
             String s = clubMapper.getClubTagsById(clubVo.getId());
-            clubVo.setTags(splitTag(s.split(";")));
+            if (s != null && !"".equals(s)) {
+                clubVo.setTags(splitTag(s.split(";")));
+            }
             if (clubMapper.selectClubTypeByUserIdAndClubId(userId, clubVo.getId()) != null) {
                 clubVo.setJoined(1);
             } else {

@@ -54,9 +54,11 @@
         </form>
     </div>
     <div class="club-activity">
+
         <c:if test="${activities != null}">
+            <div class="item">关注的活动</div>
             <c:forEach var="activity" items="${activities}">
-                <div class="activity">
+                <div class="activity-body">
                     <div><a href="">${activity.activityName}</a></div>
                     <div>俱乐部名：<a href="/club/clubHome?clubId=${activity.clubId}">${activity.clubName}</a></div>
                     <div>标签：
@@ -72,7 +74,7 @@
             </c:forEach>
         </c:if>
         <c:if test="${activities == null}">
-            还没有活动！
+            <div class="item">还没有关注的活动</div>
         </c:if>
     </div>
 </div>

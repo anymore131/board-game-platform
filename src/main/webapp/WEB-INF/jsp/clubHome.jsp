@@ -51,7 +51,9 @@
 </div>
 <div class="side">
     <a href="/user/index">首页</a>
-    <a href="/club/createActivity">新建活动</a>
+    <c:if test="${club.clubType == 1}">
+        <a href="/activity/createActivity">新建活动</a>
+    </c:if>
 </div>
 <div class="body">
     <div class="club-img">
@@ -85,6 +87,23 @@
                 <c:if test="${cj.clubType == 0}"><span>普通成员</span></c:if>
             </c:forEach>
         </c:if>
+    </div>
+    <div class="club-activity">
+        <div class="club-item">活动</div>
+        <c:forEach var="activity" items="${activities}">
+            <div class="activity-body">
+                <div><a href="">${activity.activityName}</a></div>
+                <div>标签：
+                    <c:forEach var="tag" items="${activity.tags}">
+                        <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                    </c:forEach>
+                </div>
+                <span>参加人数：${activity.number}</span>
+                <span>时间：
+                    ${activity.startTime}——${activity.endTime}
+                </span>
+            </div>
+        </c:forEach>
     </div>
     <div class="club-comments">
         <div class="club-item">评论</div>

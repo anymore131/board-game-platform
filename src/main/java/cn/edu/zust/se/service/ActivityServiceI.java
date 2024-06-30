@@ -1,5 +1,6 @@
 package cn.edu.zust.se.service;
 
+import cn.edu.zust.se.bo.ActivityBo;
 import cn.edu.zust.se.vo.ActivityVo;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface ActivityServiceI {
     Integer getActivityVoNumberByName(String name);
 
     List<ActivityVo> getActivityVoByName(String tag, int pageNo, int pageSize, int userId);
+
+    ActivityVo insertActivity(ActivityBo activityBo,int userId);
+
+
 }

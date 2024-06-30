@@ -1,5 +1,6 @@
 package cn.edu.zust.se.service.impl;
 
+import cn.edu.zust.se.bo.ActivityBo;
 import cn.edu.zust.se.dao.ActivityMapper;
 import cn.edu.zust.se.dao.GameMapper;
 import cn.edu.zust.se.service.ActivityServiceI;
@@ -29,7 +30,9 @@ public class ActivityServiceImpl implements ActivityServiceI {
         for (ActivityVo activityVo : activityVos) {
             String s = activityMapper.selectActivityVoTagsById(activityVo.getId());
             activityVo.setNumber(activityMapper.selectActivityVoNumberById(activityVo.getId()));
-            activityVo.setTags(splitTag(s.split(";")));
+            if (s != null) {
+                activityVo.setTags(splitTag(s.split(";")));
+            }
             if (activityMapper.selectActivityByUserIdAndActivityId(userId, activityVo.getId()) != null) {
                 activityVo.setAttended(1);
             } else {
@@ -42,17 +45,20 @@ public class ActivityServiceImpl implements ActivityServiceI {
     @Override
     public Integer getActivityVoNumberByTag(String tag) {
         Date nowTime = new Date(new java.util.Date().getTime());
-        return activityMapper.selectActivityNumberByTag(';' + tag + ';', nowTime);
+        return activityMapper.selectActivityNumberByTag(';' + String.valueOf(gameMapper.selectGameIdByName(tag)) + ';', nowTime);
     }
 
     @Override
     public List<ActivityVo> getActivityVoByTag(String tag, int pageNo, int pageSize, int userId) {
         Date nowTime = new Date(new java.util.Date().getTime());
-        List<ActivityVo> activityVos = activityMapper.selectActivityByTag(';' + tag + ';', pageNo, pageSize, nowTime);
+        List<ActivityVo> activityVos = activityMapper.selectActivityByTag
+                (';' + String.valueOf(gameMapper.selectGameIdByName(tag)) + ';', pageNo, pageSize, nowTime);
         for (ActivityVo activityVo : activityVos) {
             String s = activityMapper.selectActivityVoTagsById(activityVo.getId());
             activityVo.setNumber(activityMapper.selectActivityVoNumberById(activityVo.getId()));
-            activityVo.setTags(splitTag(s.split(";")));
+            if (s != null) {
+                activityVo.setTags(splitTag(s.split(";")));
+            }
             if (activityMapper.selectActivityByUserIdAndActivityId(userId, activityVo.getId()) != null) {
                 activityVo.setAttended(1);
             } else {
@@ -75,7 +81,9 @@ public class ActivityServiceImpl implements ActivityServiceI {
         for (ActivityVo activityVo : activityVos) {
             String s = activityMapper.selectActivityVoTagsById(activityVo.getId());
             activityVo.setNumber(activityMapper.selectActivityVoNumberById(activityVo.getId()));
-            activityVo.setTags(splitTag(s.split(";")));
+            if (s != null){
+                activityVo.setTags(splitTag(s.split(";")));
+            }
             if (activityMapper.selectActivityByUserIdAndActivityId(userId, activityVo.getId()) != null) {
                 activityVo.setAttended(1);
             } else {
@@ -83,6 +91,23 @@ public class ActivityServiceImpl implements ActivityServiceI {
             }
         }
         return activityVos;
+    }
+
+    @Override
+    public ActivityVo insertActivity(ActivityBo activityBo,int userId) {
+        Integer id = activityMapper.selectActivityIdByClubIdAndActivityName(activityBo.getClubId(), activityBo.getActivityName());
+        if (id == null) {
+            activityMapper.insertActivity(activityBo);
+            id = activityMapper.selectActivityIdByClubIdAndActivityName(activityBo.getClubId(), activityBo.getActivityName());
+            ActivityVo activity = activityMapper.selectActivityById(id);
+            activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
+            if(activityMapper.selectActivityVoTagsById(activity.getId())!=null){
+                activity.setTags(splitTag(activityMapper.selectActivityVoTagsById(activity.getId()).split(";")));
+            }
+            activityMapper.insertUserAttend(activity.getId(),userId);
+            return activity;
+        }
+        return null;
     }
 
     public List<String> splitTag(String[] ss) {
