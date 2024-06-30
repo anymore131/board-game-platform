@@ -2,6 +2,7 @@ package cn.edu.zust.se.controller;
 
 import cn.edu.zust.se.bo.ActivityBo;
 import cn.edu.zust.se.service.ActivityServiceI;
+import cn.edu.zust.se.service.ClubServiceI;
 import cn.edu.zust.se.service.GameServiceI;
 import cn.edu.zust.se.vo.ActivityVo;
 import cn.edu.zust.se.vo.ClubVo;
@@ -27,6 +28,8 @@ public class ActivityController {
     ActivityServiceI activityService;
     @Resource
     GameServiceI gameService;
+    @Resource
+    ClubServiceI clubService;
 
     @RequestMapping(value = "activityHome",method = RequestMethod.GET)
     public String activityHomeGet(@RequestParam(value = "activityId")int activityId,
@@ -35,8 +38,17 @@ public class ActivityController {
         if(user == null){
             return "redirect:/login/login";
         }
-        List<ActivityVo> activities = activityService.getActivityVoById(activityId, user.getId());
-        session.setAttribute("activities", activities);
+        cleanSession(session);
+        ActivityVo activity = activityService.getActivityVoById(activityId, user.getId());
+        ClubVo club = clubService.getClubVo(activity.getClubId());
+        if(clubService.getClubType(user.getId(), club.getId()) == null){
+            club.setJoined(0);
+        }else{
+            club.setJoined(1);
+            club.setClubType(clubService.getClubType(user.getId(), club.getId()));
+        }
+        session.setAttribute("activity", activity);
+        session.setAttribute("club", club);
         return "activityHome";
     }
 
@@ -109,5 +121,13 @@ public class ActivityController {
         List<String> games = gameService.selectAllGameName();
         session.setAttribute("games", games);
         return "createActivity";
+    }
+
+    private void cleanSession(HttpSession session) {
+        session.removeAttribute("comments");
+        session.removeAttribute("pictures");
+        session.removeAttribute("club");
+        session.removeAttribute("game");
+        session.removeAttribute("activity");
     }
 }

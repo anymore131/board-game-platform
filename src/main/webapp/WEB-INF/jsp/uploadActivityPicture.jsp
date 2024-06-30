@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: Lenovo
   Date: 2024/6/30
-  Time: 下午8:47
+  Time: 下午10:06
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,7 +10,7 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>创建活动</title>
+    <title>添加图片</title>
     <script>
         <c:if test="${sessionScope.error != null}">
         alert("${sessionScope.error}")
@@ -117,47 +117,12 @@
 </div>
 <div class="side">
     <a href="/user/index">首页</a>
-    <a href="/club/clubHome?clubId=${club.id}">返回</a>
+    <a href="/activity/activityHome?activityId=${activity.id}">返回</a>
 </div>
 <div class="body">
-    <form action="/activity/createActivity" method="post">
-        <table>
-            <tr>
-                <td>活动名：</td>
-                <td colspan="2"><input type="text" name="activityName"></td>
-            </tr>
-            <tr>
-                <td>活动介绍：</td>
-                <td colspan="2"><textarea name="introduction"></textarea></td>
-            </tr>
-            <tr>
-                <td>位置：</td>
-                <td colspan="2"><input type="text" name="address"></td>
-            </tr>
-            <tr>
-                <td>标签</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <c:forEach var="game" items="${games}">
-                        <input type="checkbox" name="tags" value="${game}">${game}
-                    </c:forEach>
-                </td>
-            </tr>
-            <tr>
-                <td>开始时间：</td>
-                <td colspan="w"><input type="date" name="startTime"></td>
-            </tr>
-            <tr>
-                <td>结束时间：</td>
-                <td colspan="2"><input type="date" name="endTime"></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="提交"></td>
-            </tr>
-        </table>
+    <form action="/club/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="picture" multiple="multiple"><br>
+        <input type="submit" value="上传">
     </form>
 </div>
 <div class="footer"></div>

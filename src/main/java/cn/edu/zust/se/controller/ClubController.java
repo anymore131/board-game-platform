@@ -55,7 +55,9 @@ public class ClubController {
             return "redirect:/user/index";
         }
         ClubVo club = clubService.getClubVo(Integer.parseInt(clubId));
-        club.setClubType(clubService.getClubType(user.getId(), club.getId()));
+        if(clubService.getClubType(user.getId(), club.getId())!=null){
+            club.setClubType(clubService.getClubType(user.getId(), club.getId()));
+        }
         club.setNumber(clubService.getClubJoinNumber(club.getId()));
         List<ClubPictureVo> clubPicture = pictureService.selectClubPictureByClubId(club.getId());
         if (club.getClubType() == 1) {
@@ -234,6 +236,9 @@ public class ClubController {
         session.removeAttribute("pictures");
         session.removeAttribute("club");
         session.removeAttribute("game");
+        session.removeAttribute("clubs");
+        session.removeAttribute("activities");
+        session.removeAttribute("activity");
     }
 
     private void showComments(HttpSession session,int commentsPageNo){
