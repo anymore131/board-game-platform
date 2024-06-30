@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: Lenovo
   Date: 2024/6/30
-  Time: 上午1:09
+  Time: 下午3:32
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,7 +10,7 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>创建俱乐部</title>
+    <title>修改俱乐部</title>
     <script>
         <c:if test="${sessionScope.error != null}">
         alert("${sessionScope.error}")
@@ -39,22 +39,23 @@
 </div>
 <div class="side">
     <a href="/user/index">首页</a>
+    <a href="/club/clubHome?clubId=${club.id}">返回</a>
 </div>
 <div class="body">
-    <form action="/club/createClub" method="post">
+    <form action="/club/changeClub" method="post">
         <table>
             <tr>
                 <td>俱乐部名：</td>
-                <td colspan="2"><input type="text" name="clubName"></td>
+                <td colspan="2"><input type="text" name="clubName" value="${club.clubName}"></td>
             </tr>
             <tr>
                 <td>简介：</td>
-                <td colspan="2"><textarea name="introduction"></textarea></td>
+                <td colspan="2"><textarea name="introduction" value="${club.introduction}"></textarea></td>
             </tr>
             <tr>
                 <td>位置：</td>
-                <td><input type="text" name="province"></td>
-                <td><input type="text" name="city"></td>
+                <td><input type="text" name="province" value="${club.province}"></td>
+                <td><input type="text" name="city" value="${club.city}"></td>
             </tr>
             <tr>
                 <td>标签</td>
@@ -62,7 +63,19 @@
             <tr>
                 <td colspan="2">
                     <c:forEach var="game" items="${games}">
-                        <input type="checkbox" name="tags" value="${game}">${game}
+                        <c:set var="gameCheck" scope="session" value="0"/>
+                        <c:forEach var="tag" items="${club.tags}">
+                            <c:if test="${game == tag}">
+                                <c:set var="gameCheck" scope="session" value="1"/>
+                            </c:if>
+                        </c:forEach>
+                        <c:if test="${gameCheck == 1}">
+                            <input type="checkbox" name="tags" value="${game}" checked>${game}
+                        </c:if>
+                        <c:if test="${gameCheck == 0||gameCheck == null}">
+                            <input type="checkbox" name="tags" value="${game}">${game}
+                        </c:if>
+                        <c:set var="gameCheck" scope="session" value="0"/>
                     </c:forEach>
                 </td>
             </tr>

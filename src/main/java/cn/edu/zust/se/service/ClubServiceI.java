@@ -31,4 +31,6 @@ public interface ClubServiceI {
     List<UserJoinVo> getUserJoinVoByClubId(int clubId);
 
     Integer getClubJoinNumber(int clubId);
+
+    void updateClub(ClubBo clubBo);
 }

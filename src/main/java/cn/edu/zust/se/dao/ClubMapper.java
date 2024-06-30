@@ -1,11 +1,13 @@
 package cn.edu.zust.se.dao;
 
+import cn.edu.zust.se.bo.ClubBo;
 import cn.edu.zust.se.entity.Club;
 import cn.edu.zust.se.vo.ClubVo;
 import cn.edu.zust.se.vo.UserJoinVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.sql.Date;
 import java.util.List;
@@ -128,4 +130,10 @@ public interface ClubMapper {
                         @Param("clubId") int clubId,
                         @Param("joinTime") Date joinTime,
                         @Param("clubType") int clubType);
+
+    @Update("UPDATE board_game_platform.t_club " +
+            "SET club_name = #{clubName},province = #{province}," +
+            "city = #{city},tags = #{tags},introduction = #{introduction} " +
+            "WHERE id = #{id}")
+    void updateClub(ClubBo clubBo);
 }

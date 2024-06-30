@@ -131,6 +131,11 @@ public class ClubServiceImpl implements ClubServiceI {
         return clubMapper.selectClubJoinCount(clubId);
     }
 
+    @Override
+    public void updateClub(ClubBo clubBo) {
+        clubMapper.updateClub(clubBo);
+    }
+
     public List<String> splitTag(String[] ss) {
         List<String> tags = new ArrayList<String>();
         for (String tag : ss) {

@@ -13,5 +13,5 @@ public class ClubComments {
     int userId;
     int clubId;
     String comments;
-    Date commentTime;
+    Date commentsTime;
 }

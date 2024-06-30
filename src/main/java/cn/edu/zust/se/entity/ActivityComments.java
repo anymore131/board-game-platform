@@ -13,5 +13,5 @@ public class ActivityComments {
     int userId;
     int activityId;
     String comments;
-    Date commentTime;
+    Date commentsTime;
 }

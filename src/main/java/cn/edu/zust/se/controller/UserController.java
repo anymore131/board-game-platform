@@ -27,6 +27,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import static cn.edu.zust.se.util.Constants.PAGE_SIZE;
+
 /**
  * @author Lenovo
  */
@@ -257,13 +259,12 @@ public class UserController {
 
     private void showSearch(HttpSession session,int pageNo1,int pageNo2){
         UserVo user = (UserVo)session.getAttribute("user");
-        int pageSize = 16;
         String searchText = (String) session.getAttribute("searchText");
         String searchTarget = (String) session.getAttribute("searchTarget");
         //俱乐部
         if(Objects.equals(searchTarget,"0")){
             cleanSession(session);
-            int maxPage1 = clubService.getClubNumberByName(searchText) / pageSize + 1;
+            int maxPage1 = clubService.getClubNumberByName(searchText) / PAGE_SIZE + 1;
             session.setAttribute("maxPage1", maxPage1);
             if (pageNo1 > maxPage1){
                 pageNo1 = maxPage1;
@@ -271,7 +272,7 @@ public class UserController {
                 pageNo1 = 1;
             }
             if(clubService.getClubNumberByName(searchText) > 0){
-                List<ClubVo> clubVos = clubService.getClubVoByName(searchText,pageNo1,pageSize,user.getId());
+                List<ClubVo> clubVos = clubService.getClubVoByName(searchText,pageNo1,PAGE_SIZE,user.getId());
                 session.setAttribute("clubs", clubVos);
             }
             session.setAttribute("pageNo1", pageNo1);
@@ -279,9 +280,9 @@ public class UserController {
         //标签
         else if(Objects.equals(searchTarget,"2")){
             cleanSession(session);
-            int maxPage1 = clubService.getClubNumberByTag(searchText) / pageSize + 1;
+            int maxPage1 = clubService.getClubNumberByTag(searchText) / PAGE_SIZE + 1;
             session.setAttribute("maxPage1", maxPage1);
-            int maxPage2 = activityService.getActivityVoNumberByTag(searchText) / pageSize + 1;
+            int maxPage2 = activityService.getActivityVoNumberByTag(searchText) / PAGE_SIZE + 1;
             session.setAttribute("maxPage2", maxPage2);
             if (pageNo1 > maxPage1){
                 pageNo1 = maxPage1;
@@ -294,11 +295,11 @@ public class UserController {
                 pageNo2 = 1;
             }
             if(clubService.getClubNumberByTag(searchText) > 0){
-                List<ClubVo> clubVos = clubService.getClubVoByTag(searchText,pageNo2,pageSize,user.getId());
+                List<ClubVo> clubVos = clubService.getClubVoByTag(searchText,pageNo2,PAGE_SIZE,user.getId());
                 session.setAttribute("clubs", clubVos);
             }
             if(activityService.getActivityVoNumberByTag(searchText) > 0){
-                List<ActivityVo> activityVos = activityService.getActivityVoByTag(searchText,pageNo2,pageSize,user.getId());
+                List<ActivityVo> activityVos = activityService.getActivityVoByTag(searchText,pageNo2,PAGE_SIZE,user.getId());
                 session.setAttribute("activities", activityVos);
             }
             session.setAttribute("pageNo1", pageNo1);
@@ -307,7 +308,7 @@ public class UserController {
         //活动
         else if(Objects.equals(searchTarget,"1")){
             cleanSession(session);
-            int maxPage2 = activityService.getActivityVoNumberByName(searchText) / pageSize + 1;
+            int maxPage2 = activityService.getActivityVoNumberByName(searchText) / PAGE_SIZE + 1;
             session.setAttribute("maxPage2", maxPage2);
             if (pageNo2 > maxPage2){
                 pageNo2 = maxPage2;
@@ -315,7 +316,7 @@ public class UserController {
                 pageNo2 = 1;
             }
             if (activityService.getActivityVoNumberByName(searchText) > 0){
-                List<ActivityVo> activityVos = activityService.getActivityVoByName(searchText,pageNo2,pageSize,user.getId());
+                List<ActivityVo> activityVos = activityService.getActivityVoByName(searchText,pageNo2,PAGE_SIZE,user.getId());
                 session.setAttribute("activities", activityVos);
             }
             session.setAttribute("pageNo2", pageNo2);

@@ -15,5 +15,5 @@ public class ActivityCommentsVo {
     String userName;
     String activityName;
     String comments;
-    Date commentTime;
+    Date commentsTime;
 }

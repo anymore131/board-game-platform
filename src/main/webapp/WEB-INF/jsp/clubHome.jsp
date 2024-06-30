@@ -61,26 +61,56 @@
     </div>
     <div class="club-body">
         <div class="club-name">${club.clubName}</div>
-        <div class="club-item">地址：${club.province}&nbsp;&nbsp;${club.city}</div>
-        <div class="club-item">创建时间:${club.createTime}</div>
-        <div class="club-item">
-            标签：
-            <c:forEach var="tag" items="${club.tags}">
-                <a href="/user/search?search-text=${tag}&&search-target=2">${tag}</a>&nbsp;&nbsp;
-            </c:forEach>
+        <div class="club-describe">
+            <div class="club-item">详细情况</div>
+            <div class="club-describe-item">地址：${club.province}&nbsp;&nbsp;${club.city}</div>
+            <div class="club-describe-item">创建时间:${club.createTime}</div>
+            <div class="club-describe-item">
+                标签：
+                <c:forEach var="tag" items="${club.tags}">
+                    <a href="/user/search?search-text=${tag}&&search-target=2">${tag}</a>&nbsp;&nbsp;
+                </c:forEach>
+            </div>
+            <div class="club-describe-item">人数：${club.number}</div>
+            <div class="club-describe-item">简介：${club.introduction}</div>
         </div>
-        <div class="club-item">人数：${club.number}</div>
-        <div class="club-item">简介：${club.introduction}</div>
         <c:if test="${club.clubType == 1}">
-            <a href="/club/changeClub">修改俱乐部信息</a><br>
-            成员：<br>
+            <a href="/club/changeClub" class="club-describe-item">修改俱乐部信息</a><br>
+            <a href="/club/uploadClubPicture" class="club-describe-item">上传俱乐部照片</a><br>
+            <div class="club-item">成员</div>
             <c:forEach var="cj" items="${userJoins}">
-                <span>${cj.userName}</span>
+                <span><a href="/user/otherHome?userId=${cj.userId}">${cj.userName}</a></span>
                 <span>${cj.joinTime}</span>
                 <c:if test="${cj.clubType == 1}"><span>管理成员</span></c:if>
                 <c:if test="${cj.clubType == 0}"><span>普通成员</span></c:if>
             </c:forEach>
         </c:if>
+    </div>
+    <div class="club-comments">
+        <div class="club-item">评论</div>
+        <c:if test="${club.clubType == 0}">
+            <div class="input-comments">
+                <form action="/club/insertComments" method="post">
+                    <textarea name="comments-text"></textarea>
+                    <input type="submit" value="提交">
+                </form>
+            </div>
+        </c:if>
+        <c:forEach var="comment" items="${comments}">
+            <div class="comment-body">
+                <div><a href="/user/otherHome?userId=${comment.userId}">${comment.userName}</a></div>
+                <div>${comment.comments}</div>
+                <div>${comment.commentsTime}</div>
+            </div>
+        </c:forEach>
+        <div class="page">
+            <c:if test="${commentsPageNo > 1}">
+                <a href="/club/clubHome?CommentsPage=${commentsPageNo - 1}&&clubId=${club.id}">上一页</a>
+            </c:if>
+            <c:if test="${commentsPageNo < maxCommentsPage}">
+                <a href="/club/clubHome?CommentsPage=${commentsPageNo - 1}&&clubId=${club.id}">下一页</a>
+            </c:if>
+        </div>
     </div>
 </div>
 <div class="footer"></div>

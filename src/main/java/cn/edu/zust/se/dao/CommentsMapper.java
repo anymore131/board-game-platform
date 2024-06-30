@@ -23,7 +23,7 @@ public interface CommentsMapper {
 
     @Insert("INSERT INTO board_game_platform.t_club_comments " +
             "(user_id, club_id, comments, comments_time) " +
-            "VALUES (#{activityId}, #{userId}, #{comments}, #{commentsTime})")
+            "VALUES (#{userId}, #{clubId}, #{comments}, #{commentsTime})")
     void insertClubComments(@Param("userId") int userId,
                             @Param("clubId") int clubId,
                             @Param("comments") String comments,

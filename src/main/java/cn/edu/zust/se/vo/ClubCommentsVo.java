@@ -15,5 +15,5 @@ public class ClubCommentsVo {
     String userName;
     String clubName;
     String comments;
-    Date commentTime;
+    Date commentsTime;
 }
