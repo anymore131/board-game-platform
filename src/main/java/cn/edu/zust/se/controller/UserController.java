@@ -106,6 +106,7 @@ public class UserController {
         cleanSession(session);
         return "userHome";
     }
+
     @RequestMapping(value = "otherHome" ,method = RequestMethod.GET)
     public String otherHome(@RequestParam(value = "userId",required = false) int userId, Model model){
         UserVo otherUser =userService.selectuserbyid(userId);

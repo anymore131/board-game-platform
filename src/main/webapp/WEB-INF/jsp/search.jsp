@@ -315,7 +315,7 @@
             找到的用户：<br>
             <c:forEach var="user" items="${users}">
                 <div class="user-body">
-                    <div><a href="/user/userHome?userId=${user.id}">${user.userName}</a></div>
+                    <div><a href="/user/otherHome?userId=${user.id}">${user.userName}</a></div>
                     <div>
                         <span>年龄：${user.age}</span>
                         <span>性别：${user.gender}</span
