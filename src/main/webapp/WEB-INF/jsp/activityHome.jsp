@@ -79,7 +79,7 @@
     </div>
     <div class="activity-comments">
         <div class="activity-item">评论</div>
-        <c:if test="${club.clubType != 1}">
+        <c:if test="${activity.clubType != 1}">
             <div class="input-comments">
                 <form action="/activity/insertComments" method="post">
                     <textarea name="comments-text"></textarea>
@@ -103,6 +103,7 @@
             </c:if>
         </div>
     </div>
+
 </div>
 <div class="footer"></div>
 </body>

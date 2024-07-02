@@ -29,6 +29,7 @@ public class ClubServiceImpl implements ClubServiceI {
     @Override
     public ClubVo getClubVo(int id) {
         ClubVo clubVo = clubMapper.getClubById(id);
+        clubVo.setNumber(clubMapper.selectJoinCount(clubVo.getId()));
         String s = clubMapper.getClubTagsById(id);
         if (s != null && !"".equals(s)) {
             clubVo.setTags(splitTag(s.split(";")));
@@ -40,6 +41,7 @@ public class ClubServiceImpl implements ClubServiceI {
     public List<ClubVo> getClubVoByUserJoin(int userId) {
         List<ClubVo> clubVos = clubMapper.selectClubVoByUserJoin(userId);
         for (ClubVo clubVo : clubVos) {
+            clubVo.setNumber(clubMapper.selectJoinCount(clubVo.getId()));
             String s = clubMapper.getClubTagsById(clubVo.getId());
             if (s != null && !"".equals(s)) {
                 clubVo.setTags(splitTag(s.split(";")));
@@ -53,6 +55,7 @@ public class ClubServiceImpl implements ClubServiceI {
     public List<ClubVo> getClubVoManageByUserJoin(int userId) {
         List<ClubVo> clubVos = clubMapper.selectClubVoManageByUserJoin(userId);
         for (ClubVo clubVo : clubVos) {
+            clubVo.setNumber(clubMapper.selectJoinCount(clubVo.getId()));
             String s = clubMapper.getClubTagsById(clubVo.getId());
             if (s != null && !"".equals(s)) {
                 clubVo.setTags(splitTag(s.split(";")));
@@ -71,6 +74,7 @@ public class ClubServiceImpl implements ClubServiceI {
     public List<ClubVo> getClubVoByName(String clubName, int pageNo, int pageSize, int userId) {
         List<ClubVo> clubVos = clubMapper.selectClubByName(clubName, pageNo, pageSize);
         for (ClubVo clubVo : clubVos) {
+            clubVo.setNumber(clubMapper.selectJoinCount(clubVo.getId()));
             String s = clubMapper.getClubTagsById(clubVo.getId());
             if (s != null && !"".equals(s)) {
                 clubVo.setTags(splitTag(s.split(";")));
@@ -94,6 +98,7 @@ public class ClubServiceImpl implements ClubServiceI {
         List<ClubVo> clubVos = clubMapper.selectClubByTag
                 (';' + String.valueOf(gameMapper.selectGameIdByName(tag)) + ';', pageNo, pageSize);
         for (ClubVo clubVo : clubVos) {
+            clubVo.setNumber(clubMapper.selectJoinCount(clubVo.getId()));
             String s = clubMapper.getClubTagsById(clubVo.getId());
             if (s != null && !"".equals(s)) {
                 clubVo.setTags(splitTag(s.split(";")));
@@ -138,6 +143,24 @@ public class ClubServiceImpl implements ClubServiceI {
     @Override
     public void updateClub(ClubBo clubBo) {
         clubMapper.updateClub(clubBo);
+    }
+
+    @Override
+    public List<ClubVo> getClubVoByProvinceAndCity(String province, String city,int userId) {
+        List<ClubVo> clubVos = clubMapper.selectClubVoByProvinceAndCity(province, city,userId);
+        for (ClubVo clubVo : clubVos) {
+            clubVo.setNumber(clubMapper.selectJoinCount(clubVo.getId()));
+            String s = clubMapper.getClubTagsById(clubVo.getId());
+            if (s != null && !"".equals(s)) {
+                clubVo.setTags(splitTag(s.split(";")));
+            }
+            if (clubMapper.selectClubTypeByUserIdAndClubId(userId, clubVo.getId()) != null) {
+                clubVo.setJoined(1);
+            } else {
+                clubVo.setJoined(0);
+            }
+        }
+        return clubVos;
     }
 
     public List<String> splitTag(String[] ss) {

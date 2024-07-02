@@ -10,6 +10,119 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        position: relative;
+        background-color: #f8f9fa;
+    }
+
+    .header {
+        background-color: #343a40;
+        color: #fff;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+    }
+
+    .header-out a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .side {
+        background-color: #444;
+        padding: 20px;
+        color: #fff;
+    }
+
+    .side a {
+        display: block;
+        margin-bottom: 10px;
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .body {
+        padding: 20px;
+        padding-left: 30px;
+    }
+
+    .search-body {
+        margin-bottom: 20px;
+    }
+
+    .search-body form {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-body select,
+    .search-body input[type="text"],
+    .search-body input[type="submit"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+    }
+
+    .search-body select {
+        margin-right: 10px;
+    }
+
+    .search-body input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    .club-activity {
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        position: relative;
+    }
+
+    .club-activity.item {
+        font-size: 18px;
+        margin-bottom: 10px;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .activity-body {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+    }
+
+    .activity-body a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .footer {
+        background-color: #343a40;
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
+</style>
     <title>主页面</title>
     <script>
         <c:if test="${sessionScope.error != null}">
@@ -131,8 +244,31 @@
             <input type="submit" value="提交" name="action">
         </form>
     </div>
+    <div class="club-tj">
+        <c:if test="${tjClubs != null}">
+            <div class="item">推荐俱乐部</div>
+            <c:forEach items="${tjClubs}" var="tjClub">
+                <div class="club-body">
+                    <div><a href="/club/clubHome?clubId=${tjClub.id}">${tjClub.clubName}</a></div>
+                    <div>标签：
+                        <c:forEach var="tag" items="${tjClub.tags}">
+                            <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                        </c:forEach>
+                    </div>
+                    <span>俱乐部人数：${tjClub.number}</span>
+                    <span>位置：
+                        ${tjClub.province}&nbsp;&nbsp;${tjClub.city}
+                    </span>
+                    <div>
+                        <c:if test="${tjClub.joined == 0}">
+                            <a href="">加入</a>
+                        </c:if>
+                    </div>
+                </div>
+            </c:forEach>
+        </c:if>
+    </div>
     <div class="club-activity">
-
         <c:if test="${activities != null}">
             <div class="item">关注的活动</div>
             <c:forEach var="activity" items="${activities}">
