@@ -130,7 +130,7 @@ public class UserController {
         if (pageNo2 == null || pageNo2.isEmpty()){
             pageNo2 = "1";
         }
-        if(searchText == null){
+        if(searchText == ""){
             return "index";
         }
         session.setAttribute("searchText", searchText);
@@ -156,7 +156,7 @@ public class UserController {
         if (pageNo2 == null || pageNo2.isEmpty()){
             pageNo2 = "1";
         }
-        if(searchText == null){
+        if(searchText == ""){
             return "index";
         }
         session.setAttribute("searchText", searchText);
@@ -296,6 +296,22 @@ public class UserController {
             }
             session.setAttribute("pageNo1", pageNo1);
         }
+        //活动
+        else if(Objects.equals(searchTarget,"1")){
+            cleanSession(session);
+            int maxPage2 = activityService.getActivityVoNumberByName(searchText) / PAGE_SIZE + 1;
+            session.setAttribute("maxPage2", maxPage2);
+            if (pageNo2 > maxPage2){
+                pageNo2 = maxPage2;
+            }else if (pageNo2 <= 0){
+                pageNo2 = 1;
+            }
+            if (activityService.getActivityVoNumberByName(searchText) > 0){
+                List<ActivityVo> activityVos = activityService.getActivityVoByName(searchText,pageNo2,PAGE_SIZE,user.getId());
+                session.setAttribute("activities", activityVos);
+            }
+            session.setAttribute("pageNo2", pageNo2);
+        }
         //标签
         else if(Objects.equals(searchTarget,"2")){
             cleanSession(session);
@@ -324,21 +340,21 @@ public class UserController {
             session.setAttribute("pageNo1", pageNo1);
             session.setAttribute("pageNo2", pageNo2);
         }
-        //活动
-        else if(Objects.equals(searchTarget,"1")){
+        //用户
+        else if(Objects.equals(searchTarget,"3")){
             cleanSession(session);
-            int maxPage2 = activityService.getActivityVoNumberByName(searchText) / PAGE_SIZE + 1;
-            session.setAttribute("maxPage2", maxPage2);
-            if (pageNo2 > maxPage2){
+            int maxPage2 = userService.getUserNumber(searchText) / PAGE_SIZE + 1;
+            session.setAttribute("maxPage2",maxPage2);
+            if(pageNo2 > maxPage2){
                 pageNo2 = maxPage2;
-            }else if (pageNo2 <= 0){
+            }else if(pageNo2 <= 0){
                 pageNo2 = 1;
             }
-            if (activityService.getActivityVoNumberByName(searchText) > 0){
-                List<ActivityVo> activityVos = activityService.getActivityVoByName(searchText,pageNo2,PAGE_SIZE,user.getId());
-                session.setAttribute("activities", activityVos);
+            if(userService.getUserNumber(searchText) > 0){
+                List<UserVo> userVos = userService.getUser(searchText,pageNo2,PAGE_SIZE);
+                session.setAttribute("users",userVos);
             }
-            session.setAttribute("pageNo2", pageNo2);
+            session.setAttribute("pageNo3",pageNo2);
         }
     }
 }

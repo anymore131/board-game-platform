@@ -14,13 +14,12 @@ import java.util.List;
  */
 public interface GameMapper {
     @Insert("INSERT INTO board_game_platform.t_game_type " +
-            "(name, referrals, introduction, insert_time, user_id, type) " +
-            "VALUES (#{name}, #{referrals}, #{introduction}, #{insertTime}, #{userId}, 0)")
+            "(name, referrals, introduction, insert_time,type) " +
+            "VALUES (#{name}, #{referrals}, #{introduction}, #{insertTime}, 0)")
     void insertGame(@Param("name") String name,
                     @Param("referrals") String referrals,
                     @Param("introduction") String introduction,
-                    @Param("insertTime") Date insertTime,
-                    @Param("userId") int userId);
+                    @Param("insertTime") Date insertTime);
 
     /**
      * 通过id获取游戏信息
@@ -28,15 +27,15 @@ public interface GameMapper {
      * @return      游戏信息
      */
     @Select("select g.id,g.name,g.referrals,g.introduction,g.insert_time " +
-            "from t_game_type g " +
+            "from board_game_platform.t_game_type g " +
             "where g.id = #{id} ")
     GameTypeVo selectGameById(@Param("id") int id);
 
     @Select("select * from board_game_platform.t_game_type")
-    List<GameType> selectGameType();
+    List<GameTypeVo> selectGameType();
 
     @Select("select * from board_game_platform.t_game_type where name = #{name}")
-    GameType selectGameTypeByName(String name);
+    GameTypeVo selectGameTypeByName(String name);
 
     @Select("select COUNT(id) from board_game_platform.t_game_type")
     int selectGameTypeNumber();

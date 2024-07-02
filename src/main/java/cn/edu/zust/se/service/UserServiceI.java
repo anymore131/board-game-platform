@@ -11,4 +11,6 @@ public interface UserServiceI {
     List<Integer> getUserJoin(int id);
     UserVo selectuserbyid(int id);
     void updateUserAvatar(int id, String fname);
+    List<UserVo> getUser(String userName, int pageNo, int pageSize);
+    Integer getUserNumber(String userName);
 }

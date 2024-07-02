@@ -16,8 +16,10 @@ public interface UserMapper {
             "where user_name = #{userName} and password = #{password}")
     UserVo selectUserByUserNameAndPassword(@Param("userName") String userName,
                                            @Param("password") String password);
+
     @Select("select * from board_game_platform.t_user where id=#{id}")
     UserVo selectUserById(@Param("id") int id);
+
     @Select("select * from board_game_platform.t_user where user_name = #{userName}")
     UserVo selectUserByUserName(@Param("userName") String userName);
 
@@ -41,4 +43,17 @@ public interface UserMapper {
             "SET t.avatar_fname = #{fname} " +
             "WHERE t.id = #{id}")
     void updateUserAvatar(@Param("id") int id, @Param("fname") String fname);
+
+    @Select("SELECT COUNT(id) " +
+            "FROM board_game_platform.t_user " +
+            "WHERE user_name LIKE CONCAT('%',#{userName},'%')")
+    Integer getUserByUserName(@Param("userName") String userName);
+
+    @Select("SELECT * " +
+            "FROM board_game_platform.t_user " +
+            "WHERE user_name LIKE CONCAT('%',#{userName},'%') " +
+            "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
+    List<UserVo> getUserVoByUserName(@Param("userName") String userName,
+                                     @Param("pageNo") int pageNo,
+                                   @Param("pageSize") int pageSize);
 }

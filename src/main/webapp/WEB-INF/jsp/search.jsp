@@ -140,7 +140,12 @@
                 <c:if test="${searchTarget != 2 || searchTarget == null}">
                     <option value="2">游戏标签</option>
                 </c:if>
+                <c:if test="${searchTarget == 3}">
                 <option value="3">用户</option>
+                </c:if>
+                <c:if test="${searchTarget != 3 || searchTarget == null}">
+                    <option value="3">用户</option>
+                </c:if>
             </select>
             <input type="text" name="search-text" value="${searchText}">
             <input type="submit" value="提交" name="action">
@@ -305,6 +310,34 @@
             <c:if test="${activities == null}">
                 未找到相关活动!
             </c:if>
+        </c:if>
+        <c:if test="${users != null && searchTarget == 3}">
+            找到的用户：<br>
+            <c:forEach var="user" items="${users}">
+                <div class="user-body">
+                    <div><a href="/user/userHome?userId=${user.id}">${user.userName}</a></div>
+                    <div>
+                        <span>年龄：${user.age}</span>
+                        <span>性别：${user.gender}</span
+                        <span>所在省：${user.province}</span>
+                        <span>所在市：${user.city}</span>
+                    </div>
+                    <div>
+                        <p>${user.introduction}</p>
+                    </div>
+                </div>
+            </c:forEach>
+            <div class="page">
+                <c:if test="${pageNo1 > 1}">
+                    <a href="/user/search?pageNo1=${pageNo1 - 1}&&pageNo2=${pageNo2}">上一页</a>
+                </c:if>
+                <c:if test="${pageNo1 < maxpageNo1}">
+                    <a href="/user/search?pageNo1=${pageNo1 + 1}&&pageNo2=${pageNo2}">下一页</a>
+                </c:if>
+            </div>
+        </c:if>
+        <c:if test="${users == null && searchTarget == 3}">
+            未找到相关用户!
         </c:if>
     </div>
 </div>
