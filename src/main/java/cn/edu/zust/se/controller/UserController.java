@@ -50,10 +50,15 @@ public class UserController {
         if(user == null){
             return "redirect:/login/login";
         }
-        List<Integer> userJoinId = userService.getUserJoin(user.getId());
-        List<ActivityVo> activities = new ArrayList<>();
+        if (user.getProvince() == null || user.getProvince().isEmpty() ||
+                user.getCity() == null || user.getCity().isEmpty()) {
+            session.setAttribute("error", "请先完善你的信息");
+            return "userHome";
+        }
+        List<ClubVo> tjClubs = clubService.getClubVoByProvinceAndCity(user.getProvince(),user.getCity(), user.getId());
         List<ClubVo> clubs = new ArrayList<>();
-        for(Integer id : userJoinId){
+        List<ActivityVo> activities = new ArrayList<>();
+        for(Integer id : userService.getUserJoin(user.getId())){
             clubs.add(clubService.getClubVo(id));
         }
         for(ClubVo club : clubs){
@@ -61,6 +66,10 @@ public class UserController {
                 activities.addAll(activityService.getActivityVoByClubId(club.getId(),user.getId()));
             }
         }
+        for(ClubVo club : tjClubs){
+            club.setNumber(clubService.getClubJoinNumber(club.getId()));
+        }
+        session.setAttribute("tjClubs",tjClubs);
         session.setAttribute("activities", activities);
         return "index";
     }

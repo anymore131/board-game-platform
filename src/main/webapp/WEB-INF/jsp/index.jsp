@@ -9,7 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <html>
-<head> <style>
+<head>
+    <style>
     body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -243,8 +244,31 @@
             <input type="submit" value="提交" name="action">
         </form>
     </div>
+    <div class="club-tj">
+        <c:if test="${tjClubs != null}">
+            <div class="item">推荐俱乐部</div>
+            <c:forEach items="${tjClubs}" var="tjClub">
+                <div class="club-body">
+                    <div><a href="/club/clubHome?clubId=${tjClub.id}">${tjClub.clubName}</a></div>
+                    <div>标签：
+                        <c:forEach var="tag" items="${tjClub.tags}">
+                            <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                        </c:forEach>
+                    </div>
+                    <span>俱乐部人数：${tjClub.number}</span>
+                    <span>位置：
+                        ${tjClub.province}&nbsp;&nbsp;${tjClub.city}
+                    </span>
+                    <div>
+                        <c:if test="${tjClub.joined == 0}">
+                            <a href="">加入</a>
+                        </c:if>
+                    </div>
+                </div>
+            </c:forEach>
+        </c:if>
+    </div>
     <div class="club-activity">
-
         <c:if test="${activities != null}">
             <div class="item">关注的活动</div>
             <c:forEach var="activity" items="${activities}">

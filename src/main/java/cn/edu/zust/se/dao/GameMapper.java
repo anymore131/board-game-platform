@@ -27,9 +27,9 @@ public interface GameMapper {
      * @param id    游戏id
      * @return      游戏信息
      */
-    @Select("select g.id,g.name,g.referrals,g.introduction,g.insert_time,u.user_name " +
-            "from board_game_platform.t_game_type g,board_game_platform.t_user u " +
-            "where g.id = #{id} and g.user_id = u.id and g.type = 1")
+    @Select("select g.id,g.name,g.referrals,g.introduction,g.insert_time " +
+            "from t_game_type g " +
+            "where g.id = #{id} ")
     GameTypeVo selectGameById(@Param("id") int id);
 
     @Select("select * from board_game_platform.t_game_type")

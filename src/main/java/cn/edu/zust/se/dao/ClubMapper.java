@@ -44,7 +44,7 @@ public interface ClubMapper {
      */
     @Select("select tags " +
             "from board_game_platform.t_club " +
-            "where id = ${id} and status = 1")
+            "where id = #{id} and status = 1")
     String getClubTagsById(@Param("id") int id);
 
     /**
@@ -75,6 +75,8 @@ public interface ClubMapper {
     @Select("select c.id,c.club_name,u.user_name,c.create_time,c.province,c.city,c.introduction " +
             "from board_game_platform.t_club c,board_game_platform.t_user u " +
             "where c.user_id = u.id and c.club_name like concat('%',#{clubName},'%') and c.status = 1 " +
+            "order by (select count(j.id) from board_game_platform.t_club c,board_game_platform.t_user_join j " +
+            "where c.id = j.club_id) DESC  " +
             "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
     List<ClubVo> selectClubByName(@Param("clubName") String clubName,
                                   @Param("pageNo") int pageNo,
@@ -112,6 +114,8 @@ public interface ClubMapper {
     @Select("select c.id,c.club_name,u.user_name,c.create_time,c.province,c.city,c.introduction " +
             "from board_game_platform.t_club c,board_game_platform.t_user u " +
             "where c.tags like concat('%',#{tag},'%') and c.status = 1 and c.user_id = u.id " +
+            "order by (select count(j.id) from board_game_platform.t_club c,board_game_platform.t_user_join j " +
+            "where c.id = j.club_id) DESC  " +
             "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
     List<ClubVo> selectClubByTag(@Param("tag") String tag,
                                  @Param("pageNo") int pageNo,
@@ -191,4 +195,27 @@ public interface ClubMapper {
             "where user_id = #{userId} and club_id = #{clubId}")
     void deleteUserJoin(@Param("userId")int userId,
                         @Param("clubId")int clubId);
+
+    /**
+     * 按地区搜索用户没有加入的俱乐部，按照俱乐部的人数递减
+     * @param province  省
+     * @param city      市
+     * @return          俱乐部列表
+     */
+    @Select("select distinct c.id,c.club_name,c.create_time,c.province,c.city,c.introduction " +
+            "from board_game_platform.t_club c,board_game_platform.t_user_join u " +
+            "where province = #{province} and city = #{city} and " +
+            "c.id not in (select c.id from board_game_platform.t_club c,board_game_platform.t_user_join u " +
+            "where c.id = u.club_id and u.user_id = #{userId}) " +
+            "order by (select count(j.id) from board_game_platform.t_club c,board_game_platform.t_user_join j " +
+            "where c.id = j.club_id) DESC " +
+            "Limit 10 ")
+    List<ClubVo> selectClubVoByProvinceAndCity(@Param("province")String province,
+                                               @Param("city")String city,
+                                               @Param("userId")int userId);
+
+    @Select("select count(id) " +
+            "from board_game_platform.t_user_join " +
+            "where club_id = #{clubId}")
+    Integer selectJoinCount(@Param("clubId") int clubId);
 }
