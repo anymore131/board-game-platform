@@ -16,6 +16,21 @@
         </c:if>
     </script>
     <style>
+        .user-avatar {
+            width: 50px; /* 头像宽度 */
+            height: 50px; /* 头像高度 */
+            border-radius: 50%; /* 圆形头像 */
+            /* margin-left: 1200px; 这个设置是错误的，应该去掉 */
+            margin-right: 10px; /* 与链接之间留一些空间 */
+            vertical-align: middle; /* 垂直居中（在这个上下文中可能不需要，因为已经使用了align-items: center） */
+            border: 2px solid #ffffff; /* 为头像添加一个边框，如果需要的话 */
+        }
+        .user-message {
+            /* 不需要指定宽度，因为我们想要它根据内容自适应大小 */
+            display: flex; /* 使用flex布局使头像和链接并排显示 */
+            align-items: center; /* 垂直居中 */
+            margin-right: 10px; /* 与搜索表单之间留一些空间 */
+        }
         body {
             width: 100%;
             font-family: Arial, sans-serif;

@@ -1,5 +1,7 @@
 package cn.edu.zust.se.service;
 
+import cn.edu.zust.se.vo.UserVo;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,6 @@ import java.util.List;
  */
 public interface UserServiceI {
     List<Integer> getUserJoin(int id);
-
+    UserVo selectuserbyid(int id);
     void updateUserAvatar(int id, String fname);
 }

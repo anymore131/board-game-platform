@@ -16,7 +16,8 @@ public interface UserMapper {
             "where user_name = #{userName} and password = #{password}")
     UserVo selectUserByUserNameAndPassword(@Param("userName") String userName,
                                            @Param("password") String password);
-
+    @Select("select * from board_game_platform.t_user where id=#{id}")
+    UserVo selectUserById(@Param("id") int id);
     @Select("select * from board_game_platform.t_user where user_name = #{userName}")
     UserVo selectUserByUserName(@Param("userName") String userName);
 

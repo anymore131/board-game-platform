@@ -2,6 +2,7 @@ package cn.edu.zust.se.service.impl;
 
 import cn.edu.zust.se.dao.UserMapper;
 import cn.edu.zust.se.service.UserServiceI;
+import cn.edu.zust.se.vo.UserVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,11 @@ public class UserServiceImpl implements UserServiceI {
     @Override
     public List<Integer> getUserJoin(int id) {
         return userMapper.selectUserJoinByUserId(id);
+    }
+
+    @Override
+    public UserVo selectuserbyid(int id) {
+        return userMapper.selectUserById(id);
     }
 
     @Override
