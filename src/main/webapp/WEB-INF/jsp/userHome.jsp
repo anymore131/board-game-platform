@@ -247,13 +247,13 @@
         <p>我加入的俱乐部</p>
         <c:forEach var="club" items="${clubs}">
         <div class="club-body">
-                                <span class="club-name">
-                                    <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
-                                </span>
+            <span class="club-name">
+                <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
+            </span>
             <div class="club-tags">
                 标签：
                 <c:forEach var="tag" items="${club.tags}">
-                    <a href="/user/serarch?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                    <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
                 </c:forEach>
             </div>
             <div class="club-join-time">
@@ -266,9 +266,9 @@
         <p>我管理的俱乐部</p>
         <c:forEach var="club" items="${manageClubs}">
             <div class="club-body">
-                                <span class="club-name">
-                                    <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
-                                </span>
+                <span class="club-name">
+                    <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
+                </span>
                 <div class="club-tags">
                     标签：
                     <c:forEach var="tag" items="${club.tags}">
