@@ -24,4 +24,6 @@ public class ActivityVo {
     int number;
     //1为已参加，0为未参加
     int attended;
+    //1为管理，0为普通成员
+    int clubType;
 }

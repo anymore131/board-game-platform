@@ -159,7 +159,7 @@
         <div class="activity-item">评论</div>
         <c:if test="${activity.clubType != 1}">
             <div class="input-comments">
-                <form action="/activity/insertComments" method="post">
+                <form action="/activity/insertActivityComments" method="post">
                     <textarea name="comments-text"></textarea>
                     <input type="submit" value="提交">
                 </form>
