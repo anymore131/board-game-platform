@@ -145,7 +145,7 @@ public class UserController {
         if (pageNo2 == null || pageNo2.isEmpty()){
             pageNo2 = "1";
         }
-        if(searchText == ""){
+        if(Objects.equals(searchText, "")||searchText.isEmpty()){
             return "index";
         }
         session.setAttribute("searchText", searchText);
@@ -171,8 +171,8 @@ public class UserController {
         if (pageNo2 == null || pageNo2.isEmpty()){
             pageNo2 = "1";
         }
-        if(searchText == null){
-            return "index";
+        if(Objects.equals(searchText, "")||searchText.isEmpty()){
+            return "redirect:/user/index";
         }
         session.setAttribute("searchText", searchText);
         session.setAttribute("searchTarget", searchTarget);
@@ -289,6 +289,7 @@ public class UserController {
         session.removeAttribute("manageClubs");
         session.removeAttribute("activity");
         session.removeAttribute("club");
+        session.removeAttribute("tjClubs");
     }
 
     private void showSearch(HttpSession session,int pageNo1,int pageNo2){
