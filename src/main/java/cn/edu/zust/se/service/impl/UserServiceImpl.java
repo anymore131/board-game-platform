@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserServiceI {
     }
 
     @Override
-    public UserVo selectuserbyid(int id) {
+    public UserVo selectUserById(int id) {
         return userMapper.selectUserById(id);
     }
 
@@ -43,5 +43,10 @@ public class UserServiceImpl implements UserServiceI {
     public Integer getUserNumber(String userName) {
         System.out.println(userMapper.getUserByUserName(userName));
         return userMapper.getUserByUserName(userName);
+    }
+
+    @Override
+    public void updateUser(UserVo userVo) {
+        userMapper.updateUser(userVo);
     }
 }

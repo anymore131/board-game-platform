@@ -161,7 +161,7 @@
     </span>
     <span class="avatar-body">
         <a href="/user/userHome">
-            <img src="/user/showAvatar/${otherUser.avatarFname}" alt="头像" class="avatar" title="个人中心">
+            <img src="/user/showAvatar/${user.avatarFname}" alt="头像" class="avatar" title="个人中心">
         </a>
     </span>
     <span class="header-out">

@@ -56,7 +56,10 @@ public class ClubController {
         }
         ClubVo club = clubService.getClubVo(Integer.parseInt(clubId));
         if(clubService.getClubType(user.getId(), club.getId())!=null){
+            club.setJoined(1);
             club.setClubType(clubService.getClubType(user.getId(), club.getId()));
+        }else{
+            club.setJoined(0);
         }
         club.setNumber(clubService.getClubJoinNumber(club.getId()));
         List<ClubPictureVo> clubPicture = pictureService.selectClubPictureByClubId(club.getId());
@@ -193,7 +196,7 @@ public class ClubController {
         String finalPath = Constants.IMG_PATH2 + fileName2;
         java.sql.Date uploadTime =  new java.sql.Date(new Date().getTime());
         int nameIndex = fileName.lastIndexOf(".");
-        String name = fileName;
+        String name;
         if (nameIndex > 0 && nameIndex < fileName.length() - 1){
             name = fileName.substring( 0, nameIndex);
         }else {
@@ -227,7 +230,12 @@ public class ClubController {
             return "redirect:/login/login";
         }
         ClubVo club = (ClubVo) session.getAttribute("club");
-        commentsService.postClubComments(user.getId(), club.getId(), request.getParameter("comments-text"));
+        String comments= request.getParameter("comments-text");
+        if (comments==null || comments.isEmpty()){
+            session.setAttribute("error","评论不能为空！");
+            return "redirect:/club/clubHome?clubId=" + club.getId();
+        }
+        commentsService.postClubComments(user.getId(), club.getId(),comments);
         return "redirect:/club/clubHome?clubId=" + club.getId();
     }
 

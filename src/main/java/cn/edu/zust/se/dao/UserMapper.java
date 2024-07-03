@@ -56,4 +56,10 @@ public interface UserMapper {
     List<UserVo> getUserVoByUserName(@Param("userName") String userName,
                                      @Param("pageNo") int pageNo,
                                    @Param("pageSize") int pageSize);
+
+    @Update("update board_game_platform.t_user " +
+            "set name=#{name},age=#{age},gender=#{gender},introduction=#{introduction},email=#{email}," +
+            "mobile=#{mobile},province=#{province},city=#{city},QQ=#{QQ},weixin=#{weixin} " +
+            "where id = #{id}")
+    void updateUser(UserVo userVo);
 }

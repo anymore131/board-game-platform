@@ -176,7 +176,7 @@
                     </span>
                     <div>
                         <c:if test="${tjClub.joined == 0}">
-                            <a href="">加入</a>
+                            <a href="/user/userJoin?clubId=${tjClub.id}">加入</a>
                         </c:if>
                     </div>
                 </div>

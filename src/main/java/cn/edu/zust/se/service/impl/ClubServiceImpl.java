@@ -163,6 +163,16 @@ public class ClubServiceImpl implements ClubServiceI {
         return clubVos;
     }
 
+    /**
+     * 用户加入俱乐部，为普通用户
+     * @param userId    用户id
+     * @param clubId    俱乐部id
+     */
+    @Override
+    public void userJoinClub(int userId, int clubId) {
+        clubMapper.insertUserJoin(userId,clubId,new Date(new java.util.Date().getTime()), 0);
+    }
+
     public List<String> splitTag(String[] ss) {
         List<String> tags = new ArrayList<String>();
         for (String tag : ss) {

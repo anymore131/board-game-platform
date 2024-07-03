@@ -173,10 +173,10 @@
                     </span>
                     <div>
                         <c:if test="${club.joined == 1}">
-                            <a href="">已加入</a>
+                            <p>已加入</p>
                         </c:if>
                         <c:if test="${club.joined == 0}">
-                            <a href="">未加入</a>
+                            <a href="/user/userJoin?clubId=${club.id}">加入</a>
                         </c:if>
                     </div>
                 </div>
@@ -238,10 +238,10 @@
                     </span>
                     <div>
                         <c:if test="${club.joined == 1}">
-                            <a href="">已加入</a>
+                            <p>已加入</p>
                         </c:if>
                         <c:if test="${club.joined == 0}">
-                            <a href="">未加入</a>
+                            <a href="/user/userJoin?clubId=${club.id}">加入</a>
                         </c:if>
                     </div>
                 </div>

@@ -35,4 +35,6 @@ public interface ClubServiceI {
     void updateClub(ClubBo clubBo);
 
     List<ClubVo> getClubVoByProvinceAndCity(String province, String city,int userId);
+
+    void userJoinClub(int userId,int clubId);
 }

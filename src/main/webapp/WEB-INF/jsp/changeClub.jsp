@@ -128,7 +128,7 @@
             </tr>
             <tr>
                 <td>简介：</td>
-                <td colspan="2"><textarea name="introduction" value="${club.introduction}"></textarea></td>
+                <td colspan="2"><textarea name="introduction">${club.introduction}</textarea></td>
             </tr>
             <tr>
                 <td>位置：</td>

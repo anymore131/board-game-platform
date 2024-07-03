@@ -9,8 +9,9 @@ import java.util.List;
  */
 public interface UserServiceI {
     List<Integer> getUserJoin(int id);
-    UserVo selectuserbyid(int id);
+    UserVo selectUserById(int id);
     void updateUserAvatar(int id, String fname);
     List<UserVo> getUser(String userName, int pageNo, int pageSize);
     Integer getUserNumber(String userName);
+    void updateUser(UserVo userVo);
 }

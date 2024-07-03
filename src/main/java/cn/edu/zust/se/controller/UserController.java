@@ -109,7 +109,14 @@ public class UserController {
 
     @RequestMapping(value = "otherHome" ,method = RequestMethod.GET)
     public String otherHome(@RequestParam(value = "userId",required = false) int userId, Model model,HttpSession session){
-        UserVo otherUser =userService.selectuserbyid(userId);
+        UserVo user = (UserVo)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        if (userId == user.getId()) {
+            return "redirect:/user/userHome";
+        }
+        UserVo otherUser =userService.selectUserById(userId);
         model.addAttribute("otherUser", otherUser);
         List<ClubVo> clubs = new ArrayList<>();
         List<ActivityVo> activities = new ArrayList<>();
@@ -196,6 +203,27 @@ public class UserController {
             return "redirect:/login/login";
         }
         return "changeAvatar";
+    }
+
+    @RequestMapping(value = "changeUser",method = RequestMethod.POST)
+    public String changeUserPost(UserVo userVo,HttpSession session){
+        UserVo user = (UserVo)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        userVo.setId(user.getId());
+        userService.updateUser(userVo);
+        session.setAttribute("user", userService.selectUserById(user.getId()));
+        return "userHome";
+    }
+
+    @RequestMapping(value = "changeUser",method = RequestMethod.GET)
+    public String changeUserGet(HttpSession session){
+        UserVo user = (UserVo)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        return "changeUser";
     }
 
     /**
