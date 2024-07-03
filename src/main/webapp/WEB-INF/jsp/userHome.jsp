@@ -117,8 +117,6 @@
             margin-left: 150px; /* 左边距，留出侧边栏的空间 */
         }
 
-
-
         /* 表格样式 */
         .body table {
             width: 80%; /* 表格宽度100% */
@@ -135,7 +133,6 @@
 
         .user-club::before,
         .user-manage::before {
-            content: attr(data-title) ": ";
             display: block;
             font-weight: bold;
             margin-bottom: 10px;
@@ -244,38 +241,34 @@
                 <td>QQ:${user.QQ}</td>
                 <td>微信：${user.weixin}</td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="user-club">
-        我加入的俱乐部
+        </table>
+    </span>
+    <div class="user-club">
+        <p>我加入的俱乐部</p>
         <c:forEach var="club" items="${clubs}">
-            <div class="club-body">
-                <span class="club-name">
-                    <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
-                </span>
-                <div class="club-tags">
-                    标签：
-                    <c:forEach var="tag" items="${club.tags}">
-                        <a href="/user/serarch?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
-                    </c:forEach>
-                </div>
-                <div class="club-join-time">
-                    加入时间：${club.joinTime}
-                </div>
+        <div class="club-body">
+                                <span class="club-name">
+                                    <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
+                                </span>
+            <div class="club-tags">
+                标签：
+                <c:forEach var="tag" items="${club.tags}">
+                    <a href="/user/serarch?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                </c:forEach>
             </div>
-        </c:forEach>
+            <div class="club-join-time">
+                加入时间：${club.joinTime}
+            </div>
+            </c:forEach>
+        </div>
     </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                  <div class="user-manage">
-        我管理的俱乐部
+    <div class="user-manage">
+        <p>我管理的俱乐部</p>
         <c:forEach var="club" items="${manageClubs}">
             <div class="club-body">
-                <span class="club-name">
-                    <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
-                </span>
+                                <span class="club-name">
+                                    <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
+                                </span>
                 <div class="club-tags">
                     标签：
                     <c:forEach var="tag" items="${club.tags}">
@@ -285,13 +278,8 @@
             </div>
         </c:forEach>
     </div>
-                </td>
-            </tr>
-        </table>
-    </span>
-
     <div class="user-activity">
-        所有活动
+        <p>所有活动</p>
     </div>
 </div>
 <div class="footer"></div>
