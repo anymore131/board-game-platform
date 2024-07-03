@@ -60,7 +60,7 @@ public interface CommentsMapper {
      * @param pageSize      每页数量
      * @return              评论列表
      */
-    @Select("select c.id,club_id,c.activity_id,u.user_name,a.activity_name,c.comments,c.comments_time " +
+    @Select("select c.id,c.user_id,c.activity_id,u.user_name,a.activity_name,c.comments,c.comments_time " +
             "from board_game_platform.t_activity_comments c,board_game_platform.t_user u ,board_game_platform.t_activity a " +
             "where c.activity_id = #{activityId} and c.user_id = u.id and c.activity_id = a.id " +
             "Limit #{pageSize} offset ${(pageNo - 1) * pageSize}")
