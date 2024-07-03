@@ -1,12 +1,8 @@
 package cn.edu.zust.se.controller;
 
 import cn.edu.zust.se.bo.ActivityBo;
-import cn.edu.zust.se.service.ActivityServiceI;
-import cn.edu.zust.se.service.ClubServiceI;
-import cn.edu.zust.se.service.GameServiceI;
-import cn.edu.zust.se.vo.ActivityVo;
-import cn.edu.zust.se.vo.ClubVo;
-import cn.edu.zust.se.vo.UserVo;
+import cn.edu.zust.se.service.*;
+import cn.edu.zust.se.vo.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -17,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.List;
+
+import static cn.edu.zust.se.util.Constants.PAGE_SIZE;
 
 /**
  * @author Lenovo
@@ -29,16 +27,19 @@ public class ActivityController {
     @Resource
     GameServiceI gameService;
     @Resource
+    CommentsServiceI commentsService;
+    @Resource
     ClubServiceI clubService;
 
     @RequestMapping(value = "activityHome",method = RequestMethod.GET)
     public String activityHomeGet(@RequestParam(value = "activityId")int activityId,
+                                  @RequestParam(value = "commentsPageNo",required = false) String commentsPageNo,
                                   HttpSession session){
+        cleanSession(session);
         UserVo user = (UserVo)session.getAttribute("user");
         if(user == null){
             return "redirect:/login/login";
         }
-        cleanSession(session);
         ActivityVo activity = activityService.getActivityVoById(activityId, user.getId());
         ClubVo club = clubService.getClubVo(activity.getClubId());
         if(clubService.getClubType(user.getId(), club.getId()) == null){
@@ -47,8 +48,12 @@ public class ActivityController {
             club.setJoined(1);
             club.setClubType(clubService.getClubType(user.getId(), club.getId()));
         }
+        if (commentsPageNo == null || commentsPageNo.isEmpty()){
+            commentsPageNo = "1";
+        }
         session.setAttribute("activity", activity);
         session.setAttribute("club", club);
+        showComments(session, Integer.parseInt(commentsPageNo));
         return "activityHome";
     }
 
@@ -128,6 +133,38 @@ public class ActivityController {
         session.removeAttribute("pictures");
         session.removeAttribute("club");
         session.removeAttribute("game");
+        session.removeAttribute("clubs");
+        session.removeAttribute("activities");
         session.removeAttribute("activity");
+    }
+
+    @RequestMapping(value = "insertActivityComments" , method = RequestMethod.POST)
+    public String insertComments(HttpServletRequest request, HttpSession session) {
+        UserVo user = (UserVo) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login/login";
+        }
+        ActivityVo activity = (ActivityVo) session.getAttribute("activity");
+        commentsService.postActivityComments(user.getId(), activity.getId(), request.getParameter("comments-text"));
+        return "redirect:/activity/activityHome?activityId=" + activity.getId();
+    }
+
+
+    private void showComments(HttpSession session,int commentsPageNo){
+        ActivityVo activity = (ActivityVo) session.getAttribute("activity");
+        if (activity != null) {
+            int maxCommentsPage =commentsService.getActivityCommentsCountByActivityId(activity.getId()) / PAGE_SIZE + 1;
+            session.setAttribute("maxCommentsPage", maxCommentsPage);
+            if (commentsPageNo > maxCommentsPage){
+                commentsPageNo = maxCommentsPage;
+            }else if (commentsPageNo <= 0){
+                commentsPageNo = 1;
+            }
+            if(commentsService.getActivityCommentsCountByActivityId(activity.getId()) > 0){
+                List<ActivityCommentsVo> comments = commentsService.getActivityCommentsByActivityId(activity.getId(),commentsPageNo,PAGE_SIZE);
+                session.setAttribute("comments", comments);
+            }
+            session.setAttribute("commentsPageNo", commentsPageNo);
+        }
     }
 }
