@@ -19,89 +19,94 @@
     </script>
     <style>
         body {
-            width: 100%;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f8f9fa;
         }
 
         .header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            background-color: #f2f2f2; /* 浅灰色背景 */
-            border-bottom: 1px solid #ddd; /* 底部边框 */
-        }
-        .search-body form {
-            display: flex;
-            align-items: center;
-            margin-right: 20px;
-            margin-top: 10px;
         }
 
-        input[type="text"] {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-
-        input[type="submit"] {
-            padding: 5px 10px;
-            background-color: #4CAF50; /* 绿色背景 */
-            color: white; /* 白色文字 */
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
         }
 
         .header-out a {
-            color: #333; /* 退出链接文字颜色 */
-            text-decoration: none; /* 去掉下划线 */
-            font-weight: bold; /* 加粗 */
+            color: #fff;
+            text-decoration: none;
         }
 
-        /* 退出链接的hover样式 */
-        .header-out a:hover {
-            color: #007BFF; /* 蓝色文字 */
-            text-decoration: underline; /* 鼠标悬停时下划线 */
-        }
         .side {
-            margin-left: 100px;
-            width: 140px; /* 侧边栏宽度 */
-            float: left; /* 浮动到左边 */
-            background-color: #f8f9fa; /* 背景色 */
-            padding: 10px; /* 内边距 */
-            text-align: center;
+            background-color: #444;
+            padding: 20px;
+            color: #fff;
         }
 
         .side a {
-            display: block; /* 链接作为块级元素显示 */
-            padding: 5px 0; /* 上下内边距 */
-            text-decoration: none; /* 去除下划线 */
-            color: #333; /* 文本颜色 */
+            display: block;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #fff;
         }
 
-        /* 主体内容样式 */
         .body {
-            margin-left: 150px; /* 左边距，留出侧边栏的空间 */
-        }
-        .avatar{
-            width: 60px;
-            height: 60px;
-            border-radius: 100%;
-            border-color: #ffffff
-        }
-        .footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
             padding: 20px;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
         }
+
+        .search-body form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-body select,
+        .search-body input[type="text"],
+        .search-body input[type="submit"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+
+        .search-body select {
+            margin-right: 10px;
+        }
+
+        .search-body input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .club-body,
+        .activity-body,
+        .user-body {
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .page a {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .page a:hover {
+            background-color: #0056b3;
+        }
+
     </style>
 </head>
 <body>

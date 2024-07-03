@@ -23,80 +23,150 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f5f5f5;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            background-color: #f2f2f2; /* 浅灰色背景 */
-            border-bottom: 1px solid #ddd; /* 底部边框 */
+            padding: 15px;
+            background-color: #343a40;
+            color: #fff;
         }
+
         .search-body form {
             display: flex;
             align-items: center;
             margin-right: 20px;
-            margin-top: 10px;
+            float: right;
         }
 
-        input[type="text"] {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
+        .search-body input[type="text"] {
+            padding: 8px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #444;
+            color: #fff;
         }
 
-        input[type="submit"] {
-            padding: 5px 10px;
-            background-color: #4CAF50; /* 绿色背景 */
-            color: white; /* 白色文字 */
+        .search-body input[type="submit"] {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: #fff;
             border: none;
-            border-radius: 3px;
+            border-radius: 5px;
             cursor: pointer;
         }
 
         .header-out a {
-            color: #333; /* 退出链接文字颜色 */
-            text-decoration: none; /* 去掉下划线 */
-            font-weight: bold; /* 加粗 */
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
         }
 
-        /* 退出链接的hover样式 */
         .header-out a:hover {
-            color: #007BFF; /* 蓝色文字 */
-            text-decoration: underline; /* 鼠标悬停时下划线 */
+            text-decoration: underline;
         }
+
         .side {
-            margin-left: 100px;
-            width: 140px; /* 侧边栏宽度 */
-            float: left; /* 浮动到左边 */
-            background-color: #f8f9fa; /* 背景色 */
-            padding: 10px; /* 内边距 */
+            margin-left: 0;
+            width: 140px;
+            float: left;
+            background-color: #f1f1f1;
+            padding: 10px;
             text-align: center;
         }
 
         .side a {
-            display: block; /* 链接作为块级元素显示 */
-            padding: 5px 0; /* 上下内边距 */
-            text-decoration: none; /* 去除下划线 */
-            color: #333; /* 文本颜色 */
+            display: block;
+            padding: 10px 0;
+            text-decoration: none;
+            color: black;
         }
 
-        /* 主体内容样式 */
-        .body {
-            margin-left: 150px; /* 左边距，留出侧边栏的空间 */
+        .side a:hover {
+            background-color: #e6e6e6;
+            color: #333333;
         }
-        .avatar{
+
+        .body {
+            margin-left: 150px;
+            padding: 20px;
+        }
+
+        .avatar {
             width: 60px;
             height: 60px;
-            border-radius: 100%;
-            border-color: #ffffff
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         }
+
+        .club-img img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .club-body {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .club-describe-item {
+            margin: 10px 0;
+        }
+
+        .club-item {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .activity-body {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .input-comments textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .comment-body {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .page a {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+
+        .page a:hover {
+            background-color: #0056b3;
+        }
+
         .footer {
             background-color: #333;
             color: #fff;
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             position: fixed;
             left: 0;
             bottom: 0;

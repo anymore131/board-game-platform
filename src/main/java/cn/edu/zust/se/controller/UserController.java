@@ -108,9 +108,23 @@ public class UserController {
     }
 
     @RequestMapping(value = "otherHome" ,method = RequestMethod.GET)
-    public String otherHome(@RequestParam(value = "userId",required = false) int userId, Model model){
+    public String otherHome(@RequestParam(value = "userId",required = false) int userId, Model model,HttpSession session){
         UserVo otherUser =userService.selectuserbyid(userId);
         model.addAttribute("otherUser", otherUser);
+        List<ClubVo> clubs = new ArrayList<>();
+        List<ActivityVo> activities = new ArrayList<>();
+        for(Integer id : userService.getUserJoin(otherUser.getId())){
+            clubs.add(clubService.getClubVo(id));
+        }
+        for(ClubVo club : clubs){
+            if (club!=null){
+
+                activities.addAll(activityService.getActivityVoByClubId(club.getId(),otherUser.getId()));
+                System.out.println(activities);
+            }
+        }
+
+        session.setAttribute("activities", activities);
         return "otherHome";
     }
 
