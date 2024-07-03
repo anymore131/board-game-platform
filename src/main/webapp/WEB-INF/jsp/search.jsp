@@ -24,41 +24,91 @@
             padding: 0;
             background-color: #f8f9fa;
         }
-
         .header {
-            background-color: #343a40;
-            color: #fff;
-            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 10px;
+            background-color: #f2f2f2; /* 浅灰色背景 */
+            border-bottom: 1px solid #ddd; /* 底部边框 */
         }
-
         .avatar {
             width: 60px;
             height: 60px;
             border-radius: 50%;
+            border: 2px solid #fff;
+        }
+        .search-body {
+            width: 80%;
+
+            /*flex: 1; !* 占据尽可能多的空间 *!*/
+            display: flex; /* 允许子元素并排显示 */
+            align-items: center; /* 垂直居中 */
+            justify-content: flex-end; /* 子元素靠右对齐 */
+        }
+
+        .search-body form {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        #search-target {
+            margin-right: 10px; /* 下拉框和文本框之间留一些空间 */
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50; /* 绿色背景 */
+            color: white; /* 白色文字 */
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
         }
 
         .header-out a {
-            color: #fff;
-            text-decoration: none;
+            color: black; /* 退出链接文字颜色 */
+            text-decoration: none; /* 去掉下划线 */
+            font-weight: bold; /* 加粗 */
+        }
+
+        /* 退出链接的hover样式 */
+        .header-out a:hover {
+            color: #007BFF; /* 蓝色文字 */
+            text-decoration: underline; /* 鼠标悬停时下划线 */
         }
 
         .side {
-            background-color: #444;
-            padding: 20px;
-            color: #fff;
+            margin-left: 0;
+            width: 140px;
+            float: left;
+            background-color: #6c6a6a;
+            padding: 10px;
+            text-align: center;
         }
 
         .side a {
             display: block;
-            margin-bottom: 10px;
+            padding: 10px 0;
             text-decoration: none;
-            color: #fff;
+            color: black;
+        }
+
+        .side a:hover {
+            background-color: #e6e6e6;
+            color: #333333;
         }
 
         .body {
+            margin-left: 150px;
+            margin-right: 150px;
             padding: 20px;
         }
 

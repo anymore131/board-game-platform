@@ -18,6 +18,32 @@
         </c:if>
     </script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {list-style-type: none;}
+        #circlebutton {
+            position: absolute;
+            bottom: 20px;
+            left: 260px;
+            list-style-type: none;
+            text-align: center;
+        }
+
+        #circlebutton li {
+            margin-left: 10px;
+            float: left;
+        }
+        #circlebutton li div {
+            width: 20px;
+            height: 20px;
+            background: #DDDDDD;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            vertical-align: middle;
+        }
         body {
             width: 100%;
             font-family: Arial, sans-serif;
@@ -26,54 +52,68 @@
             background-color: #f5f5f5;
         }
 
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            background-color: #343a40;
-            color: #fff;
+            padding: 10px;
+            background-color: #f2f2f2; /* 浅灰色背景 */
+            border-bottom: 1px solid #ddd; /* 底部边框 */
+        }
+
+        .search-body {
+            width: 80%;
+
+            /*flex: 1; !* 占据尽可能多的空间 *!*/
+            display: flex; /* 允许子元素并排显示 */
+            align-items: center; /* 垂直居中 */
+            justify-content: flex-end; /* 子元素靠右对齐 */
         }
 
         .search-body form {
             display: flex;
             align-items: center;
             margin-right: 20px;
-            float: right;
+            margin-top: 10px;
         }
 
-        .search-body input[type="text"] {
-            padding: 8px;
-            border: 1px solid #444;
-            border-radius: 5px;
-            background-color: #444;
-            color: #fff;
+        #search-target {
+            margin-right: 10px; /* 下拉框和文本框之间留一些空间 */
         }
 
-        .search-body input[type="submit"] {
-            padding: 8px 15px;
-            background-color: #007bff;
-            color: #fff;
+        input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50; /* 绿色背景 */
+            color: white; /* 白色文字 */
             border: none;
-            border-radius: 5px;
+            border-radius: 3px;
             cursor: pointer;
         }
 
         .header-out a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
+            color: black; /* 退出链接文字颜色 */
+            text-decoration: none; /* 去掉下划线 */
+            font-weight: bold; /* 加粗 */
         }
 
+        /* 退出链接的hover样式 */
         .header-out a:hover {
-            text-decoration: underline;
+            color: #007BFF; /* 蓝色文字 */
+            text-decoration: underline; /* 鼠标悬停时下划线 */
         }
 
         .side {
             margin-left: 0;
             width: 140px;
             float: left;
-            background-color: #f1f1f1;
+            background-color: #6c6a6a;
             padding: 10px;
             text-align: center;
         }
@@ -92,9 +132,17 @@
 
         .body {
             margin-left: 150px;
+            margin-right: 150px;
             padding: 20px;
         }
-
+        .club-img{
+            width: 700px;
+            height: 320px;
+            margin: 0 auto;
+            position: relative;
+            text-align:center;
+            overflow: hidden;
+        }
         .avatar {
             width: 60px;
             height: 60px;
@@ -104,10 +152,9 @@
         }
 
         .club-img img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            width: 700px;
+            height: 320px;
+            margin: 0 auto;
         }
 
         .club-body {
@@ -205,9 +252,23 @@
 </div>
 <div class="body">
     <div class="club-img">
-        <c:forEach var="picture" items="${pictures}">
-            <img src="/user/showPic/${picture.fname}" alt="俱乐部图片">
+        <ul class="box">
+        <c:set var="state" scope="session" value="0"/>
+        <c:forEach var="picture" items="${pictures}" varStatus="status">
+                <c:set var="state"  value="${state+1}" scope="session"/>
+                <li> <img class="img-slide img${state}" src="/user/showPic/${picture.fname}" alt="${state}"></li>
         </c:forEach>
+        </ul>
+
+        <ul id="circlebutton">
+            <c:set var="state" scope="session" value="0"/>
+            <c:forEach var="picture" items="${pictures}" varStatus="status">
+                <li>
+                    <c:set var="state"  value="${state+1}" scope="session"/>
+                    <div class="divEle" style="background: #FF0000;">${state}</div>
+                </li>
+            </c:forEach>
+        </ul>
     </div>
     <div class="club-body">
         <div class="club-name">${club.clubName}</div>
@@ -290,5 +351,55 @@
     </div>
 </div>
 <div class="footer"></div>
+<script type="text/javascript">
+    var index = 0;
+    var divCon = document.getElementsByClassName("divEle");
+    var imgEle = document.getElementsByClassName("img-slide");
+    var divPrev = document.getElementById("prev");
+    var divNext = document.getElementById("next");
+    for (var i = 0; i < divCon.length; i++) {
+        divCon[i].index = i;
+        divCon[i].onmouseover = function() {
+            if (index == this.index){return;}
+            index = this.index;
+            changeImg();
+            clearInterval(change1);
+        }
+    }
+    function autoChangeImg() {
+        index++;
+        changeImg();
+    }
+    var change1 = setInterval(autoChangeImg, 3000);
+    function changeImg() {
+        if (index >= imgEle.length) {
+            index = 0;
+        }
+        for (var i = 0; i < imgEle.length; i++) {
+            imgEle[i].style.display = 'none';
+            divCon[i].style.background = "#DDDDDD";
+        }
+        imgEle[index].style.display = 'block';
+        divCon[index].style.background = "#FF0000";
+    }
+    divPrev.onclick = function() {
+        clearInterval(change1);
+        if (index > 0) {index--} else {index = 4;}
+        changeImg();
+    };
+    divNext.onclick = function() {
+        clearInterval(change1);
+        if (index >= 4) {index = 0;} else {index++;}
+        changeImg();
+    };
+    divNext.onmouseover = function() {clearInterval(change1);}
+    divPrev.onmouseover = function() {clearInterval(change1);}
+    divPrev.onmouseout = function() {
+        change1 = setInterval(autoChangeImg, 3000);
+    }
+    divNext.onmouseout = function() {
+        change1 = setInterval(autoChangeImg, 3000);
+    }
+</script>
 </body>
 </html>

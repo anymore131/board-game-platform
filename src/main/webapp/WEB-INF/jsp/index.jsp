@@ -21,8 +21,9 @@
     }
 
     .header {
-        background-color: #343a40;
-        color: #fff;
+        /*background-color: #343a40;*/
+        background-color: #f2f2f2; /* 浅灰色背景 */
+        border-bottom: 1px solid #ddd; /* 底部边框 */
         padding: 15px;
         display: flex;
         justify-content: space-between;
@@ -37,14 +38,22 @@
     }
 
     .header-out a {
-        color: #fff;
+        color: black;
         text-decoration: none;
     }
 
     .side {
+        float: left;
+
         background-color: #444;
         padding: 20px;
         color: #fff;
+        margin-left: 0;
+        width: 140px;
+
+
+
+        text-align: center;
     }
 
     .side a {
@@ -55,8 +64,9 @@
     }
 
     .body {
+        margin-left: 150px;
+        margin-right: 150px;
         padding: 20px;
-        padding-left: 30px;
     }
 
     .search-body {
@@ -145,8 +155,14 @@
 </div>
 <div class="side">
     <a href="/club/createClub">创建俱乐部</a>
+    <c:if test="${user.type==1}">
+
+        管理
+
+    </c:if>
 </div>
 <div class="body">
+
     <div class="search-body">
         <form action="/user/search" method="post">
             <select id="search-target" name="search-target" >
