@@ -311,6 +311,22 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/userJoin")
+    public String userJoin(HttpSession session){
+        UserVo user = (UserVo) session.getAttribute("user");
+        ClubVo club = (ClubVo) session.getAttribute("club");
+        clubService.userJoinClub(user.getId(),club.getId());
+        return "redirect:/club/clubHome?clubId=" + club.getId();
+    }
+
+    @RequestMapping(value = "/userOut")
+    public String userOut(HttpSession session){
+        UserVo user = (UserVo) session.getAttribute("user");
+        ClubVo club = (ClubVo) session.getAttribute("club");
+        clubService.userOutClub(user.getId(),club.getId());
+        return "redirect:/club/clubHome?clubId=" + club.getId();
+    }
+
     private void cleanSession(HttpSession session){
         session.removeAttribute("activities");
         session.removeAttribute("clubs");
