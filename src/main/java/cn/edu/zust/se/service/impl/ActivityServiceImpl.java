@@ -166,6 +166,11 @@ public class ActivityServiceImpl implements ActivityServiceI {
         activityMapper.deleteUserAttend(userId,activityId);
     }
 
+    @Override
+    public List<ActivityVo> getActivityByUsrId(int userId, int pageNo, int pageSize) {
+        return null;
+    }
+
     public List<String> splitTag(String[] ss) {
         List<String> tags = new ArrayList<>();
         for (String tag : ss) {

@@ -101,6 +101,7 @@ public class UserController {
         if (!manageClubs.isEmpty()){
             session.setAttribute("manageClubs", manageClubs);
         }
+        List<ActivityVo> activities = new ArrayList<>();
         return "userHome";
     }
 

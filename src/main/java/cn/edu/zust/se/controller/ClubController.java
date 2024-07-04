@@ -106,6 +106,7 @@ public class ClubController {
         for (String tag : tags) {
             ss.append(";").append(gameService.getGameTypeId(tag));
         }
+        ss.append(";");
         club.setClubName(request.getParameterValues("clubName")[0]);
         club.setIntroduction(request.getParameterValues("introduction")[0]);
         club.setTags(ss.toString());
@@ -152,8 +153,9 @@ public class ClubController {
         String[] tags = request.getParameterValues("tags");
         StringBuilder ss = new StringBuilder(";");
         for (String tag : tags) {
-            ss.append(";").append(tag);
+            ss.append(";").append(gameService.getGameTypeId(tag));
         }
+        ss.append(";");
         clubBo.setTags(ss.toString());
         clubBo.setProvince(request.getParameterValues("province")[0]);
         clubBo.setCity(request.getParameterValues("city")[0]);

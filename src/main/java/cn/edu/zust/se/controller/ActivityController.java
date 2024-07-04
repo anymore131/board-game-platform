@@ -96,6 +96,7 @@ public class ActivityController {
             for (String tag : tags) {
                 ss.append(";").append(gameService.getGameTypeId(tag));
             }
+            ss.append(";");
             activityBo.setTags(ss.toString());
         }
         if (request.getParameter("endTime") == null||request.getParameter("startTime")==null){

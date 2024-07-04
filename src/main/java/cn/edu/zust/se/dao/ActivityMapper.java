@@ -219,4 +219,7 @@ public interface ActivityMapper {
             "where user_id = #{userId} and activity_id = #{activityId}")
     void deleteUserAttend(@Param("userId") int userId,
                           @Param("activityId") int activityId);
+
+    @Select("select ")
+    List<ActivityVo> selectActivityVoByUserId(@Param("clubId") int clubId);
 }

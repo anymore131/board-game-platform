@@ -17,7 +17,7 @@ public interface ActivityServiceI {
 
     Integer getActivityVoNumberByName(String name);
 
-    List<ActivityVo> getActivityVoByName(String tag, int pageNo, int pageSize, int userId);
+    List<ActivityVo> getActivityVoByName(String name, int pageNo, int pageSize, int userId);
 
     ActivityVo insertActivity(ActivityBo activityBo,int userId);
 
@@ -32,4 +32,6 @@ public interface ActivityServiceI {
     void userAttendActivity(int userId,int activityId);
 
     void userQuitActivity(int userId,int activityId);
+
+    List<ActivityVo> getActivityByUsrId(int userId,int pageNo, int pageSize);
 }
