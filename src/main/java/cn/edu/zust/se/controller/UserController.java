@@ -364,7 +364,7 @@ public class UserController {
         return "redirect:/club/clubHome?clubId=" + club.getId();
     }
 
-    private void cleanSession(HttpSession session){
+    public static void cleanSession(HttpSession session){
         session.removeAttribute("activities");
         session.removeAttribute("clubs");
         session.removeAttribute("manageClubs");
