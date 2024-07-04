@@ -167,8 +167,78 @@ public class ActivityServiceImpl implements ActivityServiceI {
     }
 
     @Override
-    public List<ActivityVo> getActivityByUsrId(int userId, int pageNo, int pageSize) {
-        return null;
+    public Integer getActivityUnStartNumberByUserId(int userId) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        Integer i = activityMapper.selectActivityUnStartNumberByUserId(userId,nowTime);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
+
+    @Override
+    public List<ActivityVo> getActivityUnStartByUserId(int userId, int pageNo, int pageSize) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        List<ActivityVo> activities = activityMapper.selectActivityUnStartByUserId(userId,pageNo,pageSize,nowTime);
+        for (ActivityVo activity : activities) {
+            activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
+            String s = activityMapper.selectActivityVoTagsById(activity.getId());
+            if (s != null) {
+                activity.setTags(splitTag(s.split(";")));
+            }
+            activity.setAttended(1);
+        }
+        return activities;
+    }
+
+    @Override
+    public Integer getActivityStartingNumberByUserId(int userId) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        Integer i = activityMapper.selectActivityStartingNumberByUserId(userId,nowTime);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
+
+    @Override
+    public List<ActivityVo> getActivityStartingByUserId(int userId, int pageNo, int pageSize) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        List<ActivityVo> activities = activityMapper.selectActivityStartingByUserId(userId,pageNo,pageSize,nowTime);
+        for (ActivityVo activity : activities) {
+            activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
+            String s = activityMapper.selectActivityVoTagsById(activity.getId());
+            if (s != null) {
+                activity.setTags(splitTag(s.split(";")));
+            }
+            activity.setAttended(1);
+        }
+        return activities;
+    }
+
+    @Override
+    public Integer getActivityEndNumberByUserId(int userId) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        Integer i =  activityMapper.selectActivityEndNumberByUserId(userId,nowTime);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
+
+    @Override
+    public List<ActivityVo> getActivityEndByUserId(int userId, int pageNo, int pageSize) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        List<ActivityVo> activities = activityMapper.selectActivityEndByUserId(userId,pageNo,pageSize,nowTime);
+        for (ActivityVo activity : activities) {
+            activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
+            String s = activityMapper.selectActivityVoTagsById(activity.getId());
+            if (s != null) {
+                activity.setTags(splitTag(s.split(";")));
+            }
+            activity.setAttended(1);
+        }
+        return activities;
     }
 
     public List<String> splitTag(String[] ss) {

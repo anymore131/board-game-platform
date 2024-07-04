@@ -220,6 +220,81 @@ public interface ActivityMapper {
     void deleteUserAttend(@Param("userId") int userId,
                           @Param("activityId") int activityId);
 
-    @Select("select ")
-    List<ActivityVo> selectActivityVoByUserId(@Param("clubId") int clubId);
+    @Select("select count(a.id) " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c,board_game_platform.t_user_join j,board_game_platform.t_user_attend ua " +
+            "where ua.user_id = #{userId} and a.id = ua.activity_id and c.id = a.club_id and j.user_id = #{userId} and j.club_id = c.id " +
+            "and date(a.start_time) > #{nowTime} ")
+    Integer selectActivityUnStartNumberByUserId(@Param("userId") int userId,
+                                                @Param("nowTime") Date nowTime);
+
+    @Select("select count(a.id) " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c,board_game_platform.t_user_join j,board_game_platform.t_user_attend ua " +
+            "where ua.user_id = #{userId} and a.id = ua.activity_id and c.id = a.club_id and j.user_id = #{userId} and j.club_id = c.id " +
+            "and #{nowTime} between date(a.start_time) and date(a.end_time) ")
+    Integer selectActivityStartingNumberByUserId(@Param("userId") int userId,
+                                                 @Param("nowTime") Date nowTime);
+
+    @Select("select count(a.id) " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c,board_game_platform.t_user_join j,board_game_platform.t_user_attend ua " +
+            "where ua.user_id = #{userId} and a.id = ua.activity_id and c.id = a.club_id and j.user_id = #{userId} and j.club_id = c.id " +
+            "and date(a.end_time) < #{nowTime} ")
+    Integer selectActivityEndNumberByUserId(@Param("userId") int userId,
+                                            @Param("nowTime") Date nowTime);
+
+    /**
+     * 找到用户参加的还没开始的活动
+     * @param userId    用户id
+     * @param pageNo    页码
+     * @param pageSize  每页数量
+     * @param nowTime   现在时间
+     * @return          活动列表
+     */
+    @Select("select a.id,a.club_id,c.club_name,a.activity_name,a.address,a.start_time,a.end_time,a.create_time,j.club_type " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c,board_game_platform.t_user_join j,board_game_platform.t_user_attend ua " +
+            "where ua.user_id = #{userId} and a.id = ua.activity_id and c.id = a.club_id and j.user_id = #{userId} and j.club_id = c.id " +
+            "and date(a.start_time) > #{nowTime} " +
+            "ORDER BY a.start_time " +
+            "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
+    List<ActivityVo> selectActivityUnStartByUserId(@Param("userId") int userId,
+                                                   @Param("pageNo") int pageNo,
+                                                   @Param("pageSize") int pageSize,
+                                                   @Param("nowTime") Date nowTime);
+
+    /**
+     * 找到用户参加的进行中的活动
+     * @param userId    用户id
+     * @param pageNo    页码
+     * @param pageSize  每页数量
+     * @param nowTime   现在时间
+     * @return          活动列表
+     */
+    @Select("select a.id,a.club_id,c.club_name,a.activity_name,a.address,a.start_time,a.end_time,a.create_time,j.club_type " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c,board_game_platform.t_user_join j,board_game_platform.t_user_attend ua " +
+            "where ua.user_id = #{userId} and a.id = ua.activity_id and c.id = a.club_id and j.user_id = #{userId} and j.club_id = c.id " +
+            "and #{nowTime} between date(a.start_time) and date(a.end_time) " +
+            "ORDER BY a.start_time " +
+            "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
+    List<ActivityVo> selectActivityStartingByUserId(@Param("userId") int userId,
+                                                    @Param("pageNo") int pageNo,
+                                                    @Param("pageSize") int pageSize,
+                                                    @Param("nowTime") Date nowTime);
+
+    /**
+     * 找到用户参加的已经结束的活动
+     * @param userId    用户id
+     * @param pageNo    页码
+     * @param pageSize  每页数量
+     * @param nowTime   现在时间
+     * @return          活动列表
+     */
+    @Select("select a.id,a.club_id,c.club_name,a.activity_name,a.address,a.start_time,a.end_time,a.create_time,j.club_type " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c,board_game_platform.t_user_join j,board_game_platform.t_user_attend ua " +
+            "where ua.user_id = #{userId} and a.id = ua.activity_id and c.id = a.club_id and j.user_id = #{userId} and j.club_id = c.id " +
+            "and date(a.end_time) < #{nowTime} " +
+            "ORDER BY a.start_time " +
+            "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
+    List<ActivityVo> selectActivityEndByUserId(@Param("userId") int userId,
+                                               @Param("pageNo") int pageNo,
+                                               @Param("pageSize") int pageSize,
+                                               @Param("nowTime") Date nowTime);
 }

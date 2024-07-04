@@ -33,5 +33,15 @@ public interface ActivityServiceI {
 
     void userQuitActivity(int userId,int activityId);
 
-    List<ActivityVo> getActivityByUsrId(int userId,int pageNo, int pageSize);
+    Integer getActivityUnStartNumberByUserId(int userId);
+    //找到用户参加的还没有开始的活动
+    List<ActivityVo> getActivityUnStartByUserId(int userId,int pageNo, int pageSize);
+
+    Integer getActivityStartingNumberByUserId(int userId);
+    //找到用户参加的真正进行的活动
+    List<ActivityVo> getActivityStartingByUserId(int userId,int pageNo, int pageSize);
+
+    Integer getActivityEndNumberByUserId(int userId);
+    //找到用户参加过的已经结束的活动
+    List<ActivityVo> getActivityEndByUserId(int userId,int pageNo, int pageSize);
 }
