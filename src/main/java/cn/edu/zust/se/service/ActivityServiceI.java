@@ -22,4 +22,7 @@ public interface ActivityServiceI {
     ActivityVo insertActivity(ActivityBo activityBo,int userId);
 
     ActivityVo getActivityVoById(int id, int userId);
+    void updateActivity(ActivityBo activityBo);
+    void userAttendActivity(int userId,int activityId);
+    void userQuitActivity(int userId,int activityId);
 }

@@ -129,6 +129,7 @@
 </div>
 <div class="side">
     <a href="/user/index">首页</a>
+    <a href="/activity/changeActivity">修改活动</a>
 </div>
 <div class="body">
     <div class="activity-img">
@@ -138,6 +139,19 @@
     </div>
     <div class="activity-body">
         <div class="activity-name">${activity.activityName}</div>
+        <div class="activity-attend">
+            <c:if test="${activity.attended == 1}">
+                <div class="activity-attend"><p>已参加</p></div>
+                <div class="activity-attend">
+                    <a href="/activity/userQuit?activityId=${activity.id}">退出</a>
+                </div>
+            </c:if>
+            <c:if test="${activity.attended == 0}">
+                <div class="activity-attend">
+                    <a href="/activity/userAttend?activityId=${activity.id}">加入</a>
+                </div>
+            </c:if>
+        </div>
         <div class="activity-describe">
             <div class="activity-item">详细情况</div>
             <div class="activity-describe-item">俱乐部：<a href="/club/clubHome?clubId=${activity.clubId}">${activity.clubName}</a></div>

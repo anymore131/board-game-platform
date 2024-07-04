@@ -128,6 +128,22 @@ public class ActivityController {
         return "createActivity";
     }
 
+    @RequestMapping(value = "/userAttend")
+    public String userAttend(HttpSession session){
+        UserVo user = (UserVo) session.getAttribute("user");
+        ActivityVo activity = (ActivityVo) session.getAttribute("activity");
+        activityService.userAttendActivity(user.getId(),activity.getId());
+        return "redirect:/activity/activityHome?activityId=" + activity.getId();
+    }
+
+    @RequestMapping(value = "/userQuit")
+    public String userQuit(HttpSession session){
+        UserVo user = (UserVo) session.getAttribute("user");
+        ActivityVo activity = (ActivityVo) session.getAttribute("activity");
+        activityService.userQuitActivity(user.getId(),activity.getId());
+        return "redirect:/activity/activityHome?activityId=" + activity.getId();
+    }
+
     private void cleanSession(HttpSession session) {
         session.removeAttribute("comments");
         session.removeAttribute("pictures");

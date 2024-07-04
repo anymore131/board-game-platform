@@ -126,6 +126,21 @@ public class ActivityServiceImpl implements ActivityServiceI {
         return activity;
     }
 
+    @Override
+    public void updateActivity(ActivityBo activityBo) {
+        activityMapper.updateActivity(activityBo);
+    }
+
+    @Override
+    public void userAttendActivity(int userId, int activityId) {
+        activityMapper.insertUserAttend(userId,activityId);
+    }
+
+    @Override
+    public void userQuitActivity(int userId, int activityId) {
+        activityMapper.deleteUserAttend(userId,activityId);
+    }
+
     public List<String> splitTag(String[] ss) {
         List<String> tags = new ArrayList<String>();
         for (String tag : ss) {

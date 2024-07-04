@@ -12,6 +12,4 @@ public class UserAttend {
     int id;
     int userId;
     int activityId;
-    Date attendTime;
-    int attendType;
 }

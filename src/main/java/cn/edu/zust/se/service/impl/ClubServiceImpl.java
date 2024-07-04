@@ -170,7 +170,12 @@ public class ClubServiceImpl implements ClubServiceI {
      */
     @Override
     public void userJoinClub(int userId, int clubId) {
-        clubMapper.insertUserJoin(userId,clubId,new Date(new java.util.Date().getTime()), 0);
+        clubMapper.insertUserJoin(userId,clubId,new Date(new java.util.Date().getTime()), 1);
+    }
+
+    @Override
+    public void userOutClub(int userId, int clubId) {
+        clubMapper.deleteUserJoin(userId,clubId);
     }
 
     public List<String> splitTag(String[] ss) {

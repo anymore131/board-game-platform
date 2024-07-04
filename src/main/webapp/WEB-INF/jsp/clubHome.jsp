@@ -272,15 +272,19 @@
     </div>
     <div class="club-body">
         <div class="club-name">${club.clubName}</div>
-        <c:if test="${club.joined == 1}">
-            <div class="club-join"><p>已参加</p></div>
-        </c:if>
-        <c:if test="${club.joined == 0}">
-            <div class="club-join">
-                <a href="/user/userJoin?clubId=${club.id}">加入</a>
-            </div>
-        </c:if>
-        <div class="club-join"></div>
+        <div class="club-join">
+            <c:if test="${club.joined == 1}">
+                <div class="club-join"><p>已参加</p></div>
+                <div class="club-join">
+                    <a href="/user/userOut?clubId=${club.id}">退出</a>
+                </div>
+            </c:if>
+            <c:if test="${club.joined == 0}">
+                <div class="club-join">
+                    <a href="/user/userJoin?clubId=${club.id}">加入</a>
+                </div>
+            </c:if>
+        </div>
         <div class="club-describe">
             <div class="club-item">详细情况</div>
             <div class="club-describe-item">地址：${club.province}&nbsp;&nbsp;${club.city}</div>

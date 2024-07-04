@@ -2,10 +2,7 @@ package cn.edu.zust.se.dao;
 
 import cn.edu.zust.se.bo.ActivityBo;
 import cn.edu.zust.se.vo.ActivityVo;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.sql.Date;
 import java.util.List;
@@ -33,6 +30,16 @@ public interface ActivityMapper {
             "(club_id, activity_name, introduction, tags, address, start_time, end_time, create_time) " +
             "VALUES (#{clubId}, #{activityName}, #{introduction}, #{tags}, #{address}, #{startTime}, #{endTime}, #{createTime})")
     void insertActivity(ActivityBo activityBo);
+
+    /**
+     * 修改活动
+     * @Param activityBo
+     */
+    @Update("UPDATE board_game_platform.t_activity " +
+            "SET activity_name = #{activityName},introduction = #{introduction}," +
+            "tags = #{tags}, address = #{address},start_time = #{startTime},end_time = #{endTime} " +
+            "WHERE id = #{id}")
+    void updateActivity(ActivityBo activityBo);
 
     /**
      * 用过活动id寻找活动
