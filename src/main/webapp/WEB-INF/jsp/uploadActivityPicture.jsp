@@ -142,11 +142,11 @@
     </span>
 </div>
 <div class="side">
-    <a href="/user/index">首页</a>
-    <a href="/activity/activityHome?activityId=${activity.id}">返回</a>
+    <a href="/user/index"><p>首页</p></a>
+    <a href="/activity/activityHome?activityId=${activity.id}"><p>返回</p></a>
 </div>
 <div class="body">
-    <form action="/club/upload" method="post" enctype="multipart/form-data">
+    <form action="/activity/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="picture" multiple="multiple"><br>
         <input type="submit" value="上传">
     </form>

@@ -230,6 +230,7 @@
 <div class="side">
     <a href="/user/index"><p>首页</p></a>
     <c:if test="${activity.clubType == 1}">
+        <a href="/activity/uploadActivityPicture" class="club-describe-item"><p>上传活动照片</p></a>
         <a href="/activity/changeActivity?activityId=${activity.id}"><p>修改活动</p></a>
     </c:if>
 </div>
