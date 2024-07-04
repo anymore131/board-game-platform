@@ -67,6 +67,7 @@
         margin-left: 0;
         width: 140px;
         float: left;
+        background-color: #6c6a6a;
         padding: 10px;
         text-align: center;
     }
@@ -183,12 +184,15 @@
     </span>
 </div>
 <div class="side">
-    <a href="/club/createClub"><p>创建俱乐部</p></a>
+    <a href="/club/createClub">创建俱乐部</a>
     <c:if test="${user.type==1}">
-        <a href=""><p>管理</p></a>
+    <a href="/manage/administrator?userId=${user.id}">
+        管理
+    </a>
     </c:if>
 </div>
 <div class="body">
+
     <div class="search-body">
         <form action="/user/search" method="post">
             <select id="search-target" name="search-target" >

@@ -36,6 +36,8 @@ public interface ClubMapper {
             "from board_game_platform.t_club c,board_game_platform.t_user u " +
             "where c.status = 1 and c.id = ${id} and c.user_id = u.id")
     ClubVo getClubById(@Param("id") int id);
+    @Select("select * from board_game_platform.t_club where id=#{id}")
+    ClubBo getClubByIdB(@Param("id") int id);
 
     /**
      * 通过id寻找俱乐部的tags
@@ -218,4 +220,9 @@ public interface ClubMapper {
             "from board_game_platform.t_user_join " +
             "where club_id = #{clubId}")
     Integer selectJoinCount(@Param("clubId") int clubId);
+
+    @Select("select * from board_game_platform.t_club where status=#{visible}")
+    List<ClubVo> selectClubVoByVisible(@Param("visible") int visible);
+    @Update("UPDATE board_game_platform.t_club set status=1 where id=#{id}")
+    void updateVisible(ClubBo club);
 }

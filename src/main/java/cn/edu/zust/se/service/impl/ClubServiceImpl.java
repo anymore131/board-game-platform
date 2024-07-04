@@ -41,6 +41,11 @@ public class ClubServiceImpl implements ClubServiceI {
     }
 
     @Override
+    public ClubBo getClubBo(int id) {
+        return clubMapper.getClubByIdB(id);
+    }
+
+    @Override
     public List<ClubVo> getClubVoByUserJoin(int userId) {
         List<ClubVo> clubVos = clubMapper.selectClubVoByUserJoin(userId);
         for (ClubVo clubVo : clubVos) {
@@ -179,6 +184,16 @@ public class ClubServiceImpl implements ClubServiceI {
     @Override
     public void userOutClub(int userId, int clubId) {
         clubMapper.deleteUserJoin(userId,clubId);
+    }
+
+    @Override
+    public List<ClubVo> selectClubVoByVisible(int status) {
+        return clubMapper.selectClubVoByVisible(status);
+    }
+
+    @Override
+    public void setbisible(ClubBo clubBo) {
+        clubMapper.updateVisible(clubBo);
     }
 
     public List<String> splitTag(String[] ss) {

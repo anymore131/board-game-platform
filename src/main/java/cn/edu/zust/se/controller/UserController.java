@@ -1,5 +1,7 @@
 package cn.edu.zust.se.controller;
 
+import cn.edu.zust.se.bo.ClubBo;
+import cn.edu.zust.se.bo.UserBo;
 import cn.edu.zust.se.service.ActivityServiceI;
 import cn.edu.zust.se.service.ClubServiceI;
 import cn.edu.zust.se.service.UserServiceI;
@@ -70,12 +72,8 @@ public class UserController {
         for(ClubVo club : tjClubs){
             club.setNumber(clubService.getClubJoinNumber(club.getId()));
         }
-        if(!tjClubs.isEmpty()){
-            session.setAttribute("tjClubs",tjClubs);
-        }
-        if(!activities.isEmpty()){
-            session.setAttribute("activities", activities);
-        }
+        session.setAttribute("tjClubs",tjClubs);
+        session.setAttribute("activities", activities);
         return "index";
     }
 
@@ -348,7 +346,7 @@ public class UserController {
         //俱乐部
         if(Objects.equals(searchTarget,"0")){
             cleanSession(session);
-            if(!searchText.isEmpty()){
+            if(!searchText.equals("")){
                 int maxPage1 = clubService.getClubNumberByName(searchText) / PAGE_SIZE + 1;
                 session.setAttribute("maxPage1", maxPage1);
                 if (pageNo1 > maxPage1){
@@ -367,7 +365,7 @@ public class UserController {
         //活动
         else if(Objects.equals(searchTarget,"1")){
             cleanSession(session);
-            if(!searchText.isEmpty()){
+            if(!searchText.equals("")){
                 int maxPage2 = activityService.getActivityVoNumberByName(searchText) / PAGE_SIZE + 1;
                 session.setAttribute("maxPage2", maxPage2);
                 if (pageNo2 > maxPage2){
@@ -385,7 +383,7 @@ public class UserController {
         //标签
         else if(Objects.equals(searchTarget,"2")){
             cleanSession(session);
-            if(!searchText.isEmpty()){
+            if(!searchText.equals("")){
                 int maxPage1 = clubService.getClubNumberByTag(searchText) / PAGE_SIZE + 1;
                 session.setAttribute("maxPage1", maxPage1);
                 int maxPage2 = activityService.getActivityVoNumberByTag(searchText) / PAGE_SIZE + 1;
@@ -415,7 +413,7 @@ public class UserController {
         //用户
         else if(Objects.equals(searchTarget,"3")){
             cleanSession(session);
-            if(!searchText.isEmpty()){
+            if(!searchText.equals("")){
                 int maxPage2 = userService.getUserNumber(searchText) / PAGE_SIZE + 1;
                 session.setAttribute("maxPage2",maxPage2);
                 if(pageNo2 > maxPage2){
