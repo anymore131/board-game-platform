@@ -144,6 +144,53 @@
             position: absolute;
             bottom: 0;
         }
+        .body {
+            background-color: #f5f5f5; /* 设置背景颜色 */
+            color: #333; /* 设置文字颜色 */
+            font-family: Arial, sans-serif; /* 设置字体样式 */
+            border-radius: 5px; /* 设置圆角边框 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+        }
+
+        .body .item {
+            margin-bottom: 10px; /* 设置项目间隔 */
+        }
+
+        .body .newClubs-body {
+            background-color: #fff; /* 设置背景颜色 */
+            padding: 10px; /* 设置内边距 */
+            border: 1px solid #ccc; /* 添加边框 */
+            border-radius: 5px; /* 设置圆角边框 */
+            margin-bottom: 10px; /* 设置间距 */
+        }
+
+        .body input[type="submit"] {
+            background-color: #007bff; /* 设置按钮背景颜色 */
+            color: #fff; /* 设置按钮文字颜色 */
+            padding: 5px 10px; /* 设置按钮内边距 */
+            border: none; /* 去除按钮边框 */
+            border-radius: 3px; /* 设置按钮圆角 */
+            cursor: pointer; /* 鼠标指针样式 */
+            float: right;
+        }
+
+        .body input[type="submit"]:hover {
+            background-color: #0056b3; /* 设置按钮鼠标悬停时的背景颜色 */
+        }
+        .pass {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .pass form {
+            margin-bottom: 0;
+            align-self: flex-end;
+        }
+
+        .pass input[type="submit"] {
+            margin-top: 10px;
+        }
     </style>
     <script>
         <c:if test="${sessionScope.error != null}">
@@ -171,19 +218,22 @@
 <div class="body">
 
     <c:if test="${newClubs != null}">
+
         <div class="item">待审核的俱乐部</div>
+
         <c:forEach var="newClub" items="${newClubs}">
             <div class="newClubs-body">
 
-                <div>${newClub.clubName}</div>
-                <div>${newClub.introduction}</div>
+                <div class="text">${newClub.clubName}</div>
+                <div class="text">${newClub.introduction}</div>
+                <div class="pass">
                 <form method="post" action="/manage/administrator">
                     <input type="hidden" name="userId" value="${user.id}">
                     <input type="hidden"  name="id" value="${newClub.id}">
                     <input type="submit" value="通过">
-                </form>
+                </form></div>
             </div>
-
+            </form>
         </c:forEach>
     </c:if>
     <c:if test="${newClubs == null}">
