@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Lenovo
-  Date: 2024/6/30
-  Time: 下午8:47
+  Date: 2024/7/5
+  Time: 上午12:27
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,7 +10,7 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>创建活动</title>
+    <title>修改活动</title>
     <script>
         <c:if test="${sessionScope.error != null}">
         alert("${sessionScope.error}")
@@ -56,6 +56,18 @@
             cursor: pointer;
         }
 
+        .header-out a {
+            color: #333; /* 退出链接文字颜色 */
+            text-decoration: none; /* 去掉下划线 */
+            font-weight: bold; /* 加粗 */
+        }
+
+        /* 退出链接的hover样式 */
+        .header-out a:hover {
+            color: #007BFF; /* 蓝色文字 */
+            text-decoration: underline; /* 鼠标悬停时下划线 */
+        }
+
         .avatar-body {
             /* 不需要指定宽度，因为我们想要它根据内容自适应大小 */
             display: flex; /* 使用flex布局使头像和链接并排显示 */
@@ -71,18 +83,6 @@
             margin-right: 10px; /* 与链接之间留一些空间 */
             vertical-align: middle; /* 垂直居中（在这个上下文中可能不需要，因为已经使用了align-items: center） */
             border: 2px solid #ffffff; /* 为头像添加一个边框，如果需要的话 */
-        }
-
-        .header-out a {
-            color: #333; /* 退出链接文字颜色 */
-            text-decoration: none; /* 去掉下划线 */
-            font-weight: bold; /* 加粗 */
-        }
-
-        /* 退出链接的hover样式 */
-        .header-out a:hover {
-            color: #007BFF; /* 蓝色文字 */
-            text-decoration: underline; /* 鼠标悬停时下划线 */
         }
 
         .side {
@@ -143,42 +143,52 @@
 </div>
 <div class="side">
     <a href="/user/index"><p>首页</p></a>
-    <a href="/club/clubHome?clubId=${club.id}"><p>返回</p></a>
+    <a href="/activity/activityHome?activityId=${activity.id}"><p>返回</p></a>
 </div>
 <div class="body">
-    <form action="/activity/createActivity" method="post">
+    <form action="/activity/changeActivity" method="post">
         <table>
             <tr>
                 <td>活动名：</td>
-                <td colspan="2"><input type="text" name="activityName"></td>
+                <td><input type="text" name="activityName" value="${activity.activityName}"></td>
             </tr>
             <tr>
-                <td>活动介绍：</td>
-                <td colspan="2"><textarea name="introduction"></textarea></td>
+                <td>简介：</td>
+                <td><textarea name="introduction">${activity.introduction}</textarea></td>
             </tr>
             <tr>
                 <td>位置：</td>
-                <td colspan="2"><input type="text" name="address"></td>
+                <td><input type="text" name="address" value="${activity.address}"></td>
             </tr>
             <tr>
                 <td>标签</td>
-                <td></td>
-                <td></td>
             </tr>
             <tr>
-                <td colspan="3">
+                <td>
                     <c:forEach var="game" items="${games}">
-                        <input type="checkbox" name="tags" value="${game}">${game}
+                        <c:set var="gameCheck" scope="session" value="0"/>
+                        <c:forEach var="tag" items="${club.tags}">
+                            <c:if test="${game == tag}">
+                                <c:set var="gameCheck" scope="session" value="1"/>
+                            </c:if>
+                        </c:forEach>
+                        <c:if test="${gameCheck == 1}">
+                            <input type="checkbox" name="tags" value="${game}" checked>${game}
+                        </c:if>
+                        <c:if test="${gameCheck == 0||gameCheck == null}">
+                            <input type="checkbox" name="tags" value="${game}">${game}
+                        </c:if>
+                        <c:set var="gameCheck" scope="session" value="0"/>
                     </c:forEach>
                 </td>
             </tr>
             <tr>
                 <td>开始时间：</td>
-                <td colspan="w"><input type="date" name="startTime"></td>
+                <td colspan="w"><input type="date" name="startTime" value="${activity.startTime}"></td>
             </tr>
             <tr>
                 <td>结束时间：</td>
-                <td colspan="2"><input type="date" name="endTime"></td>
+                <td colspan="2"><input type="date" name="endTime" value="${activity.endTime}"></td>
             </tr>
             <tr>
                 <td><input type="submit" value="提交"></td>

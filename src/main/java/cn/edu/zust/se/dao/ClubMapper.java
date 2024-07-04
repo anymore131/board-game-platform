@@ -226,4 +226,9 @@ public interface ClubMapper {
 
     @Update("UPDATE board_game_platform.t_club set status=1 where id=#{id}")
     void updateVisible(ClubBo club);
+
+    @Select("select club_type " +
+            "from board_game_platform.t_user_join " +
+            "where club_id = #{clubId} and user_id = #{userId}")
+    Integer selectUserClubType(@Param("userId")int userId,@Param("clubId")int clubId);
 }

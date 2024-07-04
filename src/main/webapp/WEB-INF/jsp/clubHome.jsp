@@ -310,16 +310,21 @@
     <div class="club-body">
         <div class="club-name">${club.clubName}</div>
         <div class="club-join">
-            <c:if test="${club.joined == 1}">
-                <div class="club-join"><p>已参加</p></div>
-                <div class="club-join">
-                    <a href="/user/userOut?clubId=${club.id}">退出</a>
-                </div>
+            <c:if test="${club.clubType == 1}">
+                <div class="club-join"><p>俱乐部管理员</p></div>
             </c:if>
-            <c:if test="${club.joined == 0}">
-                <div class="club-join">
-                    <a href="/user/userJoin?clubId=${club.id}">加入</a>
-                </div>
+            <c:if test="${club.clubType == 0}">
+                <c:if test="${club.joined == 1}">
+                    <div class="club-join"><p>已参加</p></div>
+                    <div class="club-join">
+                        <a href="/user/userOut?clubId=${club.id}">退出</a>
+                    </div>
+                </c:if>
+                <c:if test="${club.joined == 0}">
+                    <div class="club-join">
+                        <a href="/user/userJoin?clubId=${club.id}">加入</a>
+                    </div>
+                </c:if>
             </c:if>
         </div>
         <div class="club-describe">
@@ -341,7 +346,7 @@
                 <span><a href="/user/otherHome?userId=${cj.userId}">${cj.userName}</a></span>
                 <span>${cj.joinTime}</span>
                 <c:if test="${cj.clubType == 1}"><span>管理成员</span></c:if>
-                <c:if test="${cj.clubType == 0}"><span>普通成员</span></c:if>
+                <c:if test="${cj.clubType == 0}"><span>普通成员</span></c:if><br>
             </c:forEach>
         </c:if>
     </div>
@@ -389,7 +394,7 @@
                             </c:if>
                             <c:if test="${club.clubType == 1}">
                                 <div>
-                                    <a href="">修改活动</a>
+                                    <a href="/activity/changeActivity?activityId=${activity.id}">修改活动</a>
                                 </div>
                             </c:if>
                         </div>
@@ -442,7 +447,7 @@
                             </c:if>
                             <c:if test="${club.clubType == 1}">
                                 <div>
-                                    <a href="">修改活动</a>
+                                    <a href="/activity/changeActivity?activityId=${activity.id}">修改活动</a>
                                 </div>
                             </c:if>
                         </div>
@@ -498,7 +503,7 @@
                         </c:if>
                         <c:if test="${club.clubType == 1}">
                             <div>
-                                <a href="">修改活动</a>
+                                <a href="/activity/changeActivity?activityId=${activity.id}">修改活动</a>
                             </div>
                         </c:if>
 

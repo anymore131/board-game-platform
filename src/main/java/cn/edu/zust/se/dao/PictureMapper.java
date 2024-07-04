@@ -17,9 +17,9 @@ public interface PictureMapper {
             "where p.activity_id = #{activityId} and a.id = p.activity_id ")
     List<ActivityPictureVo> selectActivityPictureVoByActivityId(@Param("activityId") int activityId);
 
-    @Select("select p.id,p.name,p.fname,p.club_id,a.activity_name " +
-            "from board_game_platform.t_club_picture p,board_game_platform.t_activity a " +
-            "where p.club_id = #{clubId} and a.id = p.club_id ")
+    @Select("select p.id,p.name,p.fname,p.club_id,c.club_name " +
+            "from board_game_platform.t_club_picture p,board_game_platform.t_club c " +
+            "where p.club_id = #{clubId} and c.id = p.club_id ")
     List<ClubPictureVo> selectClubPictureVoByClubId(@Param("clubId") int clubId);
 
     @Insert("INSERT INTO board_game_platform.t_activity_picture " +

@@ -214,7 +214,7 @@
     </span>
 </div>
 <div class="side">
-    <a href="/user/index">首页</a>
+    <a href="/user/index"><p>首页</p></a>
 </div>
 <div class="body">
     <form action="/user/changeUser" method="post">

@@ -161,7 +161,11 @@
     </span>
 
 </div>
-<div class="side"><a href="/user/index?userId=${user.id}">返回首页</a></div>
+<div class="side">
+    <a href="/user/index?userId=${user.id}">
+        <p>返回首页</p>
+    </a>
+</div>
 <div class="body">
         <div class="item">游戏创建</div>
             <div class="newGame-body">
