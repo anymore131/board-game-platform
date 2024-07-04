@@ -223,6 +223,7 @@ public interface ClubMapper {
 
     @Select("select * from board_game_platform.t_club where status=#{visible}")
     List<ClubVo> selectClubVoByVisible(@Param("visible") int visible);
+
     @Update("UPDATE board_game_platform.t_club set status=1 where id=#{id}")
     void updateVisible(ClubBo club);
 }

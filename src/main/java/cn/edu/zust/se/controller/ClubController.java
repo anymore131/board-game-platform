@@ -45,8 +45,9 @@ public class ClubController {
     @RequestMapping(value = "clubHome", method = RequestMethod.GET)
     public String clubHome(@RequestParam(value = "clubId",required = false) String clubId,
                            @RequestParam(value = "commentsPageNo",required = false) String commentsPageNo,
+                           HttpServletRequest request,
                            HttpSession session) {
-        cleanSession(session);
+        UserController.cleanSession(session);
         UserVo user = (UserVo) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login/login";
@@ -79,6 +80,19 @@ public class ClubController {
         if (commentsPageNo == null || commentsPageNo.isEmpty()){
             commentsPageNo = "1";
         }
+        String pageNo1 = request.getParameter("pageNo1");
+        String pageNo2 = request.getParameter("pageNo2");
+        String pageNo3 = request.getParameter("pageNo3");
+        if (pageNo1 == null || pageNo1.isEmpty()){
+            pageNo1 = "1";
+        }
+        if (pageNo2 == null || pageNo2.isEmpty()){
+            pageNo2 = "1";
+        }
+        if (pageNo3 == null || pageNo3.isEmpty()){
+            pageNo3 = "1";
+        }
+        showActivity(session,Integer.parseInt(pageNo1),Integer.parseInt(pageNo2),Integer.parseInt(pageNo3));
         showComments(session, Integer.parseInt(commentsPageNo));
         return "clubHome";
     }
@@ -256,16 +270,6 @@ public class ClubController {
         return "redirect:/club/clubHome?clubId=" + club.getId();
     }
 
-    private void cleanSession(HttpSession session) {
-        session.removeAttribute("comments");
-        session.removeAttribute("pictures");
-        session.removeAttribute("club");
-        session.removeAttribute("game");
-        session.removeAttribute("clubs");
-        session.removeAttribute("activities");
-        session.removeAttribute("activity");
-    }
-
     private void showComments(HttpSession session,int commentsPageNo){
         ClubVo club = (ClubVo) session.getAttribute("club");
         if (club != null) {
@@ -282,5 +286,55 @@ public class ClubController {
             }
             session.setAttribute("commentsPageNo", commentsPageNo);
         }
+    }
+
+    private void showActivity(HttpSession session ,int pageNo1,int pageNo2,int pageNo3){
+        UserVo user = (UserVo)session.getAttribute("user");
+        List<ActivityVo> activitiesUnStart = new ArrayList<>();
+        List<ActivityVo> activitiesStarting = new ArrayList<>();
+        List<ActivityVo> activitiesEnd = new ArrayList<>();
+        //还没开始的
+        int maxPageNo1 = activityService.getActivityUnStartNumberByUserId(user.getId()) / PAGE_SIZE + 1;
+        //正在进行中的
+        int maxPageNo2 = activityService.getActivityStartingNumberByUserId(user.getId()) / PAGE_SIZE + 1;
+        //结束的
+        int maxPageNo3 = activityService.getActivityEndNumberByUserId(user.getId()) / PAGE_SIZE + 1;
+        //标准化页码
+        if (pageNo1 <= 0){
+            pageNo1 = 1;
+        }
+        if (pageNo2 <= 0){
+            pageNo2 = 1;
+        }
+        if (pageNo3 <= 0){
+            pageNo3 = 1;
+        }
+        if (pageNo1 > maxPageNo1){
+            pageNo1 = maxPageNo1;
+        }
+        if (pageNo2 > maxPageNo2){
+            pageNo2 = maxPageNo2;
+        }
+        if (pageNo3 > maxPageNo3){
+            pageNo3 = maxPageNo3;
+        }
+        if (activityService.getActivityUnStartNumberByUserId(user.getId()) != 0){
+            activitiesUnStart = activityService.getActivityUnStartByUserId(user.getId(), pageNo1,PAGE_SIZE);
+            session.setAttribute("activitiesUnStart", activitiesUnStart);
+        }
+        if (activityService.getActivityStartingNumberByUserId(user.getId()) != 0){
+            activitiesStarting = activityService.getActivityStartingByUserId(user.getId(), pageNo2,PAGE_SIZE);
+            session.setAttribute("activitiesStarting", activitiesStarting);
+        }
+        if (activityService.getActivityEndNumberByUserId(user.getId()) != 0){
+            activitiesEnd = activityService.getActivityEndByUserId(user.getId(), pageNo3,PAGE_SIZE);
+            session.setAttribute("activitiesEnd",activitiesEnd);
+        }
+        session.setAttribute("maxPageNo1", maxPageNo1);
+        session.setAttribute("maxPageNo2", maxPageNo2);
+        session.setAttribute("maxPageNo3", maxPageNo3);
+        session.setAttribute("pageNo1", pageNo1);
+        session.setAttribute("pageNo2", pageNo2);
+        session.setAttribute("pageNo3", pageNo3);
     }
 }

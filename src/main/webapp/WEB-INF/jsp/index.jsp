@@ -205,6 +205,80 @@
             <input type="submit" value="提交" name="action">
         </form>
     </div>
+    <%--正在进行的活动--%>
+    <div class="club-activity">
+        <c:if test="${activitiesStarting != null}">
+            <div class="item">正在进行的活动</div>
+            <c:forEach var="activity" items="${activitiesStarting}">
+                <div class="activity-body">
+                    <div>
+                        <a href="/activity/activityHome?activityId=${activity.id}">
+                                ${activity.activityName}
+                        </a>
+                    </div>
+                    <div>
+                        俱乐部名：
+                        <a href="/club/clubHome?clubId=${activity.clubId}">
+                                ${activity.clubName}
+                        </a>
+                    </div>
+                    <div>
+                        标签：
+                        <c:forEach var="tag" items="${activity.tags}">
+                            <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                        </c:forEach>
+                    </div>
+                    <span>参加人数：${activity.number}</span>
+                    <span>时间：
+                        ${activity.startTime}——${activity.endTime}
+                    </span>
+                </div>
+            </c:forEach>
+            <div class="page">
+                <c:if test="${pageNo2 > 1}">
+                    <a href="/user/index?pageNo2=${pageNo2-1}&&pageNo1=${pageNo1}&&pageNo3=${pageNo3}">上一页</a>
+                </c:if>
+                <c:if test="${pageNo2 < maxpageNo2}">
+                    <a href="/user/index?pageNo2=${pageNo2+1}&&pageNo1=${pageNo1}&&pageNo3=${pageNo3}">下一页</a>
+                </c:if>
+            </div>
+        </c:if>
+        <c:if test="${activitiesStarting == null}">
+            <div class="item">目前没有还没正在进行的活动</div>
+        </c:if>
+    </div>
+    <%--未开始的活动--%>
+    <div class="club-activity">
+        <c:if test="${activitiesUnStart != null}">
+            <div class="item">未开始的活动</div>
+            <c:forEach var="activity" items="${activitiesUnStart}">
+                <div class="activity-body">
+                    <div><a href="/activity/activityHome?activityId=${activity.id}">${activity.activityName}</a></div>
+                    <div>俱乐部名：<a href="/club/clubHome?clubId=${activity.clubId}">${activity.clubName}</a></div>
+                    <div>标签：
+                        <c:forEach var="tag" items="${activity.tags}">
+                            <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                        </c:forEach>
+                    </div>
+                    <span>参加人数：${activity.number}</span>
+                    <span>时间：
+                        ${activity.startTime}——${activity.endTime}
+                    </span>
+                </div>
+            </c:forEach>
+            <div class="page">
+                <c:if test="${pageNo1 > 1}">
+                    <a href="/user/index?pageNo2=${pageNo2}&&pageNo1=${pageNo1-1}&&pageNo3=${pageNo3}">上一页</a>
+                </c:if>
+                <c:if test="${pageNo1 < maxpageNo1}">
+                    <a href="/user/index?pageNo2=${pageNo2}&&pageNo1=${pageNo1+1}&&pageNo3=${pageNo3}">下一页</a>
+                </c:if>
+            </div>
+        </c:if>
+        <c:if test="${activitiesUnStart == null}">
+            <div class="item">目前没有还没开始的活动</div>
+        </c:if>
+    </div>
     <div class="club-activity">
         <c:if test="${tjClubs != null}">
             <div class="item">推荐俱乐部</div>
@@ -253,6 +327,41 @@
         </c:if>
         <c:if test="${activities == null}">
             <div class="item">还没有关注的活动</div>
+        </c:if>
+    </div>
+    <%--已经结束的活动--%>
+    <div class="club-activity">
+        <c:if test="${activitiesEnd != null}">
+            <div class="item">已经结束的活动</div>
+
+            <c:forEach var="activity" items="${activitiesEnd}">
+                <div class="activity-body">
+                    <div><a href="/activity/activityHome?activityId=${activity.id}">${activity.activityName}</a></div>
+                    <div>俱乐部名：<a href="/club/clubHome?clubId=${activity.clubId}">${activity.clubName}</a></div>
+                    <div>标签：
+                        <c:forEach var="tag" items="${activity.tags}">
+                            <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                        </c:forEach>
+                    </div>
+                    <span>参加人数：${activity.number}</span>
+                    <span>时间：
+                        ${activity.startTime}——${activity.endTime}
+                    </span>
+                </div>
+            </c:forEach>
+
+            <div class="page">
+                <c:if test="${pageNo2 > 1}">
+                    <a href="/user/index?pageNo2=${pageNo2}&&pageNo1=${pageNo1}&&pageNo3=${pageNo3-1}">上一页</a>
+                </c:if>
+                <c:if test="${pageNo2 < maxpageNo2}">
+                    <a href="/user/index?pageNo2=${pageNo2}&&pageNo1=${pageNo1}&&pageNo3=${pageNo3+1}">下一页</a>
+                </c:if>
+            </div>
+
+        </c:if>
+        <c:if test="${activitiesEnd == null}">
+            <div class="item">目前没有结束的活动</div>
         </c:if>
     </div>
 </div>

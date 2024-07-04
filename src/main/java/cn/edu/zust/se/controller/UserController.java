@@ -9,6 +9,7 @@ import cn.edu.zust.se.util.Constants;
 import cn.edu.zust.se.vo.ActivityVo;
 import cn.edu.zust.se.vo.ClubVo;
 import cn.edu.zust.se.vo.UserVo;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -46,7 +47,7 @@ public class UserController {
     ActivityServiceI activityService;
 
     @RequestMapping(value = "index",method = RequestMethod.GET)
-    public String indexGet(HttpSession session){
+    public String indexGet(HttpServletRequest request,HttpSession session){
         UserVo user = (UserVo)session.getAttribute("user");
         if(user == null){
             return "redirect:/login/login";
@@ -74,6 +75,19 @@ public class UserController {
         }
         session.setAttribute("tjClubs",tjClubs);
         session.setAttribute("activities", activities);
+        String pageNo1 = request.getParameter("pageNo1");
+        String pageNo2 = request.getParameter("pageNo2");
+        String pageNo3 = request.getParameter("pageNo3");
+        if (pageNo1 == null || pageNo1.isEmpty()){
+            pageNo1 = "1";
+        }
+        if (pageNo2 == null || pageNo2.isEmpty()){
+            pageNo2 = "1";
+        }
+        if (pageNo3 == null || pageNo3.isEmpty()){
+            pageNo3 = "1";
+        }
+        showActivity(session,Integer.parseInt(pageNo1),Integer.parseInt(pageNo2),Integer.parseInt(pageNo3));
         return "index";
     }
 
@@ -88,7 +102,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "userHome" ,method = RequestMethod.GET)
-    public String userHomeGet(HttpSession session){
+    public String userHomeGet(HttpServletRequest request,HttpSession session){
         UserVo user = (UserVo)session.getAttribute("user");
         if(user == null){
             return "redirect:/login/login";
@@ -101,7 +115,19 @@ public class UserController {
         if (!manageClubs.isEmpty()){
             session.setAttribute("manageClubs", manageClubs);
         }
-        List<ActivityVo> activities = new ArrayList<>();
+        String pageNo1 = request.getParameter("pageNo1");
+        String pageNo2 = request.getParameter("pageNo2");
+        String pageNo3 = request.getParameter("pageNo3");
+        if (pageNo1 == null || pageNo1.isEmpty()){
+            pageNo1 = "1";
+        }
+        if (pageNo2 == null || pageNo2.isEmpty()){
+            pageNo2 = "1";
+        }
+        if (pageNo3 == null || pageNo3.isEmpty()){
+            pageNo3 = "1";
+        }
+        showActivity(session,Integer.parseInt(pageNo1),Integer.parseInt(pageNo2),Integer.parseInt(pageNo3));
         return "userHome";
     }
 
@@ -136,7 +162,6 @@ public class UserController {
                 activities.addAll(activityService.getActivityVoByClubId(club.getId(),otherUser.getId()));
             }
         }
-
         session.setAttribute("activities", activities);
         return "otherHome";
     }
@@ -339,13 +364,16 @@ public class UserController {
         return "redirect:/club/clubHome?clubId=" + club.getId();
     }
 
-    private void cleanSession(HttpSession session){
+    public static void cleanSession(HttpSession session){
         session.removeAttribute("activities");
         session.removeAttribute("clubs");
         session.removeAttribute("manageClubs");
         session.removeAttribute("activity");
         session.removeAttribute("club");
         session.removeAttribute("tjClubs");
+        session.removeAttribute("activitiesUnStart");
+        session.removeAttribute("activitiesStarting");
+        session.removeAttribute("activitiesEnd");
     }
 
     private void showSearch(HttpSession session,int pageNo1,int pageNo2){
@@ -437,5 +465,55 @@ public class UserController {
                 session.setAttribute("pageNo3",pageNo2);
             }
         }
+    }
+
+    private void showActivity(HttpSession session ,int pageNo1,int pageNo2,int pageNo3){
+        UserVo user = (UserVo)session.getAttribute("user");
+        List<ActivityVo> activitiesUnStart = new ArrayList<>();
+        List<ActivityVo> activitiesStarting = new ArrayList<>();
+        List<ActivityVo> activitiesEnd = new ArrayList<>();
+        //还没开始的
+        int maxPageNo1 = activityService.getActivityUnStartNumberByUserId(user.getId()) / PAGE_SIZE + 1;
+        //正在进行中的
+        int maxPageNo2 = activityService.getActivityStartingNumberByUserId(user.getId()) / PAGE_SIZE + 1;
+        //结束的
+        int maxPageNo3 = activityService.getActivityEndNumberByUserId(user.getId()) / PAGE_SIZE + 1;
+        //标准化页码
+        if (pageNo1 <= 0){
+            pageNo1 = 1;
+        }
+        if (pageNo2 <= 0){
+            pageNo2 = 1;
+        }
+        if (pageNo3 <= 0){
+            pageNo3 = 1;
+        }
+        if (pageNo1 > maxPageNo1){
+            pageNo1 = maxPageNo1;
+        }
+        if (pageNo2 > maxPageNo2){
+            pageNo2 = maxPageNo2;
+        }
+        if (pageNo3 > maxPageNo3){
+            pageNo3 = maxPageNo3;
+        }
+        if (activityService.getActivityUnStartNumberByUserId(user.getId()) != 0){
+            activitiesUnStart = activityService.getActivityUnStartByUserId(user.getId(), pageNo1,PAGE_SIZE);
+            session.setAttribute("activitiesUnStart", activitiesUnStart);
+        }
+        if (activityService.getActivityStartingNumberByUserId(user.getId()) != 0){
+            activitiesStarting = activityService.getActivityStartingByUserId(user.getId(), pageNo2,PAGE_SIZE);
+            session.setAttribute("activitiesStarting", activitiesStarting);
+        }
+        if (activityService.getActivityEndNumberByUserId(user.getId()) != 0){
+            activitiesEnd = activityService.getActivityEndByUserId(user.getId(), pageNo3,PAGE_SIZE);
+            session.setAttribute("activitiesEnd",activitiesEnd);
+        }
+        session.setAttribute("maxPageNo1", maxPageNo1);
+        session.setAttribute("maxPageNo2", maxPageNo2);
+        session.setAttribute("maxPageNo3", maxPageNo3);
+        session.setAttribute("pageNo1", pageNo1);
+        session.setAttribute("pageNo2", pageNo2);
+        session.setAttribute("pageNo3", pageNo3);
     }
 }

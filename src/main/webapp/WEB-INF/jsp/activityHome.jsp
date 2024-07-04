@@ -142,8 +142,8 @@
         }
 
         .club-img img {
-            width: 700px;
-            height: 320px;
+            width: 75%;
+            object-fit: cover;
             margin: 0 auto;
         }
 
@@ -161,13 +161,6 @@
         .activity-item {
             font-weight: bold;
             margin-top: 20px;
-        }
-
-        .activity-body {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
         }
 
         .input-comments textarea {

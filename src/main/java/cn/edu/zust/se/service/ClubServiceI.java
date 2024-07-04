@@ -11,7 +11,9 @@ import cn.edu.zust.se.vo.UserJoinVo;
  */
 public interface ClubServiceI {
     ClubVo getClubVo(int id);
+
     ClubBo getClubBo(int id);
+
     List<ClubVo> getClubVoByUserJoin(int userId);
 
     List<ClubVo> getClubVoManageByUserJoin(int userId);
@@ -37,7 +39,10 @@ public interface ClubServiceI {
     List<ClubVo> getClubVoByProvinceAndCity(String province, String city,int userId);
 
     void userJoinClub(int userId,int clubId);
+
     List<ClubVo> selectClubVoByVisible(int status);
+
     void setbisible(ClubBo clubBo);
+
     void userOutClub(int userId,int clubId);
 }
