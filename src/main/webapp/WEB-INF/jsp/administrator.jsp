@@ -19,9 +19,12 @@
     </script>
 </head>
 <body>
-<div class="header"></div>
+<div class="header">
+    <a href="/user/index?userId=${user.id}">返回首页</a>
+</div>
 <div class="side"></div>
 <div class="body">
+
     <c:if test="${newClubs != null}">
         <div class="item">待审核的俱乐部</div>
         <c:forEach var="newClub" items="${newClubs}">
