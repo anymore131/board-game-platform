@@ -4,7 +4,6 @@ import cn.edu.zust.se.bo.ActivityBo;
 import cn.edu.zust.se.dao.ActivityMapper;
 import cn.edu.zust.se.dao.GameMapper;
 import cn.edu.zust.se.service.ActivityServiceI;
-import cn.edu.zust.se.vo.ActivityPictureVo;
 import cn.edu.zust.se.vo.ActivityVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -143,9 +142,9 @@ public class ActivityServiceImpl implements ActivityServiceI {
     }
 
     public List<String> splitTag(String[] ss) {
-        List<String> tags = new ArrayList<String>();
+        List<String> tags = new ArrayList<>();
         for (String tag : ss) {
-            if (tag != null && !tag.equals("")) {
+            if (tag != null && !tag.isEmpty()) {
                 tag = gameMapper.selectGameById(Integer.parseInt(tag)).getName();
                 tags.add(tag);
             }

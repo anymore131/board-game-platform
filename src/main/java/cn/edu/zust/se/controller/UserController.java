@@ -1,6 +1,5 @@
 package cn.edu.zust.se.controller;
 
-import cn.edu.zust.se.bo.UserBo;
 import cn.edu.zust.se.service.ActivityServiceI;
 import cn.edu.zust.se.service.ClubServiceI;
 import cn.edu.zust.se.service.UserServiceI;
@@ -349,7 +348,7 @@ public class UserController {
         //俱乐部
         if(Objects.equals(searchTarget,"0")){
             cleanSession(session);
-            if(!searchText.equals("")){
+            if(!searchText.isEmpty()){
                 int maxPage1 = clubService.getClubNumberByName(searchText) / PAGE_SIZE + 1;
                 session.setAttribute("maxPage1", maxPage1);
                 if (pageNo1 > maxPage1){
@@ -368,7 +367,7 @@ public class UserController {
         //活动
         else if(Objects.equals(searchTarget,"1")){
             cleanSession(session);
-            if(!searchText.equals("")){
+            if(!searchText.isEmpty()){
                 int maxPage2 = activityService.getActivityVoNumberByName(searchText) / PAGE_SIZE + 1;
                 session.setAttribute("maxPage2", maxPage2);
                 if (pageNo2 > maxPage2){
@@ -386,7 +385,7 @@ public class UserController {
         //标签
         else if(Objects.equals(searchTarget,"2")){
             cleanSession(session);
-            if(!searchText.equals("")){
+            if(!searchText.isEmpty()){
                 int maxPage1 = clubService.getClubNumberByTag(searchText) / PAGE_SIZE + 1;
                 session.setAttribute("maxPage1", maxPage1);
                 int maxPage2 = activityService.getActivityVoNumberByTag(searchText) / PAGE_SIZE + 1;
@@ -416,7 +415,7 @@ public class UserController {
         //用户
         else if(Objects.equals(searchTarget,"3")){
             cleanSession(session);
-            if(!searchText.equals("")){
+            if(!searchText.isEmpty()){
                 int maxPage2 = userService.getUserNumber(searchText) / PAGE_SIZE + 1;
                 session.setAttribute("maxPage2",maxPage2);
                 if(pageNo2 > maxPage2){

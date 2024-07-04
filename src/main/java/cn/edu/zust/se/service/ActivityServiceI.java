@@ -1,7 +1,6 @@
 package cn.edu.zust.se.service;
 
 import cn.edu.zust.se.bo.ActivityBo;
-import cn.edu.zust.se.vo.ActivityPictureVo;
 import cn.edu.zust.se.vo.ActivityVo;
 
 import java.util.List;

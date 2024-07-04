@@ -1,7 +1,6 @@
 package cn.edu.zust.se.controller;
 
 import cn.edu.zust.se.bo.ActivityBo;
-import cn.edu.zust.se.dao.PictureMapper;
 import cn.edu.zust.se.service.*;
 import cn.edu.zust.se.vo.*;
 import jakarta.servlet.http.HttpServletRequest;
