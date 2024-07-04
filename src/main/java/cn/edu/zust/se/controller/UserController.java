@@ -96,9 +96,13 @@ public class UserController {
             return "redirect:/login/login";
         }
         List<ClubVo> clubs = clubService.getClubVoByUserJoin(user.getId());
-        session.setAttribute("clubs", clubs);
+        if (!clubs.isEmpty()){
+            session.setAttribute("clubs", clubs);
+        }
         List<ClubVo> manageClubs = clubService.getClubVoManageByUserJoin(user.getId());
-        session.setAttribute("manageClubs", manageClubs);
+        if (!manageClubs.isEmpty()){
+            session.setAttribute("manageClubs", manageClubs);
+        }
         return "userHome";
     }
 

@@ -222,8 +222,8 @@
     </span>
 </div>
 <div class="side">
-    <a href="/user/index">首页</a>
-    <a href="/activity/changeActivity">修改活动</a>
+    <a href="/user/index"><p>首页</p></a>
+    <a href="/activity/changeActivity"><p>修改活动</p></a>
 </div>
 <div class="body">
     <c:if test="${pictures != null}">

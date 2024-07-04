@@ -129,7 +129,6 @@
             margin-left: 0;
             width: 140px;
             float: left;
-            background-color: #6c6a6a;
             padding: 10px;
             text-align: center;
         }
