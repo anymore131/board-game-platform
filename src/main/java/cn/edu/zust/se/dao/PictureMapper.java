@@ -35,4 +35,14 @@ public interface PictureMapper {
     void insertClubPicture(@Param("name") String name,
                            @Param("fname") String fname,
                            @Param("clubId") int clubId);
+
+    @Select("select count(id) " +
+            "from board_game_platform.t_club_picture " +
+            "where club_id=#{clubId}")
+    Integer selectClubPictureCountByClubId(@Param("clubId") int clubId);
+
+    @Select("select count(id) " +
+            "from board_game_platform.t_activity_picture " +
+            "where activity_id=#{activityId}")
+    Integer selectActivityPictureCountByActivityId(@Param("activityId") int activityId);
 }

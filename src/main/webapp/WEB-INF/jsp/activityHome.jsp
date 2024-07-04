@@ -23,6 +23,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f8f9fa;
         }
 
         .header {
@@ -33,11 +34,23 @@
             background-color: #f2f2f2; /* 浅灰色背景 */
             border-bottom: 1px solid #ddd; /* 底部边框 */
         }
+
+        .search-body {
+            flex: 1; /* 占据尽可能多的空间 */
+            display: flex; /* 允许子元素并排显示 */
+            align-items: center; /* 垂直居中 */
+            justify-content: flex-end; /* 子元素靠右对齐 */
+        }
+
         .search-body form {
             display: flex;
             align-items: center;
             margin-right: 20px;
             margin-top: 10px;
+        }
+
+        #search-target {
+            margin-right: 10px; /* 下拉框和文本框之间留一些空间 */
         }
 
         input[type="text"] {
@@ -223,7 +236,9 @@
 </div>
 <div class="side">
     <a href="/user/index"><p>首页</p></a>
-    <a href="/activity/changeActivity"><p>修改活动</p></a>
+    <c:if test="${clubType == 1}">
+        <a href="/activity/changeActivity"><p>修改活动</p></a>
+    </c:if>
 </div>
 <div class="body">
     <c:if test="${pictures != null}">
@@ -245,6 +260,9 @@
                 </c:forEach>
             </ul>
         </div>
+    </c:if>
+    <c:if test="${pictures == null}">
+
     </c:if>
     <div class="activity-body">
         <div class="activity-name">${activity.activityName}</div>

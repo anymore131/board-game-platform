@@ -22,9 +22,9 @@ public interface ActivityMapper {
             "where club_id = #{clubId} and activity_name = #{activityName}")
     Integer selectActivityIdByClubIdAndActivityName(@Param("clubId") int clubId, @Param("activityName") String activityName);
 
-    @Select("SELECT * " +
-            "FROM board_game_platform.t_activity " +
-            "WHERE club_id = #{clubId}")
+    @Select("SELECT a.id,a.club_id,c.club_name,a.activity_name,a.introduction,a.address,a.start_time,a.end_time,a.create_time " +
+            "FROM board_game_platform.t_activity a,board_game_platform.t_club c " +
+            "WHERE a.club_id = #{clubId} and c.id = a.club_id ")
     List<ActivityVo> listClubActivity(@Param("clubId") int clubId);
 
     /**

@@ -24,7 +24,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
         }
 
         .header {
@@ -189,11 +189,12 @@
             color: #666;
             margin-right: 5px;
         }
+
         .footer {
             background-color: #333;
             color: #fff;
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             position: fixed;
             left: 0;
             bottom: 0;

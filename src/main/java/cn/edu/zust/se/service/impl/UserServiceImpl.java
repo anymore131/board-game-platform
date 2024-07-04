@@ -35,13 +35,11 @@ public class UserServiceImpl implements UserServiceI {
 
     @Override
     public List<UserVo> getUser(String userName, int pageNo,int pageSize) {
-        System.out.println(userMapper.getUserVoByUserName(userName,pageNo,pageSize));
         return userMapper.getUserVoByUserName(userName,pageNo,pageSize);
     }
 
     @Override
     public Integer getUserNumber(String userName) {
-        System.out.println(userMapper.getUserByUserName(userName));
         return userMapper.getUserByUserName(userName);
     }
 

@@ -27,7 +27,7 @@ public interface ActivityServiceI {
 
     void updateActivity(ActivityBo activityBo);
 
-    List<ActivityVo> listClubActivity(int clubId);
+    List<ActivityVo> listClubActivity(int clubId,int userId);
 
     void userAttendActivity(int userId,int activityId);
 

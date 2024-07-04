@@ -28,21 +28,6 @@
             overflow-y: auto;
         }
 
-        input[type="text"] {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-
-        input[type="submit"] {
-            padding: 5px 10px;
-            background-color: #4CAF50; /* 绿色背景 */
-            color: white; /* 白色文字 */
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
         .header {
             display: flex;
             justify-content: space-between;
@@ -53,9 +38,7 @@
         }
 
         .search-body {
-            width: 80%;
-
-            /*flex: 1; !* 占据尽可能多的空间 *!*/
+            flex: 1; /* 占据尽可能多的空间 */
             display: flex; /* 允许子元素并排显示 */
             align-items: center; /* 垂直居中 */
             justify-content: flex-end; /* 子元素靠右对齐 */
@@ -70,6 +53,21 @@
 
         #search-target {
             margin-right: 10px; /* 下拉框和文本框之间留一些空间 */
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50; /* 绿色背景 */
+            color: white; /* 白色文字 */
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
         }
 
         .header-out a {
@@ -178,13 +176,14 @@
         }
 
         .footer {
-            background-color: #343a40;
+            background-color: #333;
             color: #fff;
-            padding: 15px;
             text-align: center;
-            width: 100%;
-            position: absolute;
+            padding: 15px;
+            position: fixed;
+            left: 0;
             bottom: 0;
+            width: 100%;
         }
     </style>
 </head>

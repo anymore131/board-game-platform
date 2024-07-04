@@ -178,7 +178,7 @@ public class ClubServiceImpl implements ClubServiceI {
      */
     @Override
     public void userJoinClub(int userId, int clubId) {
-        clubMapper.insertUserJoin(userId,clubId,new Date(new java.util.Date().getTime()), 1);
+        clubMapper.insertUserJoin(userId,clubId,new Date(new java.util.Date().getTime()), 0);
     }
 
     @Override

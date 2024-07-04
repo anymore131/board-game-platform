@@ -132,9 +132,7 @@ public class UserController {
         }
         for(ClubVo club : clubs){
             if (club!=null){
-
                 activities.addAll(activityService.getActivityVoByClubId(club.getId(),otherUser.getId()));
-                System.out.println(activities);
             }
         }
 
@@ -322,6 +320,9 @@ public class UserController {
     public String userJoin(HttpSession session){
         UserVo user = (UserVo) session.getAttribute("user");
         ClubVo club = (ClubVo) session.getAttribute("club");
+        if(user == null){
+            return "redirect:/login/login";
+        }
         clubService.userJoinClub(user.getId(),club.getId());
         return "redirect:/club/clubHome?clubId=" + club.getId();
     }
@@ -330,6 +331,9 @@ public class UserController {
     public String userOut(HttpSession session){
         UserVo user = (UserVo) session.getAttribute("user");
         ClubVo club = (ClubVo) session.getAttribute("club");
+        if(user == null){
+            return "redirect:/login/login";
+        }
         clubService.userOutClub(user.getId(),club.getId());
         return "redirect:/club/clubHome?clubId=" + club.getId();
     }

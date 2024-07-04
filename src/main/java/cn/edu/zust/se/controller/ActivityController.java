@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import static cn.edu.zust.se.util.Constants.PAGE_SIZE;
@@ -54,8 +55,9 @@ public class ActivityController {
         if (commentsPageNo == null || commentsPageNo.isEmpty()){
             commentsPageNo = "1";
         }
-        List<ActivityPictureVo> activityPicture = pictureService.selectActivityPictureByActivityId(activity.getId());
-        if (!activityPicture.isEmpty()){
+        List<ActivityPictureVo> activityPicture = new ArrayList<>();
+        if (pictureService.selectActivityPictureCountByActivityId(activityId) != 0){
+            activityPicture = pictureService.selectActivityPictureByActivityId(activityId);
             session.setAttribute("pictures", activityPicture);
         }
         session.setAttribute("activity", activity);
@@ -133,6 +135,36 @@ public class ActivityController {
         List<String> games = gameService.selectAllGameName();
         session.setAttribute("games", games);
         return "createActivity";
+    }
+
+    @RequestMapping(value = "attendIn")
+    public String attendInGet(HttpServletRequest request, HttpSession session) {
+        UserVo user = (UserVo)session.getAttribute("user");
+        ClubVo club = (ClubVo)session.getAttribute("club");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        if(club == null){
+            return "redirect:/user/index";
+        }
+        String activityId = request.getParameter("activityId");
+        activityService.userAttendActivity(user.getId(),Integer.parseInt(activityId));
+        return "redirect:/club/clubHome?clubId="+club.getId();
+    }
+
+    @RequestMapping(value = "attendOut")
+    public String attendOutGet(HttpServletRequest request,HttpSession session) {
+        UserVo user = (UserVo)session.getAttribute("user");
+        ClubVo club = (ClubVo)session.getAttribute("club");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        if(club == null){
+            return "redirect:/user/index";
+        }
+        String activityId = request.getParameter("activityId");
+        activityService.userQuitActivity(user.getId(),Integer.parseInt(activityId));
+        return "redirect:/club/clubHome?clubId="+club.getId();
     }
 
     @RequestMapping(value = "/userAttend")

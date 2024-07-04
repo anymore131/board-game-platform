@@ -49,7 +49,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
         }
 
         .header {
@@ -62,9 +62,7 @@
         }
 
         .search-body {
-            width: 80%;
-
-            /*flex: 1; !* 占据尽可能多的空间 *!*/
+            flex: 1; /* 占据尽可能多的空间 */
             display: flex; /* 允许子元素并排显示 */
             align-items: center; /* 垂直居中 */
             justify-content: flex-end; /* 子元素靠右对齐 */
@@ -79,6 +77,21 @@
 
         #search-target {
             margin-right: 10px; /* 下拉框和文本框之间留一些空间 */
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50; /* 绿色背景 */
+            color: white; /* 白色文字 */
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
         }
 
         .avatar-body {
@@ -96,21 +109,6 @@
             margin-right: 10px; /* 与链接之间留一些空间 */
             vertical-align: middle; /* 垂直居中（在这个上下文中可能不需要，因为已经使用了align-items: center） */
             border: 2px solid #ffffff; /* 为头像添加一个边框，如果需要的话 */
-        }
-
-        input[type="text"] {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-
-        input[type="submit"] {
-            padding: 5px 10px;
-            background-color: #4CAF50; /* 绿色背景 */
-            color: white; /* 白色文字 */
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
         }
 
         .header-out a {
@@ -331,19 +329,28 @@
     <div class="club-activity">
         <div class="club-item">活动</div>
         <c:forEach var="activity" items="${activities}">
-            <div class="activity-body">
-                <div><a href="/activity/activityHome?activityId=${activity.id}">${activity.activityName}</a></div>
-<%--                <div>标签：--%>
-<%--                    <c:forEach var="tag" items="${activity.tags}">--%>
-<%--                        <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;--%>
-<%--                    </c:forEach>--%>
-<%--                </div>--%>
-<%--                <span>参加人数：${activity.number}</span>--%>
+            <div class="comment-body">
+                <div>
+                    <a href="/activity/activityHome?activityId=${activity.id}">${activity.activityName}</a>
+                </div>
+                <div>标签：
+                    <c:forEach var="tag" items="${activity.tags}">
+                        <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                    </c:forEach>
+                </div>
+                <span>参加人数：${activity.number}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span>时间：
                     ${activity.startTime}——${activity.endTime}
                 </span>
-                <c:if test="${club.clubType == 1}">
-                    <a href="/club/activityCancel?activityId=${activity.id}">取消活动</a>
+                <c:if test="${activity.attended == 0}">
+                    <div>
+                        <a href="/activity/attendIn?activityId=${activity.id}">参加活动</a>
+                    </div>
+                </c:if>
+                <c:if test="${activity.attended == 1}">
+                    <div>
+                        <a href="/activity/attendOut?activityId=${activity.id}">取消活动</a>
+                    </div>
                 </c:if>
             </div>
         </c:forEach>

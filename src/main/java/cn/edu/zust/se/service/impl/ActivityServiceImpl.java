@@ -139,8 +139,21 @@ public class ActivityServiceImpl implements ActivityServiceI {
     }
 
     @Override
-    public List<ActivityVo> listClubActivity(int clubId) {
-        return activityMapper.listClubActivity(clubId);
+    public List<ActivityVo> listClubActivity(int clubId,int userId) {
+        List<ActivityVo> activities = activityMapper.listClubActivity(clubId);
+        for (ActivityVo activity : activities) {
+            activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
+            String s = activityMapper.selectActivityVoTagsById(activity.getId());
+            if (s != null) {
+                activity.setTags(splitTag(s.split(";")));
+            }
+            if (activityMapper.selectActivityByUserIdAndActivityId(userId, activity.getId()) != null) {
+                activity.setAttended(1);
+            } else {
+                activity.setAttended(0);
+            }
+        }
+        return activities;
     }
 
     @Override

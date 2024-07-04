@@ -38,4 +38,14 @@ public class PictureServiceImpl implements PictureServiceI {
     public List<ActivityPictureVo> selectActivityPictureByActivityId(int activityId) {
         return pictureMapper.selectActivityPictureVoByActivityId(activityId);
     }
+
+    @Override
+    public Integer selectClubPictureCountByClubId(int clubId) {
+        return pictureMapper.selectClubPictureCountByClubId(clubId);
+    }
+
+    @Override
+    public Integer selectActivityPictureCountByActivityId(int activityId) {
+        return pictureMapper.selectActivityPictureCountByActivityId(activityId);
+    }
 }

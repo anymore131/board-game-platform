@@ -16,4 +16,8 @@ public interface PictureServiceI {
     List<ClubPictureVo> selectClubPictureByClubId(int clubId);
 
     List<ActivityPictureVo> selectActivityPictureByActivityId(int activityId);
+
+    Integer selectClubPictureCountByClubId(int clubId);
+
+    Integer selectActivityPictureCountByActivityId(int activityId);
 }

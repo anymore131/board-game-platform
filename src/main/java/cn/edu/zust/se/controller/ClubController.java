@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -61,18 +62,19 @@ public class ClubController {
             club.setJoined(0);
         }
         club.setNumber(clubService.getClubJoinNumber(club.getId()));
-        List<ClubPictureVo> clubPicture = pictureService.selectClubPictureByClubId(club.getId());
+        List<ClubPictureVo> clubPicture = new ArrayList<>();
         if (club.getClubType() == 1) {
             List<UserJoinVo> userJoins = clubService.getUserJoinVoByClubId(club.getId());
             session.setAttribute("userJoins", userJoins);
         }
-        if (!clubPicture.isEmpty()) {
+        if (pictureService.selectClubPictureCountByClubId(club.getId()) != 0) {
+            clubPicture = pictureService.selectClubPictureByClubId(club.getId());
             session.setAttribute("pictures", clubPicture);
         }
-        List<ActivityVo> activities = activityService.listClubActivity(club.getId());
-        session.setAttribute("activities",activities);
-        System.out.println(activities);
-        session.setAttribute("pictures", clubPicture);
+        List<ActivityVo> activities = activityService.listClubActivity(club.getId(), user.getId());
+        if (!activities.isEmpty()){
+            session.setAttribute("activities",activities);
+        }
         session.setAttribute("club", club);
         if (commentsPageNo == null || commentsPageNo.isEmpty()){
             commentsPageNo = "1";
