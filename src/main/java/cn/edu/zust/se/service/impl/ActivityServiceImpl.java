@@ -4,6 +4,7 @@ import cn.edu.zust.se.bo.ActivityBo;
 import cn.edu.zust.se.dao.ActivityMapper;
 import cn.edu.zust.se.dao.GameMapper;
 import cn.edu.zust.se.service.ActivityServiceI;
+import cn.edu.zust.se.vo.ActivityPictureVo;
 import cn.edu.zust.se.vo.ActivityVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,7 +105,7 @@ public class ActivityServiceImpl implements ActivityServiceI {
             if(activityMapper.selectActivityVoTagsById(activity.getId())!=null){
                 activity.setTags(splitTag(activityMapper.selectActivityVoTagsById(activity.getId()).split(";")));
             }
-            activityMapper.insertUserAttend(activity.getId(),userId);
+            activityMapper.insertUserAttend(userId,activity.getId());
             return activity;
         }
         return null;

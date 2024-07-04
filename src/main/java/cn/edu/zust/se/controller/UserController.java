@@ -71,8 +71,12 @@ public class UserController {
         for(ClubVo club : tjClubs){
             club.setNumber(clubService.getClubJoinNumber(club.getId()));
         }
-        session.setAttribute("tjClubs",tjClubs);
-        session.setAttribute("activities", activities);
+        if(!tjClubs.isEmpty()){
+            session.setAttribute("tjClubs",tjClubs);
+        }
+        if(!activities.isEmpty()){
+            session.setAttribute("activities", activities);
+        }
         return "index";
     }
 

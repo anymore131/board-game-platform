@@ -28,68 +28,111 @@
             overflow-y: auto;
         }
 
+        input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50; /* 绿色背景 */
+            color: white; /* 白色文字 */
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
         .header {
-            background-color: #343a40;
-            color: #fff;
-            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 10px;
+            background-color: #f2f2f2; /* 浅灰色背景 */
+            border-bottom: 1px solid #ddd; /* 底部边框 */
+        }
+
+        .search-body {
+            width: 80%;
+
+            /*flex: 1; !* 占据尽可能多的空间 *!*/
+            display: flex; /* 允许子元素并排显示 */
+            align-items: center; /* 垂直居中 */
+            justify-content: flex-end; /* 子元素靠右对齐 */
         }
 
         .search-body form {
             display: flex;
             align-items: center;
+            margin-right: 20px;
+            margin-top: 10px;
         }
 
-        .search-body select,
-        .search-body input[type="text"],
-        .search-body input[type="submit"] {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-        }
-
-        .search-body select {
-            margin-right: 10px;
-        }
-
-        .search-body input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        .avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid #fff;
+        #search-target {
+            margin-right: 10px; /* 下拉框和文本框之间留一些空间 */
         }
 
         .header-out a {
-            color: #fff;
-            text-decoration: none;
+            color: #333; /* 退出链接文字颜色 */
+            text-decoration: none; /* 去掉下划线 */
+            font-weight: bold; /* 加粗 */
+        }
+
+        /* 退出链接的hover样式 */
+        .header-out a:hover {
+            color: #007BFF; /* 蓝色文字 */
+            text-decoration: underline; /* 鼠标悬停时下划线 */
+        }
+
+        .avatar-body {
+            /* 不需要指定宽度，因为我们想要它根据内容自适应大小 */
+            display: flex; /* 使用flex布局使头像和链接并排显示 */
+            align-items: center; /* 垂直居中 */
+            margin-right: 10px; /* 与搜索表单之间留一些空间 */
+        }
+
+        .avatar {
+            width: 50px; /* 头像宽度 */
+            height: 50px; /* 头像高度 */
+            border-radius: 50%; /* 圆形头像 */
+            /* margin-left: 1200px; 这个设置是错误的，应该去掉 */
+            margin-right: 10px; /* 与链接之间留一些空间 */
+            vertical-align: middle; /* 垂直居中（在这个上下文中可能不需要，因为已经使用了align-items: center） */
+            border: 2px solid #ffffff; /* 为头像添加一个边框，如果需要的话 */
         }
 
         .side {
-            background-color: #444;
-            padding: 20px;
-            color: #fff;
+            margin-left: 0;
+            width: 140px;
+            float: left;
+            padding: 10px;
+            text-align: center;
         }
 
         .side a {
             display: block;
-            margin-bottom: 10px;
+            padding: 10px 0;
             text-decoration: none;
-            color: #fff;
+            color: black;
+        }
+
+        .side a p{
+            margin: 0;
+        }
+
+        .side a:hover {
+            background-color: #e6e6e6;
+            color: #333333;
+        }
+
+        .side a:hover p{
+            color: #007bff;
         }
 
         .body {
+            margin-left: 150px;
+            margin-right: 150px;
             padding: 20px;
-            padding-left: 30px;
-
         }
 
         .user-message {
@@ -137,7 +180,7 @@
         .footer {
             background-color: #343a40;
             color: #fff;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             width: 100%;
             position: absolute;

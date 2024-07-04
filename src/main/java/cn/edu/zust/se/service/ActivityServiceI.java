@@ -1,6 +1,7 @@
 package cn.edu.zust.se.service;
 
 import cn.edu.zust.se.bo.ActivityBo;
+import cn.edu.zust.se.vo.ActivityPictureVo;
 import cn.edu.zust.se.vo.ActivityVo;
 
 import java.util.List;
@@ -22,7 +23,10 @@ public interface ActivityServiceI {
     ActivityVo insertActivity(ActivityBo activityBo,int userId);
 
     ActivityVo getActivityVoById(int id, int userId);
+
     void updateActivity(ActivityBo activityBo);
+
     void userAttendActivity(int userId,int activityId);
+
     void userQuitActivity(int userId,int activityId);
 }

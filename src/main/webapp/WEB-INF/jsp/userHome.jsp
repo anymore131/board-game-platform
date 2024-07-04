@@ -97,20 +97,33 @@
             vertical-align: middle; /* 垂直居中（在这个上下文中可能不需要，因为已经使用了align-items: center） */
             border: 2px solid #ffffff; /* 为头像添加一个边框，如果需要的话 */
         }
+
         .side {
-            margin-left: 100px;
-            width: 140px; /* 侧边栏宽度 */
-            float: left; /* 浮动到左边 */
-            background-color: #f8f9fa; /* 背景色 */
-            padding: 10px; /* 内边距 */
+            margin-left: 0;
+            width: 140px;
+            float: left;
+            padding: 10px;
             text-align: center;
         }
 
         .side a {
-            display: block; /* 链接作为块级元素显示 */
-            padding: 5px 0; /* 上下内边距 */
-            text-decoration: none; /* 去除下划线 */
-            color: #333; /* 文本颜色 */
+            display: block;
+            padding: 10px 0;
+            text-decoration: none;
+            color: black;
+        }
+
+        .side a p{
+            margin: 0;
+        }
+
+        .side a:hover {
+            background-color: #e6e6e6;
+            color: #333333;
+        }
+
+        .side a:hover p{
+            color: #007bff;
         }
 
         /* 主体内容样式 */
@@ -212,7 +225,7 @@
     </span>
 </div>
 <div class="side">
-    <a href="/user/index">首页</a>
+    <a href="/user/index"><p>首页</p></a>
 </div>
 <div class="body">
     <span>

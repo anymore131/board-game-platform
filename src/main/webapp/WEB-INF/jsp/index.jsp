@@ -21,20 +21,41 @@
     }
 
     .header {
-        /*background-color: #343a40;*/
-        background-color: #f2f2f2; /* 浅灰色背景 */
-        border-bottom: 1px solid #ddd; /* 底部边框 */
-        padding: 15px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 10px;
+        background-color: #f2f2f2; /* 浅灰色背景 */
+        border-bottom: 1px solid #ddd; /* 底部边框 */
+    }
+
+    .header-out a {
+        color: #333; /* 退出链接文字颜色 */
+        text-decoration: none; /* 去掉下划线 */
+        font-weight: bold; /* 加粗 */
+    }
+
+    /* 退出链接的hover样式 */
+    .header-out a:hover {
+        color: #007BFF; /* 蓝色文字 */
+        text-decoration: underline; /* 鼠标悬停时下划线 */
+    }
+
+    .avatar-body {
+        /* 不需要指定宽度，因为我们想要它根据内容自适应大小 */
+        display: flex; /* 使用flex布局使头像和链接并排显示 */
+        align-items: center; /* 垂直居中 */
+        margin-right: 10px; /* 与搜索表单之间留一些空间 */
     }
 
     .avatar {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        border: 2px solid #fff;
+        width: 50px; /* 头像宽度 */
+        height: 50px; /* 头像高度 */
+        border-radius: 50%; /* 圆形头像 */
+        /* margin-left: 1200px; 这个设置是错误的，应该去掉 */
+        margin-right: 10px; /* 与链接之间留一些空间 */
+        vertical-align: middle; /* 垂直居中（在这个上下文中可能不需要，因为已经使用了align-items: center） */
+        border: 2px solid #ffffff; /* 为头像添加一个边框，如果需要的话 */
     }
 
     .header-out a {
@@ -46,7 +67,6 @@
         margin-left: 0;
         width: 140px;
         float: left;
-        background-color: #6c6a6a;
         padding: 10px;
         text-align: center;
     }
@@ -58,9 +78,17 @@
         color: black;
     }
 
+    .side a p{
+        margin: 0;
+    }
+
     .side a:hover {
         background-color: #e6e6e6;
         color: #333333;
+    }
+
+    .side a:hover p{
+        color: #007bff;
     }
 
     .body {
@@ -98,6 +126,7 @@
     }
 
     .club-activity {
+        margin-bottom: 20px;
         padding: 20px;
         background-color: #fff;
         border: 1px solid #ccc;
@@ -154,15 +183,12 @@
     </span>
 </div>
 <div class="side">
-    <a href="/club/createClub">创建俱乐部</a>
+    <a href="/club/createClub"><p>创建俱乐部</p></a>
     <c:if test="${user.type==1}">
-
-        管理
-
+        <a href=""><p>管理</p></a>
     </c:if>
 </div>
 <div class="body">
-
     <div class="search-body">
         <form action="/user/search" method="post">
             <select id="search-target" name="search-target" >
@@ -175,7 +201,7 @@
             <input type="submit" value="提交" name="action">
         </form>
     </div>
-    <div class="club-tj">
+    <div class="club-activity">
         <c:if test="${tjClubs != null}">
             <div class="item">推荐俱乐部</div>
             <c:forEach items="${tjClubs}" var="tjClub">
@@ -197,6 +223,9 @@
                     </div>
                 </div>
             </c:forEach>
+        </c:if>
+        <c:if test="${tjClubs == null}">
+            <div class="item"><p>暂无可推荐的俱乐部</p></div>
         </c:if>
     </div>
     <div class="club-activity">

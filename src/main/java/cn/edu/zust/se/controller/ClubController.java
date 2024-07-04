@@ -67,7 +67,9 @@ public class ClubController {
             List<UserJoinVo> userJoins = clubService.getUserJoinVoByClubId(club.getId());
             session.setAttribute("userJoins", userJoins);
         }
-        session.setAttribute("pictures", clubPicture);
+        if (!clubPicture.isEmpty()) {
+            session.setAttribute("pictures", clubPicture);
+        }
         session.setAttribute("club", club);
         if (commentsPageNo == null || commentsPageNo.isEmpty()){
             commentsPageNo = "1";

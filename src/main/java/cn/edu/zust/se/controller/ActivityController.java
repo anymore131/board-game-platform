@@ -1,10 +1,12 @@
 package cn.edu.zust.se.controller;
 
 import cn.edu.zust.se.bo.ActivityBo;
+import cn.edu.zust.se.dao.PictureMapper;
 import cn.edu.zust.se.service.*;
 import cn.edu.zust.se.vo.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +32,8 @@ public class ActivityController {
     CommentsServiceI commentsService;
     @Resource
     ClubServiceI clubService;
+    @Autowired
+    PictureServiceI pictureService;
 
     @RequestMapping(value = "activityHome",method = RequestMethod.GET)
     public String activityHomeGet(@RequestParam(value = "activityId")int activityId,
@@ -50,6 +54,10 @@ public class ActivityController {
         }
         if (commentsPageNo == null || commentsPageNo.isEmpty()){
             commentsPageNo = "1";
+        }
+        List<ActivityPictureVo> activityPicture = pictureService.selectActivityPictureByActivityId(activity.getId());
+        if (!activityPicture.isEmpty()){
+            session.setAttribute("pictures", activityPicture);
         }
         session.setAttribute("activity", activity);
         session.setAttribute("club", club);
@@ -85,7 +93,7 @@ public class ActivityController {
             String[] tags = request.getParameterValues("tags");
             StringBuilder ss = new StringBuilder(";");
             for (String tag : tags) {
-                ss.append(";").append(tag);
+                ss.append(";").append(gameService.getGameTypeId(tag));
             }
             activityBo.setTags(ss.toString());
         }

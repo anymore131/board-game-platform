@@ -81,6 +81,23 @@
             margin-right: 10px; /* 下拉框和文本框之间留一些空间 */
         }
 
+        .avatar-body {
+            /* 不需要指定宽度，因为我们想要它根据内容自适应大小 */
+            display: flex; /* 使用flex布局使头像和链接并排显示 */
+            align-items: center; /* 垂直居中 */
+            margin-right: 10px; /* 与搜索表单之间留一些空间 */
+        }
+
+        .avatar {
+            width: 50px; /* 头像宽度 */
+            height: 50px; /* 头像高度 */
+            border-radius: 50%; /* 圆形头像 */
+            /* margin-left: 1200px; 这个设置是错误的，应该去掉 */
+            margin-right: 10px; /* 与链接之间留一些空间 */
+            vertical-align: middle; /* 垂直居中（在这个上下文中可能不需要，因为已经使用了align-items: center） */
+            border: 2px solid #ffffff; /* 为头像添加一个边框，如果需要的话 */
+        }
+
         input[type="text"] {
             padding: 5px;
             border: 1px solid #ccc;
@@ -112,7 +129,6 @@
             margin-left: 0;
             width: 140px;
             float: left;
-            background-color: #6c6a6a;
             padding: 10px;
             text-align: center;
         }
@@ -124,9 +140,17 @@
             color: black;
         }
 
+        .side a p{
+            margin: 0;
+        }
+
         .side a:hover {
             background-color: #e6e6e6;
             color: #333333;
+        }
+
+        .side a:hover p{
+            color: #007bff;
         }
 
         .body {
@@ -134,25 +158,19 @@
             margin-right: 150px;
             padding: 20px;
         }
+
         .club-img{
             width: 700px;
             height: 320px;
-            margin: 0 auto;
             position: relative;
             text-align:center;
             overflow: hidden;
-        }
-        .avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin: 0 auto 20px;
         }
 
         .club-img img {
-            width: 700px;
-            height: 320px;
+            width: 75%;
+            object-fit: cover;
             margin: 0 auto;
         }
 
@@ -244,9 +262,9 @@
     </span>
 </div>
 <div class="side">
-    <a href="/user/index">首页</a>
+    <a href="/user/index"><p>首页</p></a>
     <c:if test="${club.clubType == 1}">
-        <a href="/activity/createActivity">新建活动</a>
+        <a href="/activity/createActivity"><p>新建活动</p></a>
     </c:if>
 </div>
 <div class="body">
