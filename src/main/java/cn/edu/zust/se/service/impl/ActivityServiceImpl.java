@@ -2,9 +2,12 @@ package cn.edu.zust.se.service.impl;
 
 import cn.edu.zust.se.bo.ActivityBo;
 import cn.edu.zust.se.dao.ActivityMapper;
+import cn.edu.zust.se.dao.ClubMapper;
 import cn.edu.zust.se.dao.GameMapper;
 import cn.edu.zust.se.service.ActivityServiceI;
 import cn.edu.zust.se.vo.ActivityVo;
+import cn.edu.zust.se.vo.UserVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,8 @@ public class ActivityServiceImpl implements ActivityServiceI {
     ActivityMapper activityMapper;
     @Resource
     GameMapper gameMapper;
+    @Autowired
+    private ClubMapper clubMapper;
 
     @Override
     public List<ActivityVo> getActivityVoByClubId(int clubId, int userId) {
@@ -134,6 +139,11 @@ public class ActivityServiceImpl implements ActivityServiceI {
     }
 
     @Override
+    public List<UserVo> getUserAttend(int activityId) {
+        return activityMapper.selectUserAttend(activityId);
+    }
+
+    @Override
     public void updateActivity(ActivityBo activityBo) {
         activityMapper.updateActivity(activityBo);
     }
@@ -237,6 +247,102 @@ public class ActivityServiceImpl implements ActivityServiceI {
                 activity.setTags(splitTag(s.split(";")));
             }
             activity.setAttended(1);
+        }
+        return activities;
+    }
+
+    @Override
+    public Integer getActivityUnStartNumberByClubId(int clubId) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        Integer i = activityMapper.selectActivityUnStartNumberByClubId(clubId,nowTime);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
+
+    @Override
+    public List<ActivityVo> getActivityUnStartByClubId(int clubId, int userId, int pageNo, int pageSize) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        List<ActivityVo> activities = activityMapper.selectActivityUnStartByClubId(clubId,pageNo,pageSize,nowTime);
+        for (ActivityVo activity : activities) {
+            activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
+            String s = activityMapper.selectActivityVoTagsById(activity.getId());
+            if (s != null) {
+                activity.setTags(splitTag(s.split(";")));
+            }
+            if (activityMapper.selectActivityByUserIdAndActivityId(userId, activity.getId()) != null) {
+                activity.setAttended(1);
+            } else {
+                activity.setAttended(0);
+            }
+            if (clubMapper.selectClubTypeByUserIdAndClubId(userId, clubId) != null) {
+                activity.setAttended(clubMapper.selectClubTypeByUserIdAndClubId(userId, clubId));
+            }
+        }
+        return activities;
+    }
+
+    @Override
+    public Integer getActivityStartingNumberByClubId(int clubId) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        Integer i = activityMapper.selectActivityStartingNumberByClubId(clubId,nowTime);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
+
+    @Override
+    public List<ActivityVo> getActivityStartingByClubId(int clubId, int userId, int pageNo, int pageSize) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        List<ActivityVo> activities = activityMapper.selectActivityStartingByClubId(clubId,pageNo,pageSize,nowTime);
+        for (ActivityVo activity : activities) {
+            activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
+            String s = activityMapper.selectActivityVoTagsById(activity.getId());
+            if (s != null) {
+                activity.setTags(splitTag(s.split(";")));
+            }
+            if (activityMapper.selectActivityByUserIdAndActivityId(userId, activity.getId()) != null) {
+                activity.setAttended(1);
+            } else {
+                activity.setAttended(0);
+            }
+            if (clubMapper.selectClubTypeByUserIdAndClubId(userId, clubId) != null) {
+                activity.setAttended(clubMapper.selectClubTypeByUserIdAndClubId(userId, clubId));
+            }
+        }
+        return activities;
+    }
+
+    @Override
+    public Integer getActivityEndNumberByClubId(int clubId) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        Integer i = activityMapper.selectActivityEndNumberByClubId(clubId,nowTime);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
+
+    @Override
+    public List<ActivityVo> getActivityEndByClubId(int clubId, int userId, int pageNo, int pageSize) {
+        Date nowTime = new Date(new java.util.Date().getTime());
+        List<ActivityVo> activities = activityMapper.selectActivityEndByClubId(clubId,pageNo,pageSize,nowTime);
+        for (ActivityVo activity : activities) {
+            activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
+            String s = activityMapper.selectActivityVoTagsById(activity.getId());
+            if (s != null) {
+                activity.setTags(splitTag(s.split(";")));
+            }
+            if (activityMapper.selectActivityByUserIdAndActivityId(userId, activity.getId()) != null) {
+                activity.setAttended(1);
+            } else {
+                activity.setAttended(0);
+            }
+            if (clubMapper.selectClubTypeByUserIdAndClubId(userId, clubId) != null) {
+                activity.setAttended(clubMapper.selectClubTypeByUserIdAndClubId(userId, clubId));
+            }
         }
         return activities;
     }

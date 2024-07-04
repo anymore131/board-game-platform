@@ -32,8 +32,9 @@ public class ActivityController {
     CommentsServiceI commentsService;
     @Resource
     ClubServiceI clubService;
-    @Autowired
+    @Resource
     PictureServiceI pictureService;
+
 
     @RequestMapping(value = "activityHome",method = RequestMethod.GET)
     public String activityHomeGet(@RequestParam(value = "activityId")int activityId,
@@ -60,6 +61,8 @@ public class ActivityController {
             activityPicture = pictureService.selectActivityPictureByActivityId(activityId);
             session.setAttribute("pictures", activityPicture);
         }
+        List<UserVo> users = activityService.getUserAttend(activityId);
+        session.setAttribute("userAttends", users);
         session.setAttribute("activity", activity);
         session.setAttribute("club", club);
         showComments(session, Integer.parseInt(commentsPageNo));

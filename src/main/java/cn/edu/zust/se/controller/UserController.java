@@ -150,7 +150,7 @@ public class UserController {
         if (userId == user.getId()) {
             return "redirect:/user/userHome";
         }
-        UserVo otherUser =userService.selectUserById(userId);
+        UserVo otherUser = userService.selectUserById(userId);
         model.addAttribute("otherUser", otherUser);
         List<ClubVo> clubs = new ArrayList<>();
         List<ActivityVo> activities = new ArrayList<>();
@@ -343,28 +343,28 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userJoin")
-    public String userJoin(HttpSession session){
+    public String userJoin(HttpSession session,HttpServletRequest request){
         UserVo user = (UserVo) session.getAttribute("user");
-        ClubVo club = (ClubVo) session.getAttribute("club");
         if(user == null){
             return "redirect:/login/login";
         }
-        clubService.userJoinClub(user.getId(),club.getId());
-        return "redirect:/club/clubHome?clubId=" + club.getId();
+        int clubId = Integer.parseInt(request.getParameter("clubId"));
+        clubService.userJoinClub(user.getId(),clubId);
+        return "redirect:/club/clubHome?clubId=" + clubId;
     }
 
     @RequestMapping(value = "/userOut")
-    public String userOut(HttpSession session){
+    public String userOut(HttpSession session,HttpServletRequest request){
         UserVo user = (UserVo) session.getAttribute("user");
-        ClubVo club = (ClubVo) session.getAttribute("club");
         if(user == null){
             return "redirect:/login/login";
         }
-        clubService.userOutClub(user.getId(),club.getId());
-        return "redirect:/club/clubHome?clubId=" + club.getId();
+        int clubId = Integer.parseInt(request.getParameter("clubId"));
+        clubService.userOutClub(user.getId(),clubId);
+        return "redirect:/club/clubHome?clubId=" + clubId;
     }
 
-    public static void cleanSession(HttpSession session){
+    private void cleanSession(HttpSession session){
         session.removeAttribute("activities");
         session.removeAttribute("clubs");
         session.removeAttribute("manageClubs");

@@ -341,7 +341,7 @@
                 <span><a href="/user/otherHome?userId=${cj.userId}">${cj.userName}</a></span>
                 <span>${cj.joinTime}</span>
                 <c:if test="${cj.clubType == 1}"><span>管理成员</span></c:if>
-                <c:if test="${cj.clubType == 0}"><span>普通成员</span></c:if>
+                <c:if test="${cj.clubType == 0}"><span>普通成员</span></c:if><br>
             </c:forEach>
         </c:if>
     </div>

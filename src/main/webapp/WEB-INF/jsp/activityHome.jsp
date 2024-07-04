@@ -288,6 +288,10 @@
                 ${activity.startTime}——${activity.endTime}
             </div>
         </div>
+        <div class="club-item">成员</div>
+        <c:forEach var="ua" items="${userAttends}">
+            <span><a href="/user/otherHome?userId=${ua.id}">${ua.userName}</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </c:forEach>
     </div>
     <div class="activity-comments">
         <div class="activity-item">评论</div>

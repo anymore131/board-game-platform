@@ -322,8 +322,17 @@
                     <span>时间：
                         ${activity.startTime}——${activity.endTime}
                     </span>
+                    <c:if test="${activity.attended == 1}">
+                        <div class="activity-attend"><p>已参加</p></div>
+                    </c:if>
+                    <c:if test="${activity.attended == 0}">
+                        <div class="activity-attend">
+                            <a href="/activity/userAttend?activityId=${activity.id}">加入</a>
+                        </div>
+                    </c:if>
                 </div>
             </c:forEach>
+
         </c:if>
         <c:if test="${activities == null}">
             <div class="item">还没有关注的活动</div>

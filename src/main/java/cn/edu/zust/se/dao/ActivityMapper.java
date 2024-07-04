@@ -2,6 +2,7 @@ package cn.edu.zust.se.dao;
 
 import cn.edu.zust.se.bo.ActivityBo;
 import cn.edu.zust.se.vo.ActivityVo;
+import cn.edu.zust.se.vo.UserVo;
 import org.apache.ibatis.annotations.*;
 
 import java.sql.Date;
@@ -199,6 +200,11 @@ public interface ActivityMapper {
     Integer selectActivityByUserIdAndActivityId(@Param("userId") int userId,
                                                 @Param("activityId") int activityId);
 
+    @Select("select u.id,u.user_name " +
+            "from board_game_platform.t_user_attend a,board_game_platform.t_user u " +
+            "where a.activity_id = #{activityId} and a.user_id = u.id")
+    List<UserVo> selectUserAttend(@Param("activityId") int activityId);
+
     /**
      * 添加用户参加活动
      * @param userId        用户id
@@ -294,6 +300,84 @@ public interface ActivityMapper {
             "ORDER BY a.start_time " +
             "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
     List<ActivityVo> selectActivityEndByUserId(@Param("userId") int userId,
+                                               @Param("pageNo") int pageNo,
+                                               @Param("pageSize") int pageSize,
+                                               @Param("nowTime") Date nowTime);
+
+    @Select("select count(a.id) " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c " +
+            "where a.club_id = #{clubId} and c.id = a.club_id " +
+            "and date(a.start_time) > #{nowTime} ")
+    Integer selectActivityUnStartNumberByClubId(@Param("clubId") int clubId,
+                                                @Param("nowTime") Date nowTime);
+
+    @Select("select count(a.id) " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c " +
+            "where a.club_id = #{clubId} and c.id = a.club_id " +
+            "and #{nowTime} between date(a.start_time) and date(a.end_time) ")
+    Integer selectActivityStartingNumberByClubId(@Param("clubId") int clubId,
+                                                 @Param("nowTime") Date nowTime);
+
+    @Select("select count(a.id) " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c " +
+            "where a.club_id = #{clubId} and c.id = a.club_id " +
+            "and date(a.end_time) < #{nowTime} ")
+    Integer selectActivityEndNumberByClubId(@Param("clubId") int clubId,
+                                            @Param("nowTime") Date nowTime);
+
+    /**
+     * 找到俱乐部中还没开始的活动
+     * @param clubId    俱乐部id
+     * @param pageNo    页码
+     * @param pageSize  每页数量
+     * @param nowTime   现在时间
+     * @return          活动列表
+     */
+    @Select("select a.id,a.club_id,c.club_name,a.activity_name,a.address,a.start_time,a.end_time,a.create_time " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c " +
+            "where a.club_id = #{clubId} and c.id = a.club_id " +
+            "and date(a.start_time) > #{nowTime} " +
+            "ORDER BY a.start_time " +
+            "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
+    List<ActivityVo> selectActivityUnStartByClubId(@Param("clubId") int clubId,
+                                                   @Param("pageNo") int pageNo,
+                                                   @Param("pageSize") int pageSize,
+                                                   @Param("nowTime") Date nowTime);
+
+    /**
+     * 找到俱乐部中进行中的活动
+     * @param clubId    俱乐部id
+     * @param pageNo    页码
+     * @param pageSize  每页数量
+     * @param nowTime   现在时间
+     * @return          活动列表
+     */
+    @Select("select a.id,a.club_id,c.club_name,a.activity_name,a.address,a.start_time,a.end_time,a.create_time " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c " +
+            "where a.club_id = #{clubId} and c.id = a.club_id " +
+            "and #{nowTime} between date(a.start_time) and date(a.end_time) " +
+            "ORDER BY a.start_time " +
+            "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
+    List<ActivityVo> selectActivityStartingByClubId(@Param("clubId") int clubId,
+                                                    @Param("pageNo") int pageNo,
+                                                    @Param("pageSize") int pageSize,
+                                                    @Param("nowTime") Date nowTime);
+
+    /**
+     * 找到俱乐部中已经结束的活动
+     * @param clubId    俱乐部id
+     * @param pageNo    页码
+     * @param pageSize  每页数量
+     * @param nowTime   现在时间
+     * @return          活动列表
+     */
+    @Select("select a.id,a.club_id,c.club_name,a.activity_name,a.address,a.start_time,a.end_time,a.create_time " +
+            "from board_game_platform.t_activity a,board_game_platform.t_club c " +
+            "where a.club_id = #{clubId} and c.id = a.club_id " +
+            "and date(a.end_time) < #{nowTime} " +
+            "ORDER BY a.start_time " +
+            "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
+    List<ActivityVo> selectActivityEndByClubId(@Param("clubId") int clubId,
                                                @Param("pageNo") int pageNo,
                                                @Param("pageSize") int pageSize,
                                                @Param("nowTime") Date nowTime);

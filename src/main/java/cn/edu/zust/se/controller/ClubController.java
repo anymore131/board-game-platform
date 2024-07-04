@@ -47,7 +47,7 @@ public class ClubController {
                            @RequestParam(value = "commentsPageNo",required = false) String commentsPageNo,
                            HttpServletRequest request,
                            HttpSession session) {
-        UserController.cleanSession(session);
+        cleanSession(session);
         UserVo user = (UserVo) session.getAttribute("user");
         if (user == null) {
             return "redirect:/login/login";
@@ -270,6 +270,19 @@ public class ClubController {
         return "redirect:/club/clubHome?clubId=" + club.getId();
     }
 
+    private void cleanSession(HttpSession session){
+        session.removeAttribute("activities");
+        session.removeAttribute("clubs");
+        session.removeAttribute("manageClubs");
+        session.removeAttribute("activity");
+        session.removeAttribute("club");
+        session.removeAttribute("pictures");
+        session.removeAttribute("tjClubs");
+        session.removeAttribute("activitiesUnStart");
+        session.removeAttribute("activitiesStarting");
+        session.removeAttribute("activitiesEnd");
+    }
+
     private void showComments(HttpSession session,int commentsPageNo){
         ClubVo club = (ClubVo) session.getAttribute("club");
         if (club != null) {
@@ -290,15 +303,16 @@ public class ClubController {
 
     private void showActivity(HttpSession session ,int pageNo1,int pageNo2,int pageNo3){
         UserVo user = (UserVo)session.getAttribute("user");
+        ClubVo club = (ClubVo)session.getAttribute("club");
         List<ActivityVo> activitiesUnStart = new ArrayList<>();
         List<ActivityVo> activitiesStarting = new ArrayList<>();
         List<ActivityVo> activitiesEnd = new ArrayList<>();
         //还没开始的
-        int maxPageNo1 = activityService.getActivityUnStartNumberByUserId(user.getId()) / PAGE_SIZE + 1;
+        int maxPageNo1 = activityService.getActivityUnStartNumberByClubId(club.getId()) / PAGE_SIZE + 1;
         //正在进行中的
-        int maxPageNo2 = activityService.getActivityStartingNumberByUserId(user.getId()) / PAGE_SIZE + 1;
+        int maxPageNo2 = activityService.getActivityStartingNumberByClubId(club.getId()) / PAGE_SIZE + 1;
         //结束的
-        int maxPageNo3 = activityService.getActivityEndNumberByUserId(user.getId()) / PAGE_SIZE + 1;
+        int maxPageNo3 = activityService.getActivityEndNumberByClubId(club.getId()) / PAGE_SIZE + 1;
         //标准化页码
         if (pageNo1 <= 0){
             pageNo1 = 1;
@@ -318,16 +332,16 @@ public class ClubController {
         if (pageNo3 > maxPageNo3){
             pageNo3 = maxPageNo3;
         }
-        if (activityService.getActivityUnStartNumberByUserId(user.getId()) != 0){
-            activitiesUnStart = activityService.getActivityUnStartByUserId(user.getId(), pageNo1,PAGE_SIZE);
+        if (activityService.getActivityUnStartNumberByClubId(club.getId()) != 0){
+            activitiesUnStart = activityService.getActivityUnStartByClubId(club.getId(),user.getId(), pageNo1,PAGE_SIZE);
             session.setAttribute("activitiesUnStart", activitiesUnStart);
         }
-        if (activityService.getActivityStartingNumberByUserId(user.getId()) != 0){
-            activitiesStarting = activityService.getActivityStartingByUserId(user.getId(), pageNo2,PAGE_SIZE);
+        if (activityService.getActivityStartingNumberByClubId(club.getId()) != 0){
+            activitiesStarting = activityService.getActivityStartingByClubId(club.getId(),user.getId(), pageNo2,PAGE_SIZE);
             session.setAttribute("activitiesStarting", activitiesStarting);
         }
-        if (activityService.getActivityEndNumberByUserId(user.getId()) != 0){
-            activitiesEnd = activityService.getActivityEndByUserId(user.getId(), pageNo3,PAGE_SIZE);
+        if (activityService.getActivityEndNumberByClubId(club.getId()) != 0){
+            activitiesEnd = activityService.getActivityEndByClubId(club.getId(),user.getId(), pageNo3,PAGE_SIZE);
             session.setAttribute("activitiesEnd",activitiesEnd);
         }
         session.setAttribute("maxPageNo1", maxPageNo1);
