@@ -14,13 +14,16 @@ import java.util.List;
  */
 public interface GameMapper {
     @Insert("INSERT INTO board_game_platform.t_game_type " +
-            "(name, referrals, introduction, insert_time,type) " +
-            "VALUES (#{name}, #{referrals}, #{introduction}, #{insertTime}, 0)")
+            "(name, introduction, insert_time) " +
+            "VALUES (#{name},  #{introduction}, #{insertTime})")
     void insertGame(@Param("name") String name,
-                    @Param("referrals") String referrals,
                     @Param("introduction") String introduction,
                     @Param("insertTime") Date insertTime);
 
+    @Select("SELECT name " +
+            "FROM board_game_platform.t_game_type " +
+            "WHERE name = #{name}")
+    String selectGameByName(@Param("name") String name);
     /**
      * 通过id获取游戏信息
      * @param id    游戏id
