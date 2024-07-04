@@ -26,8 +26,18 @@ public class GameSeviceImpl implements GameServiceI {
     }
 
     @Override
-    public void createGame(String name, String referrals, String introduction, Date insertTime) {
-        gameMapper.insertGame(name,referrals,introduction,insertTime);
+    public void createGame(String name, String introduction, Date insertTime) {
+        gameMapper.insertGame(name,introduction,insertTime);
+    }
+
+    @Override
+    public Boolean getGameByName(String name) {
+        if(gameMapper.selectGameByName(name) != null){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override

@@ -13,7 +13,8 @@ import java.util.List;
  */
 public interface GameServiceI {
     List<String> selectAllGameName();
-    void createGame(String name,String referrals, String introduction,Date insertTime);
+    void createGame(String name,String introduction,Date insertTime);
+    Boolean getGameByName(String name);
     GameTypeVo getGameType(String name);
     List<GameTypeVo> getAllGameType();
     Integer getGameTypeNumber();
