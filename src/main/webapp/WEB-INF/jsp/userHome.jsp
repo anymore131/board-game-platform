@@ -270,41 +270,60 @@
     </span>
     <div class="user-club">
         <p>我加入的俱乐部</p>
-        <c:forEach var="club" items="${clubs}">
-        <div class="club-body">
-            <span class="club-name">
-                <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
-            </span>
-            <div class="club-tags">
-                标签：
-                <c:forEach var="tag" items="${club.tags}">
-                    <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
-                </c:forEach>
-            </div>
-            <div class="club-join-time">
-                加入时间：${club.joinTime}
-            </div>
-            </c:forEach>
-        </div>
-    </div>
-    <div class="user-manage">
-        <p>我管理的俱乐部</p>
-        <c:forEach var="club" items="${manageClubs}">
-            <div class="club-body">
+        <c:if test="${clubs != null}">
+            <c:forEach var="club" items="${clubs}">
+                <div class="club-body">
                 <span class="club-name">
                     <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
                 </span>
-                <div class="club-tags">
-                    标签：
-                    <c:forEach var="tag" items="${club.tags}">
-                        <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
-                    </c:forEach>
+                    <div class="club-tags">
+                        标签：
+                        <c:forEach var="tag" items="${club.tags}">
+                            <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                        </c:forEach>
+                    </div>
+                    <div class="club-join-time">
+                        加入时间：${club.joinTime}
+                    </div>
                 </div>
+            </c:forEach>
+        </c:if>
+        <c:if test="${clubs == null}">
+            <div class="club-body">
+                未有加入的俱乐部
             </div>
-        </c:forEach>
+        </c:if>
     </div>
-    <div class="user-activity">
+    <div class="user-club">
+        <p>我管理的俱乐部</p>
+        <c:if test="${manageClubs != null}">
+            <c:forEach var="club" items="${manageClubs}">
+                <div class="club-body">
+                <span class="club-name">
+                    <a href="/club/clubHome?clubId=${club.id}">${club.clubName}</a>
+                </span>
+                    <div class="club-tags">
+                        标签：
+                        <c:forEach var="tag" items="${club.tags}">
+                            <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
+                        </c:forEach>
+                    </div>
+                </div>
+            </c:forEach>
+        </c:if>
+        <c:if test="${manageClubs == null}">
+            <div class="club-body">
+                未有管理的俱乐部
+            </div>
+        </c:if>
+    </div>
+    <div class="user-club">
         <p>所有活动</p>
+        <c:if test="${activities == null}">
+            <div class="club-body">
+                未有参加的活动
+            </div>
+        </c:if>
     </div>
 </div>
 <div class="footer"></div>
