@@ -59,7 +59,9 @@ public class UserController {
         List<ClubVo> clubs = new ArrayList<>();
         List<ActivityVo> activities = new ArrayList<>();
         for(Integer id : userService.getUserJoin(user.getId())){
-            clubs.add(clubService.getClubVo(id));
+            if (clubService.getClubVo(id) != null){
+                clubs.add(clubService.getClubVo(id));
+            }
         }
         for(ClubVo club : clubs){
             if (club!=null){

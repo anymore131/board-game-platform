@@ -24,6 +24,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f5f5f5;
         }
 
         .header {
@@ -114,20 +115,23 @@
 
         /* 主体内容样式 */
         .body {
-            margin-left: 150px; /* 左边距，留出侧边栏的空间 */
+            margin-left: 150px;
+            margin-right: 150px;
+            padding: 20px;
         }
 
         /* 表格样式 */
         .body table {
             width: 80%; /* 表格宽度100% */
             border-collapse: collapse; /* 合并边框 */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
         .body table td,
         .body table th {
-            border: 1px solid #ddd; /* 单元格边框 */
             padding: 8px; /* 单元格内边距 */
             text-align: left; /* 文本左对齐 */
+            background-color: #fff;
         }
 
 
@@ -152,6 +156,14 @@
             border: 1px solid #ccc;
             padding: 10px;
             border-radius: 5px;
+        }
+
+        .club-body {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
         .club-name a {

@@ -43,24 +43,24 @@
     }
 
     .side {
-        float: left;
-
-        background-color: #444;
-        padding: 20px;
-        color: #fff;
         margin-left: 0;
         width: 140px;
-
-
-
+        float: left;
+        background-color: #6c6a6a;
+        padding: 10px;
         text-align: center;
     }
 
     .side a {
         display: block;
-        margin-bottom: 10px;
+        padding: 10px 0;
         text-decoration: none;
-        color: #fff;
+        color: black;
+    }
+
+    .side a:hover {
+        background-color: #e6e6e6;
+        color: #333333;
     }
 
     .body {

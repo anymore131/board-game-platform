@@ -45,5 +45,8 @@ public class GameSeviceImpl implements GameServiceI {
         return gameMapper.selectGameTypeNumber();
     }
 
-
+    @Override
+    public Integer getGameTypeId(String tag) {
+        return gameMapper.selectGameIdByName(tag);
+    }
 }

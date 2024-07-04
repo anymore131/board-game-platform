@@ -17,5 +17,5 @@ public interface GameServiceI {
     GameTypeVo getGameType(String name);
     List<GameTypeVo> getAllGameType();
     Integer getGameTypeNumber();
-
+    Integer getGameTypeId(String tag);
 }

@@ -29,12 +29,15 @@ public class ClubServiceImpl implements ClubServiceI {
     @Override
     public ClubVo getClubVo(int id) {
         ClubVo clubVo = clubMapper.getClubById(id);
-        clubVo.setNumber(clubMapper.selectJoinCount(clubVo.getId()));
-        String s = clubMapper.getClubTagsById(id);
-        if (s != null && !"".equals(s)) {
-            clubVo.setTags(splitTag(s.split(";")));
+        if (clubVo != null){
+            clubVo.setNumber(clubMapper.selectJoinCount(clubVo.getId()));
+            String s = clubMapper.getClubTagsById(id);
+            if (s != null && !"".equals(s)) {
+                clubVo.setTags(splitTag(s.split(";")));
+            }
+            return clubVo;
         }
-        return clubVo;
+        return null;
     }
 
     @Override

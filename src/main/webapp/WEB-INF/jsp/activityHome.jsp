@@ -132,11 +132,26 @@
     <a href="/activity/changeActivity">修改活动</a>
 </div>
 <div class="body">
-    <div class="activity-img">
-        <c:forEach var="picture" items="${pictures}">
-            <img src="/user/showPic/${picture.fname}" alt="俱乐部图片">
-        </c:forEach>
-    </div>
+    <c:if test="${pictures != null}">
+        <div class="club-img">
+            <ul class="box">
+                <c:set var="state" scope="session" value="0"/>
+                <c:forEach var="picture" items="${pictures}" varStatus="status">
+                    <c:set var="state"  value="${state+1}" scope="session"/>
+                    <li> <img class="img-slide img${state}" src="/user/showPic/${picture.fname}" alt="${state}"></li>
+                </c:forEach>
+            </ul>
+            <ul id="circlebutton">
+                <c:set var="state" scope="session" value="0"/>
+                <c:forEach var="picture" items="${pictures}" varStatus="status">
+                    <li>
+                        <c:set var="state"  value="${state+1}" scope="session"/>
+                        <div class="divEle" style="background: #FF0000;">${state}</div>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
+    </c:if>
     <div class="activity-body">
         <div class="activity-name">${activity.activityName}</div>
         <div class="activity-attend">

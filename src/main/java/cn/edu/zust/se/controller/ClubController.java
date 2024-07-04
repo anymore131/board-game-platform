@@ -97,7 +97,7 @@ public class ClubController {
         String[] tags = request.getParameterValues("tags");
         StringBuilder ss = new StringBuilder(";");
         for (String tag : tags) {
-            ss.append(";").append(tag);
+            ss.append(";").append(gameService.getGameTypeId(tag));
         }
         club.setClubName(request.getParameterValues("clubName")[0]);
         club.setIntroduction(request.getParameterValues("introduction")[0]);
