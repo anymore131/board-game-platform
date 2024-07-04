@@ -184,9 +184,12 @@
 <div class="side">
     <a href="/club/createClub"><p>创建俱乐部</p></a>
     <c:if test="${user.type==1}">
-    <a href="/manage/administrator?userId=${user.id}">
-        <p>管理</p>
-    </a>
+        <a href="/manage/administrator?userId=${user.id}">
+            管理
+        </a>
+        <a href="/manage/createGame">
+            创建游戏
+        </a>
     </c:if>
 </div>
 <div class="body">

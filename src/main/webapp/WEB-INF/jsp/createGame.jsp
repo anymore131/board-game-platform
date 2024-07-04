@@ -168,6 +168,7 @@
                 <form method="post" action="/manage/createGame">
                     <input type="text" name="name"><br/>
                     <textarea name="introduction" placeholder="规则"></textarea><br/>
+
 <%--                    创建时间：<input type="date" name="insertTime">--%>
                     <input type="submit" value="创建">
                 </form>
