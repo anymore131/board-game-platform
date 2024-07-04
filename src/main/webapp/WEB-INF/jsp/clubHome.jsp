@@ -129,6 +129,7 @@
             margin-left: 0;
             width: 140px;
             float: left;
+            background-color: #6c6a6a;
             padding: 10px;
             text-align: center;
         }
@@ -333,15 +334,18 @@
         <c:forEach var="activity" items="${activities}">
             <div class="activity-body">
                 <div><a href="/activity/activityHome?activityId=${activity.id}">${activity.activityName}</a></div>
-                <div>标签：
-                    <c:forEach var="tag" items="${activity.tags}">
-                        <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;
-                    </c:forEach>
-                </div>
-                <span>参加人数：${activity.number}</span>
+<%--                <div>标签：--%>
+<%--                    <c:forEach var="tag" items="${activity.tags}">--%>
+<%--                        <a href="/user/search?search-target=2&&search-text=${tag}">${tag}</a>&nbsp;&nbsp;--%>
+<%--                    </c:forEach>--%>
+<%--                </div>--%>
+<%--                <span>参加人数：${activity.number}</span>--%>
                 <span>时间：
                     ${activity.startTime}——${activity.endTime}
                 </span>
+                <c:if test="${club.clubType == 1}">
+                    <a href="/club/activityCancel?activityId=${activity.id}">取消活动</a>
+                </c:if>
             </div>
         </c:forEach>
     </div>

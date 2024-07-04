@@ -22,6 +22,11 @@ public interface ActivityMapper {
             "where club_id = #{clubId} and activity_name = #{activityName}")
     Integer selectActivityIdByClubIdAndActivityName(@Param("clubId") int clubId, @Param("activityName") String activityName);
 
+    @Select("SELECT * " +
+            "FROM board_game_platform.t_activity " +
+            "WHERE club_id = #{clubId}")
+    List<ActivityVo> listClubActivity(@Param("clubId") int clubId);
+
     /**
      * 添加活动
      * @param activityBo    活动
@@ -40,6 +45,20 @@ public interface ActivityMapper {
             "tags = #{tags}, address = #{address},start_time = #{startTime},end_time = #{endTime} " +
             "WHERE id = #{id}")
     void updateActivity(ActivityBo activityBo);
+    @Delete("DELETE " +
+            "FROM board_game_platform.t_activity " +
+            "WHERE id = #{id}")
+    void deleteActivityById(@Param("id") int id);
+
+    @Delete("DELETE " +
+            "FROM board_game_platform.t_activity_comments " +
+            "WHERE activity_id = #{activityId}")
+    void deleteActivityComments(@Param("activityId") int activityId);
+
+    @Delete("DELETE " +
+            "FROM board_game_platform.t_user_attend " +
+            "WHERE activity_id = #{activityId}")
+    void deleteActivity(@Param("activityId") int activityId);
 
     /**
      * 用过活动id寻找活动
