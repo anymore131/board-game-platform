@@ -111,6 +111,13 @@ public class ActivityServiceImpl implements ActivityServiceI {
     }
 
     @Override
+    public void deleteActivity(int id) {
+        activityMapper.deleteActivityComments(id);
+        activityMapper.deleteActivity(id);
+        activityMapper.deleteActivityById(id);
+    }
+
+    @Override
     public ActivityVo getActivityVoById(int id, int userId) {
         ActivityVo activity = activityMapper.selectActivityById(id);
         activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
@@ -129,6 +136,11 @@ public class ActivityServiceImpl implements ActivityServiceI {
     @Override
     public void updateActivity(ActivityBo activityBo) {
         activityMapper.updateActivity(activityBo);
+    }
+
+    @Override
+    public List<ActivityVo> listClubActivity(int clubId) {
+        return activityMapper.listClubActivity(clubId);
     }
 
     @Override

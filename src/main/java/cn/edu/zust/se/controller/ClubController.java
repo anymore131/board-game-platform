@@ -1,10 +1,7 @@
 package cn.edu.zust.se.controller;
 
 import cn.edu.zust.se.bo.ClubBo;
-import cn.edu.zust.se.service.ClubServiceI;
-import cn.edu.zust.se.service.CommentsServiceI;
-import cn.edu.zust.se.service.GameServiceI;
-import cn.edu.zust.se.service.PictureServiceI;
+import cn.edu.zust.se.service.*;
 import cn.edu.zust.se.util.Constants;
 import cn.edu.zust.se.vo.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,6 +32,8 @@ import static cn.edu.zust.se.util.Constants.PAGE_SIZE;
 public class ClubController {
     @Resource
     ClubServiceI clubService;
+    @Resource
+    ActivityServiceI activityService;
     @Resource
     GameServiceI gameService;
     @Resource
@@ -67,6 +66,9 @@ public class ClubController {
             List<UserJoinVo> userJoins = clubService.getUserJoinVoByClubId(club.getId());
             session.setAttribute("userJoins", userJoins);
         }
+        List<ActivityVo> activities = activityService.listClubActivity(club.getId());
+        session.setAttribute("activities",activities);
+        System.out.println(activities);
         session.setAttribute("pictures", clubPicture);
         session.setAttribute("club", club);
         if (commentsPageNo == null || commentsPageNo.isEmpty()){
@@ -152,6 +154,14 @@ public class ClubController {
         clubBo.setCity(request.getParameterValues("city")[0]);
         clubBo.setUserId(user.getId());
         clubService.updateClub(clubBo);
+        return "redirect:/club/clubHome?clubId=" + club.getId();
+    }
+
+    @RequestMapping(value = "activityCancel")
+    public String activityCancel(HttpSession session){
+        ActivityVo activity = (ActivityVo) session.getAttribute("activity");
+        ClubVo club = (ClubVo) session.getAttribute("club");
+        activityService.deleteActivity(activity.getId());
         return "redirect:/club/clubHome?clubId=" + club.getId();
     }
 
