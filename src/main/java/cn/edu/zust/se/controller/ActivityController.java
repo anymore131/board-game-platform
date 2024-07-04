@@ -1,6 +1,7 @@
 package cn.edu.zust.se.controller;
 
 import cn.edu.zust.se.bo.ActivityBo;
+import cn.edu.zust.se.bo.ClubBo;
 import cn.edu.zust.se.service.*;
 import cn.edu.zust.se.vo.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,6 +56,9 @@ public class ActivityController {
         }
         if (commentsPageNo == null || commentsPageNo.isEmpty()){
             commentsPageNo = "1";
+        }
+        if (clubService.getClubType(user.getId(), club.getId()) != null){
+            activity.setClubType(clubService.getClubType(user.getId(), club.getId()));
         }
         List<ActivityPictureVo> activityPicture = new ArrayList<>();
         if (pictureService.selectActivityPictureCountByActivityId(activityId) != 0){
@@ -139,6 +143,64 @@ public class ActivityController {
         List<String> games = gameService.selectAllGameName();
         session.setAttribute("games", games);
         return "createActivity";
+    }
+
+    @RequestMapping(value = "changeActivity",method = RequestMethod.GET)
+    public String changeActivityGet(HttpServletRequest request,HttpSession session) {
+        UserVo user = (UserVo) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login/login";
+        }
+        if (request.getParameter("activityId") == null){
+            return "redirect:/user/index";
+        }
+        ActivityVo activity = activityService.getActivityById(Integer.parseInt(request.getParameter("activityId")));
+        session.setAttribute("activity", activity);
+        List<String> games = gameService.selectAllGameName();
+        session.setAttribute("games", games);
+        return "changeActivity";
+    }
+
+    @RequestMapping(value = "changeActivity",method = RequestMethod.POST)
+    public String changeActivityPost(HttpServletRequest request, HttpSession session) {
+        UserVo user = (UserVo) session.getAttribute("user");
+        ActivityVo activity = (ActivityVo) session.getAttribute("activity");
+        if (user == null) {
+            return "redirect:/login/login";
+        }
+        ActivityBo activityBo = new ActivityBo();
+        activityBo.setId(activity.getId());
+        activityBo.setClubId(activityService.getActivityById(activity.getId()).getClubId());
+        activityBo.setActivityName(request.getParameter("activityName"));
+        activityBo.setIntroduction(request.getParameter("introduction"));
+        activityBo.setAddress(request.getParameter("address"));
+        if (request.getParameter("endTime") == null||request.getParameter("startTime")==null){
+            session.setAttribute("error","活动时间设置为空！");
+            return "changeActivity";
+        }
+        if(Date.valueOf(request.getParameter("endTime")).before(Date.valueOf(request.getParameter("startTime")))){
+            session.setAttribute("error","开始时间不能在结束时间之前！");
+            return "changeActivity";
+        }
+        else if(Date.valueOf(request.getParameter("startTime")).before(new Date(new java.util.Date().getTime()))){
+            session.setAttribute("error","开始时间不能在当前时间之前！");
+            return "changeActivity";
+        }
+
+        activityBo.setEndTime(Date.valueOf(request.getParameter("endTime")));
+        activityBo.setStartTime(Date.valueOf(request.getParameter("startTime")));
+
+        String[] tags = request.getParameterValues("tags");
+        StringBuilder ss = new StringBuilder(";");
+        for (String tag : tags) {
+            ss.append(";").append(gameService.getGameTypeId(tag));
+        }
+        ss.append(";");
+        activityBo.setTags(ss.toString());
+        activityService.updateActivity(activityBo);
+        session.setAttribute("activity", activityBo);
+        session.setAttribute("error","更改成功！");
+        return "redirect:/activity/activityHome?activityId=" + activityBo.getId();
     }
 
     @RequestMapping(value = "attendIn")

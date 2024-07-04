@@ -46,6 +46,7 @@ public interface ActivityMapper {
             "tags = #{tags}, address = #{address},start_time = #{startTime},end_time = #{endTime} " +
             "WHERE id = #{id}")
     void updateActivity(ActivityBo activityBo);
+
     @Delete("DELETE " +
             "FROM board_game_platform.t_activity " +
             "WHERE id = #{id}")

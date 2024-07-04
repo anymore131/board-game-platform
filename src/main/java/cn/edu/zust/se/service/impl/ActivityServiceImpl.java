@@ -139,6 +139,17 @@ public class ActivityServiceImpl implements ActivityServiceI {
     }
 
     @Override
+    public ActivityVo getActivityById(int id) {
+        ActivityVo activity = activityMapper.selectActivityById(id);
+        activity.setNumber(activityMapper.selectActivityVoNumberById(activity.getId()));
+        String s = activityMapper.selectActivityVoTagsById(activity.getId());
+        if (s != null) {
+            activity.setTags(splitTag(s.split(";")));
+        }
+        return activity;
+    }
+
+    @Override
     public List<UserVo> getUserAttend(int activityId) {
         return activityMapper.selectUserAttend(activityId);
     }

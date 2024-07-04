@@ -26,6 +26,8 @@ public interface ActivityServiceI {
 
     ActivityVo getActivityVoById(int id, int userId);
 
+    ActivityVo getActivityById(int id);
+
     List<UserVo> getUserAttend(int activityId);
 
     void updateActivity(ActivityBo activityBo);

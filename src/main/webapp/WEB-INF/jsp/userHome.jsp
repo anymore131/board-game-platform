@@ -137,7 +137,6 @@
         .body table {
             width: 80%; /* 表格宽度100% */
             border-collapse: collapse; /* 合并边框 */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
         .body table td,

@@ -229,8 +229,8 @@
 </div>
 <div class="side">
     <a href="/user/index"><p>首页</p></a>
-    <c:if test="${clubType == 1}">
-        <a href="/activity/changeActivity"><p>修改活动</p></a>
+    <c:if test="${activity.clubType == 1}">
+        <a href="/activity/changeActivity?activityId=${activity.id}"><p>修改活动</p></a>
     </c:if>
 </div>
 <div class="body">
@@ -260,16 +260,21 @@
     <div class="activity-body">
         <div class="activity-name">${activity.activityName}</div>
         <div class="activity-attend">
-            <c:if test="${activity.attended == 1}">
-                <div class="activity-attend"><p>已参加</p></div>
-                <div class="activity-attend">
-                    <a href="/activity/userQuit?activityId=${activity.id}">退出</a>
-                </div>
+            <c:if test="${activity.clubType == 1}">
+                <div class="activity-attend"><p>活动管理员</p></div>
             </c:if>
-            <c:if test="${activity.attended == 0}">
-                <div class="activity-attend">
-                    <a href="/activity/userAttend?activityId=${activity.id}">加入</a>
-                </div>
+            <c:if test="${activity.clubType == 0}">
+                <c:if test="${activity.attended == 1}">
+                    <div class="activity-attend"><p>已参加</p></div>
+                    <div class="activity-attend">
+                        <a href="/activity/userQuit?activityId=${activity.id}">退出</a>
+                    </div>
+                </c:if>
+                <c:if test="${activity.attended == 0}">
+                    <div class="activity-attend">
+                        <a href="/activity/userAttend?activityId=${activity.id}">加入</a>
+                    </div>
+                </c:if>
             </c:if>
         </div>
         <div class="activity-describe">
@@ -288,7 +293,7 @@
                 ${activity.startTime}——${activity.endTime}
             </div>
         </div>
-        <div class="club-item">成员</div>
+        <div class="club-item">参与人员</div>
         <c:forEach var="ua" items="${userAttends}">
             <span><a href="/user/otherHome?userId=${ua.id}">${ua.userName}</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </c:forEach>
@@ -319,7 +324,6 @@
             </c:if>
         </div>
     </div>
-
 </div>
 <div class="footer"></div>
 </body>
