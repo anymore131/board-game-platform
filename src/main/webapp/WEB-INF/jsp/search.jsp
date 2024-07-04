@@ -381,20 +381,44 @@
         </c:if>
         <c:if test="${users != null && searchTarget == 3}">
             找到的用户：<br>
-            <c:forEach var="user" items="${users}">
-                <div class="user-body">
-                    <div><a href="/user/otherHome?userId=${user.id}">${user.userName}</a></div>
-                    <div>
-                        <span>年龄：${user.age}</span>
-                        <span>性别：${user.gender}</span
-                        <span>所在省：${user.province}</span>
-                        <span>所在市：${user.city}</span>
+            <c:if test="${user.type==1}">
+                <c:forEach var="user" items="${users}">
+                    <div class="user-body">
+                        <div><a href="/user/otherHome?userId=${user.id}">${user.userName}</a></div>
+                        <div>
+                            <span>年龄：${user.age}</span>
+                            <span>性别：${user.gender}</span
+                            <span>所在省：${user.province}</span>
+                            <span>所在市：${user.city}</span>
+                            <a href="/manage/grantUser?userId=${user.id}">
+                                授权用户
+                            </a>
+                            <a href="/manage/deleteUser?userId=${user.id}">
+                                删除用户
+                            </a>
+                        </div>
+                        <div>
+                            <p>${user.introduction}</p>
+                        </div>
                     </div>
-                    <div>
-                        <p>${user.introduction}</p>
+                </c:forEach>
+            </c:if>
+            <c:if test="${user.type==0}">
+                <c:forEach var="user" items="${users}">
+                    <div class="user-body">
+                        <div><a href="/user/otherHome?userId=${user.id}">${user.userName}</a></div>
+                        <div>
+                            <span>年龄：${user.age}</span>
+                            <span>性别：${user.gender}</span
+                            <span>所在省：${user.province}</span>
+                            <span>所在市：${user.city}</span>
+                        </div>
+                        <div>
+                            <p>${user.introduction}</p>
+                        </div>
                     </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
+            </c:if>
             <div class="page">
                 <c:if test="${pageNo1 > 1}">
                     <a href="/user/search?pageNo1=${pageNo1 - 1}&&pageNo2=${pageNo2}">上一页</a>

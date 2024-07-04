@@ -62,4 +62,50 @@ public interface UserMapper {
             "mobile=#{mobile},province=#{province},city=#{city},QQ=#{QQ},weixin=#{weixin} " +
             "where id = #{id}")
     void updateUser(UserVo userVo);
+
+    @Update("update board_game_platform.t_user " +
+            "set name=#{name},age=#{age},gender=#{gender},introduction=#{introduction},email=#{email}," +
+            "mobile=#{mobile},province=#{province},city=#{city},QQ=#{QQ},weixin=#{weixin},type = #{type} " +
+            "where id = #{id}")
+    void updateAndGrantUser(UserVo userVo);
+
+    @Select("SELECT * " +
+            "FROM board_game_platform.t_user ")
+    List<UserVo> selectAll();
+
+    @Select("SELECT user_id, COUNT(id) AS attend_count " +
+            "FROM board_game_platform.t_user_attend " +
+            "GROUP BY user_id " +
+            "ORDER BY attend_count " +
+            "DESC")
+    List<String> selectUserAttended(@Param("userId") int userId);
+
+    @Delete("DELETE FROM board_game_platform.t_user " +
+            "WHERE id = #{id}")
+    void deleteUser(@Param("id")int id);
+
+    @Delete("DELETE FROM board_game_platform.t_activity_comments " +
+            "WHERE user_id = #{userId}")
+    void deleteUserActivityComments(int userId);
+
+    @Delete("DELETE FROM board_game_platform.t_club_comments " +
+            "WHERE user_id = #{userId}")
+    void deleteUserClubComments(int userId);
+
+    @Delete("DELETE FROM board_game_platform.t_club " +
+            "WHERE user_id = #{userId}")
+    void deleteUserClub(int userId);
+
+    @Delete("DELETE FROM board_game_platform.t_activity " +
+            "WHERE club_id = #{clubId}")
+    void deleteUserActivity(int clubId);
+
+
+    @Delete("DELETE FROM board_game_platform.t_user_attend " +
+            "WHERE user_id = #{userId}")
+    void deleteUserAttended(@Param("userId") int userId);
+
+    @Delete("DELETE FROM board_game_platform.t_user_join " +
+            "WHERE user_id = #{userId}")
+    void deleteUserJoin(@Param("userId") int userId);
 }

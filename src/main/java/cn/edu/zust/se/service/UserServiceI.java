@@ -14,4 +14,8 @@ public interface UserServiceI {
     List<UserVo> getUser(String userName, int pageNo, int pageSize);
     Integer getUserNumber(String userName);
     void updateUser(UserVo userVo);
+    void grantUser(UserVo userVo);
+    List<UserVo> selectAll();
+    List<String> getUserAttended(int userId);
+    void deleteUser(int id);
 }

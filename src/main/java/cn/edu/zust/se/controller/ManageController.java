@@ -11,6 +11,7 @@ import cn.edu.zust.se.vo.UserVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,8 +43,6 @@ public class ManageController {
     public String administratorPet(HttpSession session,
                               @RequestParam(value = "userId", required = false) int userId,
                                @RequestParam(value = "id", required = false) int id ) {
-//        System.out.println(id);
-//        System.out.println(userId);
         ClubBo club=clubService.getClubBo(id);
         clubService.setbisible(club);
         List<ClubVo> newClubs = clubService.selectClubVoByVisible(0);
@@ -70,4 +69,32 @@ public class ManageController {
             return "createGame";
         }
     }
+    @RequestMapping(value = "grantUser" ,method = RequestMethod.GET)
+    public String grantUserGet(@RequestParam(value = "userId") int userId,
+                               HttpSession session) {
+        UserVo user = (UserVo)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        if (userId == user.getId()) {
+            return "redirect:/user/userHome";
+        }
+        UserVo grantUser =userService.selectUserById(userId);
+        session.setAttribute("grantUser", grantUser);
+        return "grantUser";
+    }
+    @RequestMapping(value = "grantUser" ,method = RequestMethod.POST)
+    public String grantUserPost(UserVo grantUser, HttpSession session) {
+        UserVo user = (UserVo)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        UserVo userVo = (UserVo) session.getAttribute("grantUser");
+        grantUser.setId(userVo.getId());
+        userService.grantUser(grantUser);
+        session.setAttribute("user", userService.selectUserById(user.getId()));
+        session.setAttribute("error","修改成功！");
+        return "grantUser";
+    }
+
 }
