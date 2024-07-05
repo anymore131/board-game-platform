@@ -96,5 +96,18 @@ public class ManageController {
         session.setAttribute("error","修改成功！");
         return "grantUser";
     }
+    @RequestMapping(value = "deleteUser")
+    public String delete(@RequestParam(value = "userId") int userId,HttpSession session) {
+        UserVo user = (UserVo)session.getAttribute("user");
+        if(user == null){
+            return "redirect:/login/login";
+        }
+        UserVo dUser =userService.selectUserById(userId);
+        userService.deleteUser(dUser.getId());
 
+        if(dUser.getStatus() == 0){
+            session.setAttribute("error","删除成功！");
+        }
+        return "redirect:/user/index";
+    }
 }

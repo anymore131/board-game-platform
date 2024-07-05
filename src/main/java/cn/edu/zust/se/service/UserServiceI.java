@@ -16,6 +16,6 @@ public interface UserServiceI {
     void updateUser(UserVo userVo);
     void grantUser(UserVo userVo);
     List<UserVo> selectAll();
-    List<String> getUserAttended(int userId);
+//    List<String> getUserAttended(int userId);
     void deleteUser(int id);
 }

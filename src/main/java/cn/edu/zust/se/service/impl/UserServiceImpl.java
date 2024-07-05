@@ -64,13 +64,14 @@ public class UserServiceImpl implements UserServiceI {
         return userMapper.selectAll();
     }
 
-    @Override
-    public List<String> getUserAttended(int userId) {
-        return userMapper.selectUserAttended(userId);
-    }
+//    @Override
+//    public List<String> getUserAttended(int userId) {
+//        return userMapper.selectUserAttended(userId);
+//    }
 
     @Override
     public void deleteUser(int id) {
+        userMapper.deleteUser(id);
 //        userMapper.deleteUserActivityComments(id);
 //        userMapper.deleteUserClubComments(id);
 //        userMapper.deleteUserJoin(id);

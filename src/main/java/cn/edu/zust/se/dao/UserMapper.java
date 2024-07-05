@@ -13,14 +13,14 @@ import java.util.List;
 public interface UserMapper {
     @Select("select * " +
             "from board_game_platform.t_user " +
-            "where user_name = #{userName} and password = #{password}")
+            "where user_name = #{userName} and password = #{password} and status = 1")
     UserVo selectUserByUserNameAndPassword(@Param("userName") String userName,
                                            @Param("password") String password);
 
-    @Select("select * from board_game_platform.t_user where id=#{id}")
+    @Select("select * from board_game_platform.t_user where id=#{id} and status = 1")
     UserVo selectUserById(@Param("id") int id);
 
-    @Select("select * from board_game_platform.t_user where user_name = #{userName}")
+    @Select("select * from board_game_platform.t_user where user_name = #{userName} and status = 1")
     UserVo selectUserByUserName(@Param("userName") String userName);
 
     @Insert("INSERT INTO board_game_platform.t_user " +
@@ -41,17 +41,17 @@ public interface UserMapper {
 
     @Update("UPDATE board_game_platform.t_user t " +
             "SET t.avatar_fname = #{fname} " +
-            "WHERE t.id = #{id}")
+            "WHERE t.id = #{id} AND status = 1")
     void updateUserAvatar(@Param("id") int id, @Param("fname") String fname);
 
     @Select("SELECT COUNT(id) " +
             "FROM board_game_platform.t_user " +
-            "WHERE user_name LIKE CONCAT('%',#{userName},'%')")
+            "WHERE user_name LIKE CONCAT('%',#{userName},'%') AND status = 1")
     Integer getUserByUserName(@Param("userName") String userName);
 
     @Select("SELECT * " +
             "FROM board_game_platform.t_user " +
-            "WHERE user_name LIKE CONCAT('%',#{userName},'%') " +
+            "WHERE user_name LIKE CONCAT('%',#{userName},'%') AND status = 1 " +
             "LIMIT #{pageSize} OFFSET ${(pageNo - 1) * pageSize}")
     List<UserVo> getUserVoByUserName(@Param("userName") String userName,
                                      @Param("pageNo") int pageNo,
@@ -66,46 +66,48 @@ public interface UserMapper {
     @Update("update board_game_platform.t_user " +
             "set name=#{name},age=#{age},gender=#{gender},introduction=#{introduction},email=#{email}," +
             "mobile=#{mobile},province=#{province},city=#{city},QQ=#{QQ},weixin=#{weixin},type = #{type} " +
-            "where id = #{id}")
+            "where id = #{id} AND status = 1")
     void updateAndGrantUser(UserVo userVo);
 
     @Select("SELECT * " +
-            "FROM board_game_platform.t_user ")
+            "FROM board_game_platform.t_user " +
+            "WHERE status = 1")
     List<UserVo> selectAll();
 
-    @Select("SELECT user_id, COUNT(id) AS attend_count " +
-            "FROM board_game_platform.t_user_attend " +
-            "GROUP BY user_id " +
-            "ORDER BY attend_count " +
-            "DESC")
-    List<String> selectUserAttended(@Param("userId") int userId);
+//    @Select("SELECT user_id, COUNT(id) AS attend_count " +
+//            "FROM board_game_platform.t_user_attend " +
+//            "GROUP BY user_id " +
+//            "ORDER BY attend_count " +
+//            "DESC")
+//    List<String> selectUserAttended(@Param("userId") int userId);
 
-    @Delete("DELETE FROM board_game_platform.t_user " +
+    @Update("UPDATE board_game_platform.t_user " +
+            "SET status = 0 " +
             "WHERE id = #{id}")
     void deleteUser(@Param("id")int id);
-
-    @Delete("DELETE FROM board_game_platform.t_activity_comments " +
-            "WHERE user_id = #{userId}")
-    void deleteUserActivityComments(int userId);
-
-    @Delete("DELETE FROM board_game_platform.t_club_comments " +
-            "WHERE user_id = #{userId}")
-    void deleteUserClubComments(int userId);
-
-    @Delete("DELETE FROM board_game_platform.t_club " +
-            "WHERE user_id = #{userId}")
-    void deleteUserClub(int userId);
-
-    @Delete("DELETE FROM board_game_platform.t_activity " +
-            "WHERE club_id = #{clubId}")
-    void deleteUserActivity(int clubId);
-
-
-    @Delete("DELETE FROM board_game_platform.t_user_attend " +
-            "WHERE user_id = #{userId}")
-    void deleteUserAttended(@Param("userId") int userId);
-
-    @Delete("DELETE FROM board_game_platform.t_user_join " +
-            "WHERE user_id = #{userId}")
-    void deleteUserJoin(@Param("userId") int userId);
+//
+//    @Delete("DELETE FROM board_game_platform.t_activity_comments " +
+//            "WHERE user_id = #{userId}")
+//    void deleteUserActivityComments(int userId);
+//
+//    @Delete("DELETE FROM board_game_platform.t_club_comments " +
+//            "WHERE user_id = #{userId}")
+//    void deleteUserClubComments(int userId);
+//
+//    @Delete("DELETE FROM board_game_platform.t_club " +
+//            "WHERE user_id = #{userId}")
+//    void deleteUserClub(int userId);
+//
+//    @Delete("DELETE FROM board_game_platform.t_activity " +
+//            "WHERE club_id = #{clubId}")
+//    void deleteUserActivity(int clubId);
+//
+//
+//    @Delete("DELETE FROM board_game_platform.t_user_attend " +
+//            "WHERE user_id = #{userId}")
+//    void deleteUserAttended(@Param("userId") int userId);
+//
+//    @Delete("DELETE FROM board_game_platform.t_user_join " +
+//            "WHERE user_id = #{userId}")
+//    void deleteUserJoin(@Param("userId") int userId);
 }
