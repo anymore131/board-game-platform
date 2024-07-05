@@ -97,7 +97,7 @@ public class ManageController {
         return "grantUser";
     }
     @RequestMapping(value = "deleteUser")
-    public String delete(@RequestParam(value = "userId") int userId,HttpSession session) {
+    public String delete(@RequestParam(value = "userId") int userId,HttpSession session,HttpServletRequest request) {
         UserVo user = (UserVo)session.getAttribute("user");
         if(user == null){
             return "redirect:/login/login";
@@ -108,6 +108,7 @@ public class ManageController {
         if(dUser.getStatus() == 0){
             session.setAttribute("error","删除成功！");
         }
-        return "redirect:/user/index";
+
+        return "redirect:/user/search?search-target=3&&search-text="+session.getAttribute("searchText");
     }
 }

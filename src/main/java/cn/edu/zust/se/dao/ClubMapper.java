@@ -206,7 +206,7 @@ public interface ClubMapper {
      */
     @Select("select distinct c.id,c.club_name,c.create_time,c.province,c.city,c.introduction " +
             "from board_game_platform.t_club c,board_game_platform.t_user_join u " +
-            "where province = #{province} and city = #{city} and " +
+            "where province = #{province} and city = #{city} and c.status = 1 and " +
             "c.id not in (select c.id from board_game_platform.t_club c,board_game_platform.t_user_join u " +
             "where c.id = u.club_id and u.user_id = #{userId}) " +
             "order by (select count(j.id) from board_game_platform.t_club c,board_game_platform.t_user_join j " +

@@ -215,6 +215,7 @@
 </div>
 <div class="side">
     <a href="/user/index"><p>首页</p></a>
+    <a href="/user/userHome">返回</a>
 </div>
 <div class="body">
     <form action="/user/changeUser" method="post">

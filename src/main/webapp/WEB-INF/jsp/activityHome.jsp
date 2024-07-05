@@ -26,6 +26,29 @@
             background-color: #f8f9fa;
         }
 
+        .box {list-style-type: none;}
+        #circlebutton {
+            position: absolute;
+            bottom: 20px;
+            left: 260px;
+            list-style-type: none;
+            text-align: center;
+        }
+
+        #circlebutton li {
+            margin-left: 10px;
+            float: left;
+        }
+        #circlebutton li div {
+            width: 20px;
+            height: 20px;
+            background: #DDDDDD;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            vertical-align: middle;
+        }
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -327,5 +350,55 @@
     </div>
 </div>
 <div class="footer"></div>
+<script type="text/javascript">
+    var index = 0;
+    var divCon = document.getElementsByClassName("divEle");
+    var imgEle = document.getElementsByClassName("img-slide");
+    var divPrev = document.getElementById("prev");
+    var divNext = document.getElementById("next");
+    for (var i = 0; i < divCon.length; i++) {
+        divCon[i].index = i;
+        divCon[i].onmouseover = function() {
+            if (index == this.index){return;}
+            index = this.index;
+            changeImg();
+            clearInterval(change1);
+        }
+    }
+    function autoChangeImg() {
+        index++;
+        changeImg();
+    }
+    var change1 = setInterval(autoChangeImg, 3000);
+    function changeImg() {
+        if (index >= imgEle.length) {
+            index = 0;
+        }
+        for (var i = 0; i < imgEle.length; i++) {
+            imgEle[i].style.display = 'none';
+            divCon[i].style.background = "#DDDDDD";
+        }
+        imgEle[index].style.display = 'block';
+        divCon[index].style.background = "#FF0000";
+    }
+    divPrev.onclick = function() {
+        clearInterval(change1);
+        if (index > 0) {index--} else {index = 4;}
+        changeImg();
+    };
+    divNext.onclick = function() {
+        clearInterval(change1);
+        if (index >= 4) {index = 0;} else {index++;}
+        changeImg();
+    };
+    divNext.onmouseover = function() {clearInterval(change1);}
+    divPrev.onmouseover = function() {clearInterval(change1);}
+    divPrev.onmouseout = function() {
+        change1 = setInterval(autoChangeImg, 3000);
+    }
+    divNext.onmouseout = function() {
+        change1 = setInterval(autoChangeImg, 3000);
+    }
+</script>
 </body>
 </html>

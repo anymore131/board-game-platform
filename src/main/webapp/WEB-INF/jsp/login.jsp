@@ -278,10 +278,10 @@
 <body>
 <div class="wrapper">
     <div class="name">
-        <img src="" alt="">
+<%--        <img src="" alt="">--%>
         <span></span>
     </div>
-    <img src="" alt="" class="left-img">
+    <img src="/user/showPic/微信图片_20240705094034 - 副本.png" alt="" class="left-img">
     <div class="round"></div>
     <div class="form-wrapper">
         <div class="login-form">
