@@ -8,4 +8,3 @@ create table t_activity_picture
     constraint t_activity_picture_t_activity_id_fk
         foreign key (activity_id) references t_activity (id)
 );
-

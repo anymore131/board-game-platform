@@ -16,6 +16,3 @@ create table t_club
 
 create index user_id
     on t_club (user_id);
-
-INSERT INTO board_game_platform.t_club (id, club_name, user_id, create_time, province, city, tags, introduction, status) VALUES (1, 'club1', 1, '2024-06-21', '浙江', '杭州', ';;1', '123', 1);
-INSERT INTO board_game_platform.t_club (id, club_name, user_id, create_time, province, city, tags, introduction, status) VALUES (3, '12313122', 1, '2024-06-30', '123', '123', ';;;1;2;', '123', 1);

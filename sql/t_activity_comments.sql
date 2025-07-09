@@ -14,5 +14,3 @@ create table t_activity_comments
 
 create index user_id
     on t_activity_comments (user_id);
-
-INSERT INTO board_game_platform.t_activity_comments (id, user_id, activity_id, comments, comments_time) VALUES (1, 1, 1, '1', '2024-06-12');

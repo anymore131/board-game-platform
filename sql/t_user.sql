@@ -19,7 +19,3 @@ create table t_user
     avatar_fname varchar(30)  null comment '头像地址',
     status       int          null comment '在线状态：1为在线；0为离线'
 );
-
-INSERT INTO board_game_platform.t_user (id, name, user_name, password, age, gender, introduction, type, email, mobile, province, city, register, QQ, weixin, avatar_fname, status) VALUES (1, '小明', '小明', '1111', 11, 1, null, null, null, null, null, null, null, null, null, '小明20240630142637224gz.jpg', null);
-INSERT INTO board_game_platform.t_user (id, name, user_name, password, age, gender, introduction, type, email, mobile, province, city, register, QQ, weixin, avatar_fname, status) VALUES (2, '111', '111', '111', 11, 1, null, null, null, null, null, null, null, null, null, 'fls.jpg', null);
-INSERT INTO board_game_platform.t_user (id, name, user_name, password, age, gender, introduction, type, email, mobile, province, city, register, QQ, weixin, avatar_fname, status) VALUES (4, '123', '123', '123', null, null, null, 0, null, null, null, null, '2024-06-27', null, null, 'fls.jpg', 1);

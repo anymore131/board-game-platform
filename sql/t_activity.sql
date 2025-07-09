@@ -16,5 +16,3 @@ create table t_activity
 
 create index club_id
     on t_activity (club_id);
-
-INSERT INTO board_game_platform.t_activity (id, club_id, activity_name, introduction, tags, address, start_time, end_time, create_time) VALUES (1, 1, '1', null, ';1;', '1', '2024-07-07 22:46:10', '2024-07-13 22:46:16', '2024-06-14');

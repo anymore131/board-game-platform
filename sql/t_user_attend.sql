@@ -10,4 +10,3 @@ create table t_user_attend
         foreign key (user_id) references t_user (id)
 )
     comment '用户参加活动记录';
-

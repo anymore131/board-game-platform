@@ -17,6 +17,3 @@ create index club_id
 
 create index user_id
     on t_club_comments (user_id);
-
-INSERT INTO board_game_platform.t_club_comments (id, user_id, club_id, comments, comments_time) VALUES (1, 2, 1, '好', '2024-05-25');
-INSERT INTO board_game_platform.t_club_comments (id, user_id, club_id, comments, comments_time) VALUES (4, 1, 1, '123', '2024-06-30');

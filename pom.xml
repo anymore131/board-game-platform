@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.edu.zust.se</groupId>
-  <artifactId>BoardGamePlatform</artifactId>
+  <artifactId>board-game-platform</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>BoardGamePlatform Maven Webapp</name>
+  <name>board-game-platform</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.soureEncoding>UTD-8</project.build.soureEncoding>
@@ -173,7 +173,7 @@
   </dependencies>
 
   <build>
-    <finalName>BoardGamePlatform</finalName>
+    <finalName>board-game-platform</finalName>
     <plugins>
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
